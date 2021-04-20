@@ -1,0 +1,84 @@
+Design Rationale
+    - To fulfill some missing parts of the game Jurassic World via creating and modifying classes.
+
+Overview
+    Classes to be modified
+        - Dirt, Tree, Stegosaur
+    Interfaces to be modified
+        -
+    Clsses to be newly created
+        - Brachiosaur, Allosaur, VendingMachine, EcoPoint, GroundLocation, HarvestAction, EatBehaviour, BreedBehaviour, LayEggBehaviour
+          Egg, EcoPoint, VendingMachine, WhatObject, Bush
+    Interfaces to be newly created
+        - Dinosaur
+
+Rationale of each
+    Dirt (extends Ground)
+        - Responsible for produce fruits
+        - This overrides tick() method from Ground class.
+        - Modify the tick() to produce a fruit depending on a chance
+
+    Tree (extends Ground)
+            - Responsible for producing fruit and a bush and drop a fruit depending on a chance
+            - This overrides tick() method from Ground class
+            - Modify the tick() to produce a fruit depending on a chance
+
+    GroundLocation (extends Location)
+        - Responsible for check capabilities of ground for corresponding performance. For instance, getGround() to check
+          which object stays on the spot and then perform tick action.
+        - This class extends Location class to override tick() method to find objects nearby.
+        - If a instance of subclass of Ground at specific location override tick() that functions to find objects nearby
+          and give it chance to grow a bush by different chance.
+
+    HarvestAction (extends Action)
+        - This action is to attempt to find a fruit from a tree or a bush. This action has a chance of failing.
+        - This class overrides the execute() and menuDescription() method from the Action class
+        - In every turn, user will be given a chance for choosing an action. If this is selected, execute().
+
+    Stegosaur (extends Actor implements Dinosaur)
+        - Responsible for wander, eat fruits and breeding
+        - This class implements Dinosaur interface that provide shared methods with brachiosaur and allosaur.
+        - Overrides methods to if it is hungry, baby and conscious for WanderBehaviour, EatBehaviour and BreedBehaviour.
+
+    Brachiosaur (extends Actor implements Dinosaur)
+        - Responsible for wander, eat fruits and breeding
+        - This class implements Dinosaur interface that provide shared methods with Stegosaur and Allosaur.
+        - Overrides methods to if it is hungry, baby and conscious for WanderBehaviour, EatBehaviour and BreedBehaviour.
+
+    Dinosaur (Interface)
+        - Responsible for providing shared methods for Stegosaur, Brachiosaur and Allosaur
+        - This simply gives an ability to override.
+
+    BreedBehaviour( implements Behaviour)
+        - Responsible for breeding when two same species with opposite dinosaur are nearby in given condition
+        - This overrides getAction() from Behaviour class
+        - Create distance() method to check for adjacency with the target before performing an action.
+
+    LayEggBehaviour( implements Behaviour, Dinosaur)
+        - Responsible for laying an egg in a given condition
+        - This implements Behaviour and Dinosaur interfaces to override methods.
+        - Override canLayEgg() methods from Dinosaur and getAction() from Behaviour before an action.
+
+    Egg(extends Ground)
+        - Responsible for wait for a few turns before creating an instance of corresponding dinosaur.
+        - This extends Ground class and override tick() method for counting the number of ticks. After that, GroundLocation
+          will be responsible for creating an instance of it on the same spot.
+        - Interacting through GroundLocation class after appropriate turns pass to create an instance.
+/////// to be done deeply
+    EcoPoint( Player 'has a' EcoPoint )  - Maybe?
+        - Responsible for collecting point from different situations
+        - to be done
+        - to be done
+
+    VendingMachine( extends Ground )
+        - Responsible for selling items to the player
+        - Override
+        - Override tick() methods to check if items are sold and notify to EcoPoint
+
+    WhatObject (ENUM)
+        - Responsible for checking which Ground object is in the spot
+        - This does not relate nor interact with existing system
+        - This will specify classes that need to be specified in tick process.
+
+
+    Bush (extneds Ground)
