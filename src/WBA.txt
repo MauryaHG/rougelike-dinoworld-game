@@ -1,0 +1,13 @@
+WBA
+
+Maurya Gamage and Jinyeop Oh
+
+Jinyeop Oh will be responsible for the creating class diagram and the design rationale and
+Maurya Gamage will be responsible for creating the interaction diagram.
+
+We can test and review each others’ work
+
+All deliverables are expected to complete by 22nd April 2021 at 8 pm (Melbourne time)
+All testing and reviewing are to be completed by 23rd April 2021 at 10 pm (Melbourne time)
+
+I accept this WBA
