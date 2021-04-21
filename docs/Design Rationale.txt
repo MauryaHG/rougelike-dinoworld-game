@@ -49,6 +49,9 @@ Rationale of each
         - Responsible for providing shared methods for Stegosaur, Brachiosaur and Allosaur
         - This simply gives an ability to override.
 
+    Allosaur (extends Actor implements Dinosaur)
+        -
+
     BreedBehaviour( implements Behaviour)
         - Responsible for breeding when two same species with opposite dinosaur are nearby in given condition
         - This overrides getAction() from Behaviour class
