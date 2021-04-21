@@ -4,13 +4,11 @@ Design Rationale
 Overview
     Classes to be modified
         - Dirt, Tree, Stegosaur
-    Interfaces to be modified
-        -
-    Clsses to be newly created
-        - Brachiosaur, Allosaur, VendingMachine, EcoPoint, GroundLocation, HarvestAction, EatBehaviour, BreedBehaviour, LayEggBehaviour
-          Egg, EcoPoint, VendingMachine, WhatObject, Bush
-    Interfaces to be newly created
-        - Dinosaur
+    Classes to be created
+        - Bush, Egg, VendingMachine, Fruit, Dinosaur, Brachiosaur, Allosaur, HarvestAction, PurchaseAction, ShootAction,
+          FeedAction, BreedBehaviour, LayEggBehaviour, SeekFoodBehaviour, HatchBehaviour, GroundLocation, FruitHarvested,
+          CanivoreMeal, vegetarian, LaserGun, isInstanceOf(Enum), EcoPoint(static)
+
 
 Rationale of each
     Dirt (extends Ground)
@@ -19,9 +17,15 @@ Rationale of each
         - Modify the tick() to produce a fruit depending on a chance
 
     Tree (extends Ground)
-            - Responsible for producing fruit and a bush and drop a fruit depending on a chance
-            - This overrides tick() method from Ground class
-            - Modify the tick() to produce a fruit depending on a chance
+        - Responsible for producing fruit and a bush and drop a fruit depending on a chance
+        - This overrides tick() method from Ground class
+        - Modify the tick() to produce a fruit depending on a chance
+
+    Bush (extends Ground)
+        - Responsible for producing a fruit by chance
+        - Bush extends Ground. When tick() is invoked in GameMap, check if it a Dirt, if so, replace to a Bush using setGround()
+        - Override tick() from Ground and then create Fruit instance if it can
+
 
     GroundLocation (extends Location)
         - Responsible for check capabilities of ground for corresponding performance. For instance, getGround() to check
@@ -35,22 +39,24 @@ Rationale of each
         - This class overrides the execute() and menuDescription() method from the Action class
         - In every turn, user will be given a chance for choosing an action. If this is selected, execute().
 
-    Stegosaur (extends Actor implements Dinosaur)
+    Stegosaur (extends Dinosaur)
         - Responsible for wander, eat fruits and breeding
         - This class implements Dinosaur interface that provide shared methods with brachiosaur and allosaur.
         - Overrides methods to if it is hungry, baby and conscious for WanderBehaviour, EatBehaviour and BreedBehaviour.
 
-    Brachiosaur (extends Actor implements Dinosaur)
+    Brachiosaur (extends Dinosaur)
         - Responsible for wander, eat fruits and breeding
         - This class implements Dinosaur interface that provide shared methods with Stegosaur and Allosaur.
         - Overrides methods to if it is hungry, baby and conscious for WanderBehaviour, EatBehaviour and BreedBehaviour.
 
-    Dinosaur (Interface)
+    Dinosaur (extends Actor)
         - Responsible for providing shared methods for Stegosaur, Brachiosaur and Allosaur
         - This simply gives an ability to override.
 
-    Allosaur (extends Actor implements Dinosaur)
-        -
+    Allosaur (extends Dinosaur)
+        - Reposible for attack Stegosaur or Brachiosaur
+        - This extends Actor to override playTurn()
+        - This also override getAllowableActions() to add ShootAction and may be dead if get a gun shot.
 
     BreedBehaviour( implements Behaviour)
         - Responsible for breeding when two same species with opposite dinosaur are nearby in given condition
@@ -67,21 +73,55 @@ Rationale of each
         - This extends Ground class and override tick() method for counting the number of ticks. After that, GroundLocation
           will be responsible for creating an instance of it on the same spot.
         - Interacting through GroundLocation class after appropriate turns pass to create an instance.
-/////// to be done deeply
-    EcoPoint( Player 'has a' EcoPoint )  - Maybe?
+
+    EcoPoint( static class)
         - Responsible for collecting point from different situations
-        - to be done
-        - to be done
+        - As this class is static, any classes need this will interact via static methods
+        - Any classes that need to check add or subtract will use this class using static methods and a variable.
 
     VendingMachine( extends Ground )
         - Responsible for selling items to the player
         - Override
         - Override tick() methods to check if items are sold and notify to EcoPoint
 
-    WhatObject (ENUM)
+    isInstanceOf (ENUM)
         - Responsible for checking which Ground object is in the spot
-        - This does not relate nor interact with existing system
-        - This will specify classes that need to be specified in tick process.
+        - Ground objects will be added capabilities using this Enum
+        - This enum will specify which object is in the specific location for corresponding to determine what needs to be done.
+
+    PurchaseAction (extends Action)
+        - Responsible for the player can purchase when VendingMachine is nearby
+        - This will extends Action. getAllowableActions() will be overridden in VendingMachine class and then PurchaseAction will be added.
+        - Since PurchaseAction is added to VendingMachine, if player approaches to the VendingMachine pleyer may perform PurchaseAction
+
+    Fruit (association with Tree and Bush)
+        - Responsible for staying in the same spot for 15 turns.
+        - This class does not directly interact with the existing system, but once tick() in Tree and Bush will use Fruit class.
+        - Since tick() in Tree or Bush will be called every turn, rotCounter will be incremented if they have Fruits
+
+    CarnivoreMeal, vegeterianMeal and FruitHarvested (extends PortableItem)
+        - Responsible for carried by the player and disappear when fed
+        - This extends PortableItem class. Then this will override getAllowableActions() to add PurchaseAction class.
+        - When player selects this from VendingMachine via PurchaseAction, then addItemToInventory() will be used.
 
 
-    Bush (extneds Ground)
+    LaserGun (extends WeaponItem)
+        - Responsible for shoot the gun to remove Allosaur if need.
+        - This extends WeaponItem and ShootAction will be added to getAllowableActions() in Allosaur.
+        - If LaserGun is in inventory, player always performs ShootAction
+
+    ShootAction (extends Action)
+        - Responsible shooting LaserGun if player holds it
+        - Overrides execute() from Action and getWeapon() to check if player holds LaserGun, if so, performs an action
+        - target will be assigned and if player wants to shoot then perform it
+
+    HatchBehaviour (Behaviour)
+        - Responsible for Egg to hatch in proper turns
+        - Overrides getAction() from Behaviour to count turns and create new instance
+        - Egg 'has a' HatchBehaviour and in every turn, invoke turnCounter method in HatchBehaviour
+
+    EcoPoint (static)
+        - Reponsible for add or subtract eco points
+        - This does not interact with existing system
+        - Any class needs to add or subtract the point, static methods will be used.
+
