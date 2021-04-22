@@ -7,7 +7,7 @@ Overview
     Classes to be created
         - Bush, Egg, VendingMachine, Fruit, Dinosaur, Brachiosaur, Allosaur, HarvestAction, PurchaseAction, ShootAction,
           FeedAction, BreedBehaviour, LayEggBehaviour, SeekFoodBehaviour, HatchBehaviour, GroundLocation, FruitHarvested,
-          CanivoreMeal, vegetarian, LaserGun, isInstanceOf(Enum), EcoPoint(static)
+          CanivoreMeal, vegetarian, LaserGun, Type(Enum), EcoPoint(static)
 
 
 Rationale of each
@@ -84,7 +84,7 @@ Rationale of each
         - Override
         - Override tick() methods to check if items are sold and notify to EcoPoint
 
-    isInstanceOf (ENUM)
+    Type (ENUM)
         - Responsible for checking which Ground object is in the spot
         - Ground objects will be added capabilities using this Enum
         - This enum will specify which object is in the specific location for corresponding to determine what needs to be done.
