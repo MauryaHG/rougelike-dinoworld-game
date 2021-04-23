@@ -9,8 +9,16 @@ Overview
           FeedAction, BreedBehaviour, LayEggBehaviour, SeekFoodBehaviour, HatchBehaviour, GroundLocation, FruitHarvested,
           CanivoreMeal, vegetarian, LaserGun, Type(Enum), EcoPoint(static)
 
+    We have designed most of the classes to inherit from the existing classes from the engine. Since engine provides the
+    most of necessary parent classes, it should be able to reduce dependencies and fulfill given requirements. Stegosaur,
+    Brachiosaur and Allosaur are going to have same attributes and methods, so we designed to create parent class of them, which is Dinosaur, and the parent class extends the Actor in the engine.
+    Hence, we look forward to reduce repetition(DRY) of codes. EcoPoint class will have static attributes and methods in order to access from any where it needs.
+    The reason for the EcoPoint being a static class is that in each turn, we do not know how many points will be obtained from each objects.
+    Hence, any classes need to interact with EcoPoint will access via static methods. We decided to create enum called Type
+    to specify objects in tick() in GroundLocation in order for corresponding performance for different objects.
 
-Rationale of each
+
+Design of each classes
     Dirt (extends Ground)
         - Responsible for produce fruits
         - This overrides tick() method from Ground class.
@@ -28,7 +36,7 @@ Rationale of each
 
 
     GroundLocation (extends Location)
-        - Responsible for check capabilities of ground for corresponding performance. For instance, getGround() to check
+        - Responsible for check capabilities of the object for corresponding performance. For instance, getGround() to check
           which object stays on the spot and then perform tick action.
         - This class extends Location class to override tick() method to find objects nearby.
         - If a instance of subclass of Ground at specific location override tick() that functions to find objects nearby
@@ -41,31 +49,32 @@ Rationale of each
 
     Stegosaur (extends Dinosaur)
         - Responsible for wander, eat fruits and breeding
-        - This class implements Dinosaur interface that provide shared methods with brachiosaur and allosaur.
+        - This class extends Dinosaur that provide shared methods with brachiosaur and allosaur.
         - Overrides methods to if it is hungry, baby and conscious for WanderBehaviour, EatBehaviour and BreedBehaviour.
 
     Brachiosaur (extends Dinosaur)
         - Responsible for wander, eat fruits and breeding
-        - This class implements Dinosaur interface that provide shared methods with Stegosaur and Allosaur.
+        - This class extends Dinosaur that provide shared methods with Stegosaur and Allosaur.
         - Overrides methods to if it is hungry, baby and conscious for WanderBehaviour, EatBehaviour and BreedBehaviour.
 
     Dinosaur (extends Actor)
         - Responsible for providing shared methods for Stegosaur, Brachiosaur and Allosaur
+        - This extends Actor to let child classes to override from Actor
         - This simply gives an ability to override.
 
     Allosaur (extends Dinosaur)
         - Reposible for attack Stegosaur or Brachiosaur
-        - This extends Actor to override playTurn()
+        - This extends Dinosaur
         - This also override getAllowableActions() to add ShootAction and may be dead if get a gun shot.
 
     BreedBehaviour( implements Behaviour)
-        - Responsible for breeding when two same species with opposite dinosaur are nearby in given condition
+        - Responsible for breeding when two same species with opposite gender are nearby in given condition
         - This overrides getAction() from Behaviour class
         - Create distance() method to check for adjacency with the target before performing an action.
 
     LayEggBehaviour( implements Behaviour, Dinosaur)
         - Responsible for laying an egg in a given condition
-        - This implements Behaviour and Dinosaur interfaces to override methods.
+        - This implements Behaviour to override methods.
         - Override canLayEgg() methods from Dinosaur and getAction() from Behaviour before an action.
 
     Egg(extends Ground)
@@ -81,18 +90,18 @@ Rationale of each
 
     VendingMachine( extends Ground )
         - Responsible for selling items to the player
-        - Override
+        - Extends Ground and override allowableAction() for PurchaseAction from the player
         - Override tick() methods to check if items are sold and notify to EcoPoint
 
     Type (ENUM)
-        - Responsible for checking which Ground object is in the spot
-        - Ground objects will be added capabilities using this Enum
+        - Responsible for checking which object is in the spot
+        - Objects will be added capabilities using this Enum
         - This enum will specify which object is in the specific location for corresponding to determine what needs to be done.
 
     PurchaseAction (extends Action)
         - Responsible for the player can purchase when VendingMachine is nearby
         - This will extends Action. getAllowableActions() will be overridden in VendingMachine class and then PurchaseAction will be added.
-        - Since PurchaseAction is added to VendingMachine, if player approaches to the VendingMachine pleyer may perform PurchaseAction
+        - Since PurchaseAction is added to VendingMachine, if player approaches to the VendingMachine player may perform PurchaseAction
 
     Fruit (association with Tree and Bush)
         - Responsible for staying in the same spot for 15 turns.
@@ -104,9 +113,8 @@ Rationale of each
         - This extends PortableItem class. Then this will override getAllowableActions() to add PurchaseAction class.
         - When player selects this from VendingMachine via PurchaseAction, then addItemToInventory() will be used.
 
-
     LaserGun (extends WeaponItem)
-        - Responsible for shoot the gun to remove Allosaur if need.
+        - Responsible for shoot the gun to remove Stegosaur if need.
         - This extends WeaponItem and ShootAction will be added to getAllowableActions() in Allosaur.
         - If LaserGun is in inventory, player always performs ShootAction
 
@@ -115,7 +123,7 @@ Rationale of each
         - Overrides execute() from Action and getWeapon() to check if player holds LaserGun, if so, performs an action
         - target will be assigned and if player wants to shoot then perform it
 
-    HatchBehaviour (Behaviour)
+    HatchBehaviour (implements Behaviour)
         - Responsible for Egg to hatch in proper turns
         - Overrides getAction() from Behaviour to count turns and create new instance
         - Egg 'has a' HatchBehaviour and in every turn, invoke turnCounter method in HatchBehaviour
