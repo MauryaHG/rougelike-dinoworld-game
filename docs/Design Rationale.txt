@@ -133,3 +133,6 @@ Design of each classes
         - This does not interact with existing system
         - Any class needs to add or subtract the point, static methods will be used.
 
+
+    /////////Added classes
+    DinosaurGameMap(extends GameMap)

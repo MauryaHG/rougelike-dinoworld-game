@@ -1,0 +1,28 @@
+WBA Ass2
+
+Jinyeop Oh
+    - Dirt, Tree, Bush, Egg, VendingMachine, EcoPoint, Fruit, HarvestAction, PurchaseAction, ShootAction, FeedAction,
+    Type, GroundLocation
+
+Maurya Gamage
+    - Dinosaur, Steogosaur, Brachiosaur, Allosaur, Behaviour, BreedBehaviour, LayEggBehaviour, SeekFoodBehaviour,
+     HatchBehaviour, PortableItem, FuritHarvested, CarnivoreMeal, VegetarianMeal, LaserGun
+
+
+Dates to test and review
+1. Fri 30 April at 6pm (Melbourne time)
+    - Test and review own work individually
+    - Jinyeop Oh -> All subclasses of Ground
+    - Maurya Gamage -> All subclasses of Dinosaur
+
+2. Tues 04 May at 6pm (Melbourne time)
+    - Test and review own work individually
+    - Jinyeop Oh -> All subclasses of Action, EcoPoint and Type
+    - Maurya Gamage -> All subclasses of Behaviour
+
+3. Fri 07 May at 3pm  (Melbourne time)
+    - Test and review entire game together on Zoom meeting
+    - Jinyeop Oh -> All classes and assist Maurya
+    - Maurya Gamage -> All subclasses of Item
+
+I accept this WBA - Jinyeop Oh
