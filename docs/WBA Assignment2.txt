@@ -26,3 +26,5 @@ Dates to test and review
     - Maurya Gamage -> All subclasses of Item
 
 I accept this WBA - Jinyeop Oh
+
+I accept this WBA - Maurya Gamage
