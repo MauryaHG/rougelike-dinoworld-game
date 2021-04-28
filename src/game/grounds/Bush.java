@@ -9,8 +9,8 @@ public class Bush extends Ground {
      *
      * @param displayChar character to display for this type of terrain
      */
-    public Bush(char displayChar) {
-        super(displayChar);
+    public Bush() {
+        super(';');
         addCapability(Type.BUSH);
     }
 }

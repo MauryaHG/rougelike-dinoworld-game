@@ -10,7 +10,7 @@ import game.actions.HarvestAction;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.0
+ * @version 1.0.1
  * @see Util
  */
 public class Fruit extends Ground {
@@ -24,8 +24,8 @@ public class Fruit extends Ground {
      *
      * @param displayChar character to display for this type of terrain
      */
-    public Fruit(char displayChar) {
-        super(displayChar);
+    public Fruit() {
+        super('F');
         addCapability(Type.FRUIT);
     }
 
