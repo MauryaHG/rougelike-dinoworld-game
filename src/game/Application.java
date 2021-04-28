@@ -8,6 +8,10 @@ import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.FancyGroundFactory;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.World;
+import game.grounds.Dirt;
+import game.grounds.Floor;
+import game.grounds.Tree;
+import game.grounds.Wall;
 
 /**
  * The main class for the Jurassic World game.
@@ -46,7 +50,7 @@ public class Application {
 		".........................................................................++++...",
 		"..........................................................................++....",
 		"................................................................................");
-		GameMap gameMap = new GameMap(groundFactory, map );
+		GameMap gameMap = new DinosaurGameMap(groundFactory, map );
 		world.addGameMap(gameMap);
 		
 		Actor player = new Player("Player", '@', 100);
