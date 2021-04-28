@@ -1,16 +1,19 @@
 package game.grounds;
 
+import edu.monash.fit2099.engine.Actions;
+import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.Type;
 import game.Util;
+import game.actions.HarvestAction;
 
 import java.util.ArrayList;
 
 /**
  * Modified from existing
  * @author Jinyeop Oh
- * @version 1.0.1
+ * @version 1.0.2
  * @see Ground parent class
  * @see Fruit Association
  */
@@ -29,17 +32,34 @@ public class Tree extends Ground {
 	@Override
 	public void tick(Location location) {
 		super.tick(location);
-
 		age++;
-		if (age == 10)
-			displayChar = 't';
-		if (age == 20)
-			displayChar = 'T';
+
+		if (fruitsOnTree.size() > 0){
+			displayChar = 'Ŧ';
+		} else {
+			if (age == 10)
+				displayChar = 't';
+			if (age == 20)
+				displayChar = 'T';
+		}
+
 
 
 		produceFruit();
 		checkDropped();
 		removeRotted();
+	}
+
+	/**
+	 * Fruit can be picked up (harvested) from the player
+	 * @param actor the Actor acting
+	 * @param location the current Location
+	 * @param direction the direction of the Ground from the Actor
+	 * @return new HarvestedAction
+	 */
+	@Override
+	public Actions allowableActions(Actor actor, Location location, String direction) {
+		return new Actions(new HarvestAction());
 	}
 
 	/**
@@ -70,7 +90,7 @@ public class Tree extends Ground {
 	 */
 	public void produceFruit(){
 		if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
-			fruitsOnTree.add(new Fruit('F'));
+			fruitsOnTree.add(new Fruit());
 		}
 	}
 

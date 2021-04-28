@@ -29,17 +29,7 @@ public class Fruit extends Ground {
         addCapability(Type.FRUIT);
     }
 
-    /**
-     * Fruit can be picked up (harvested) from the player
-     * @param actor the Actor acting
-     * @param location the current Location
-     * @param direction the direction of the Ground from the Actor
-     * @return new HarvestedAction
-     */
-    @Override
-    public Actions allowableActions(Actor actor, Location location, String direction) {
-        return new Actions(new HarvestAction());
-    }
+
 
     /**
      * Calculate dropping percentage and return the outcome
@@ -59,7 +49,7 @@ public class Fruit extends Ground {
     public boolean isRotted(){
         age++;
 
-        if( age >= 15 ){
+        if( age > 15 ){
             return true;
         }
         return false;

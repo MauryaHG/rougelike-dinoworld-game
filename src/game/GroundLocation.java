@@ -2,13 +2,22 @@ package game;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
+import game.Dinosaurs.Brachiosaur;
+import game.Dinosaurs.Stegosaur;
 import game.grounds.Bush;
+import game.grounds.Egg;
 
 import java.util.Random;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.0
+ * @version 1.0.2
+ * @see Type
+ * @see game.grounds.Dirt
+ * @see game.grounds.Tree
+ * @see Bush
+ * @see Stegosaur
+ * @see Brachiosaur
  */
 public class GroundLocation extends Location {
 
@@ -16,6 +25,12 @@ public class GroundLocation extends Location {
      * An Enum to set an action
      */
     private NextTurn action = NextTurn.SAME;
+
+    /**
+     * used to grow a bush by 1% chance at the start of game
+     * then turns into false
+     */
+    private boolean firstTurn = true;
 
     /**
      * Constructor.
@@ -35,38 +50,62 @@ public class GroundLocation extends Location {
     public void tick() {
         boolean isDirt = getGround().hasCapability(Type.DIRT);
         boolean isTree = getGround().hasCapability(Type.TREE);
+        boolean isStegosaurEgg = getGround().hasCapability(Type.STEGOSAUR_EGG);
+        boolean isBrachiosaurEgg = getGround().hasCapability(Type.BRACHIOSAUR_EGG);
+        boolean isAllosaurEgg = getGround().hasCapability(Type.ALLOSAUR_EGG);
 
 
         if( isDirt ){
-            // if it is a Dirt object, grow a bush with 1% chance, and terminate if successful
-            if( performAction(NextTurn.GROW, Util.ONE_PERCENT_CHANCE)){
+
+            if( firstTurn ) { // Let every dirt instance have 1% chance to grow a bush at the start of the game
+                performAction(NextTurn.GROW, Util.ONE_PERCENT_CHANCE);
+            } else if( neighboursTreeCount() > 0){  // Second turn onwards from this else-if
                 return;
+            } else if( neighboursBushCount() > 1){
+                performAction(NextTurn.GROW, Util.TEN_PERCENT_CHANCE);
+            } else {
+                performAction(NextTurn.GROW, Util.ONE_PERCENT_CHANCE);
             }
-
-            // Count the number of around bushes and there are 2 or more, grow a Bush
-            if( neighboursBushCount() >= 2){
-                action = NextTurn.GROW;
-            }
-
-            // But if there is a tree nearby, set to SAME again, otherwise keep set BUSH
-            if( neighboursTreeCount() > 0){
-                action = NextTurn.SAME;
-            }
-
         }
 
         if(isTree){
-
         }
 
-        switch (action){
-            case SAME:
-                break;
-            case GROW:
-                performAction(NextTurn.GROW, Util.TEN_PERCENT_CHANCE);
-                break;
+        if(isStegosaurEgg){
+            if(((Egg) getGround()).getAge() > 30){
+                if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
+                    new Stegosaur("newStegoMale", "MALE");     // Naming will be looked later
+                } else{
+                    new Stegosaur("newStegoFemale", "FEMALE");
+                }
 
+            }
         }
+
+        if(isBrachiosaurEgg){
+            if(((Egg) getGround()).getAge() > 50){
+                if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
+                    new Brachiosaur("newBrachioMale", "MALE");     // Naming will be looked later
+                } else{
+                    new Brachiosaur("newBrachioFemale", "FEMALE");
+                }
+
+            }
+        }
+
+        if(isAllosaurEgg){
+            if(((Egg) getGround()).getAge() > 50){
+                if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
+                    //new Allosaur("newAlloMale", "MALE");     // Naming will be looked later
+                } else{
+                    //new Allosaur("newAlloFemale", "FEMALE");
+                }
+
+            }
+        }
+
+        if( firstTurn )
+            firstTurn = false;
 
         super.tick();
     }
@@ -98,7 +137,7 @@ public class GroundLocation extends Location {
     private boolean performAction(NextTurn action, int chance){
         if(new Random().nextInt(chance) == 0){
             if( action == NextTurn.GROW ){
-                setGround(new Bush(';'));
+                setGround(new Bush());
                 return true;
             }
         }
