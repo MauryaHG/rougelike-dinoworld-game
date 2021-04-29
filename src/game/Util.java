@@ -1,5 +1,7 @@
 package game;
 
+import edu.monash.fit2099.engine.Location;
+
 import java.util.Random;
 
 /**
@@ -33,5 +35,16 @@ public abstract class Util {
         if( random.nextInt(chance) == 0)
             return true;
         return false;
+    }
+
+    /**
+     * Compute the Manhattan distance between two locations.
+     *
+     * @param a the first location
+     * @param b the first location
+     * @return the number of steps between a and b if you only move in the four cardinal directions.
+     */
+    public static int distance(Location a, Location b) {
+        return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 }
