@@ -1,16 +1,17 @@
 package game.items;
 
 import edu.monash.fit2099.engine.*;
+import game.PortableItem;
 import game.Type;
 import game.Util;
 import game.actions.HarvestAction;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.0
+ * @version 1.1.1
  * @see Util
  */
-public class Fruit extends Item {
+public class Fruit extends PortableItem {
     /**
      * An age of this fruit. It is incremented every turn
      */
@@ -19,7 +20,7 @@ public class Fruit extends Item {
 
 
     public Fruit() {
-        super("Fruit", 'F', true);
+        super("Fruit", 'F');
         addCapability(Type.FRUIT);
     }
 
