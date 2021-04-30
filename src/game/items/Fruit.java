@@ -4,7 +4,12 @@ import edu.monash.fit2099.engine.*;
 import game.PortableItem;
 import game.Type;
 import game.Util;
+import game.actions.FeedAction;
 import game.actions.HarvestAction;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Jinyeop Oh
@@ -16,6 +21,7 @@ public class Fruit extends PortableItem {
      * An age of this fruit. It is incremented every turn
      */
     private int age = 0;
+    //private boolean isInInventory = false;
 
 
 
@@ -25,28 +31,18 @@ public class Fruit extends PortableItem {
     }
 
     /**
-     * Calculate dropping percentage and return the outcome
-     * @return true if dropped, otherwise false
+     * if this Fruit is older than 15 turns, gets removed from the current location
+     * @param currentLocation The location of the ground on which we lie.
      */
-    public boolean isDropped(){
-        if(Util.calcPercentage(Util.FIVE_PERCENT_CHANCE)){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Check if this fruit is rotted.
-     * @return true after 15 turns after dropped.
-     */
-    public boolean isRotted(){
+    @Override
+    public void tick(Location currentLocation) {
         age++;
 
-        if( age > 15 ){
-            return true;
+        if(age > 15){
+            currentLocation.map().at(currentLocation.x(), currentLocation.y()).removeItem(this);
         }
-        return false;
-
     }
+
+
 
 }
