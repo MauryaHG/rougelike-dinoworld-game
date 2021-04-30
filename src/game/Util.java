@@ -56,13 +56,17 @@ public abstract class Util {
      * @param otherActor the other actor whose gender is checked with
      * @return
      */
-    public static boolean isOppositeGender(Actor actor, Actor otherActor) {
+    public static boolean isBreedable(Actor actor, Actor otherActor) {
         boolean isValid = false;
-        if ((actor.hasCapability(Type.MALE)) && otherActor.hasCapability(Type.FEMALE)) {
-            isValid = true;
-        }
-        if ((actor.hasCapability(Type.FEMALE)) && otherActor.hasCapability(Type.MALE)) {
-            isValid = true;
+        if ((actor.hasCapability(Type.STEGOSAUR) && otherActor.hasCapability(Type.STEGOSAUR)) ||
+                (actor.hasCapability(Type.BRACHIOSAUR) && otherActor.hasCapability(Type.BRACHIOSAUR))){
+
+            if ((actor.hasCapability(Type.MALE)) && otherActor.hasCapability(Type.FEMALE)) {
+                isValid = true;
+            }
+            if ((actor.hasCapability(Type.FEMALE)) && otherActor.hasCapability(Type.MALE)) {
+                isValid = true;
+            }
         }
         return isValid;
     }

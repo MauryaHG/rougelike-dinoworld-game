@@ -1,6 +1,9 @@
-package game;
+package game.Behaviours;
 
 import edu.monash.fit2099.engine.*;
+import game.Behaviours.Behaviour;
+import game.Type;
+import game.Util;
 
 /**
  * @author Maurya Gamage
@@ -29,12 +32,16 @@ public class SeekFoodBehaviour implements Behaviour {
 
         for (int x : widths) {
             for (int y : heights) {
-                if (map.at(x, y).getGround().hasCapability(Type.BUSH)) {
-                    Location there = map.at(x, y);
-                    int currentDistance = Util.distance(here, there);
-                    if (currentDistance < minimumDistance) {
-                        minimumDistance = currentDistance;
-                        closestFood = map.at(x, y);
+                if (actor.hasCapability(Type.STEGOSAUR) || actor.hasCapability(Type.BRACHIOSAUR)) {
+                    if (map.at(x, y).getGround().hasCapability(Type.BUSH)) {
+                        Location there = map.at(x, y);
+                        if (!(map.isAnActorAt(there))) {
+                            int currentDistance = Util.distance(here, there);
+                            if (currentDistance < minimumDistance) {
+                                minimumDistance = currentDistance;
+                                closestFood = map.at(x, y);
+                            }
+                        }
                     }
                 }
 
@@ -55,5 +62,10 @@ public class SeekFoodBehaviour implements Behaviour {
             }
         }
         return null;
+    }
+
+
+    public boolean isValidGround(Actor actor, GameMap map){
+        return true;
     }
 }
