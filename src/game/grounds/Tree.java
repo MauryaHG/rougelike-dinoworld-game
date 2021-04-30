@@ -7,13 +7,14 @@ import edu.monash.fit2099.engine.Location;
 import game.Type;
 import game.Util;
 import game.actions.HarvestAction;
+import game.items.Fruit;
 
 import java.util.ArrayList;
 
 /**
  * Modified from existing
  * @author Jinyeop Oh
- * @version 1.0.2
+ * @version 1.0.3
  * @see Ground parent class
  * @see Fruit Association
  */

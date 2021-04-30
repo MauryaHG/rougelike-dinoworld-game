@@ -20,7 +20,7 @@ public class Application {
 	public static void main(String[] args) {
 		World world = new World(new Display());
 
-		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Tree(), new Egg(), new Fruit(), new VendingMachine(), new Bush()); // Jinyeop
+		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Tree(), new Egg(), new VendingMachine(), new Bush()); // Jinyeop
 		
 		List<String> map = Arrays.asList(
 		"................................................................................",

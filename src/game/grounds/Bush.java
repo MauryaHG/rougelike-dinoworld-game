@@ -4,10 +4,11 @@ import edu.monash.fit2099.engine.*;
 import game.Type;
 import game.Util;
 import game.actions.HarvestAction;
+import game.items.Fruit;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.0
+ * @version 1.0.1
  * @see Fruit
  * @see HarvestAction
  */
@@ -45,5 +46,13 @@ public class Bush extends Ground {
     @Override
     public Actions allowableActions(Actor actor, Location location, String direction) {
         return new Actions(new HarvestAction());
+    }
+
+    public boolean isHasFruit() {
+        return hasFruit;
+    }
+
+    public void setHasFruit(boolean hasFruit) {
+        this.hasFruit = hasFruit;
     }
 }

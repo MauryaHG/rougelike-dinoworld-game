@@ -1,35 +1,27 @@
-package game.grounds;
+package game.items;
 
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Ground;
-import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.*;
 import game.Type;
 import game.Util;
 import game.actions.HarvestAction;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.1
+ * @version 1.1.0
  * @see Util
  */
-public class Fruit extends Ground {
+public class Fruit extends Item {
     /**
      * An age of this fruit. It is incremented every turn
      */
     private int age = 0;
 
-    /**
-     * Constructor.
-     *
-     * @param displayChar character to display for this type of terrain
-     */
+
+
     public Fruit() {
-        super('F');
+        super("Fruit", 'F', true);
         addCapability(Type.FRUIT);
     }
-
-
 
     /**
      * Calculate dropping percentage and return the outcome
