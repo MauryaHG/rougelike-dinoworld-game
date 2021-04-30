@@ -1,11 +1,12 @@
 package game;
 
+import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Location;
 
 import java.util.Random;
 
 /**
- * @author Jinyeop Oh
+ * @author Jinyeop Oh and Maurya Gamage
  * @version 1.0.0
  */
 public abstract class Util {
@@ -46,5 +47,23 @@ public abstract class Util {
      */
     public static int distance(Location a, Location b) {
         return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
+    }
+
+
+    /**
+     * Checks if two actors are of same gender
+     * @param actor actor whose gender is checked with
+     * @param otherActor the other actor whose gender is checked with
+     * @return
+     */
+    public static boolean isOppositeGender(Actor actor, Actor otherActor) {
+        boolean isValid = false;
+        if ((actor.hasCapability(Type.MALE)) && otherActor.hasCapability(Type.FEMALE)) {
+            isValid = true;
+        }
+        if ((actor.hasCapability(Type.FEMALE)) && otherActor.hasCapability(Type.MALE)) {
+            isValid = true;
+        }
+        return isValid;
     }
 }

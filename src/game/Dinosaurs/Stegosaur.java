@@ -3,14 +3,10 @@ package game.Dinosaurs;
 
 import edu.monash.fit2099.engine.*;
 import game.*;
-import game.actions.AttackAction;
-import game.actions.FeedAction;
-
-import java.util.ArrayList;
-import java.util.List;
+import game.actions.*;
 /**
  * @author :Maurya
- * @version :1.0.1
+ * @version :1.0.2
  * A herbivorous dinosaur.
  *
  */
@@ -26,8 +22,6 @@ public class Stegosaur extends Dinosaur {
 		super(name, 'd', 100, gender);
 		this.hitPoints = 50;
 		addCapability(Type.STEGOSAUR);
-
-		//behaviour.add(new WanderBehaviour());
 	}
 
 	@Override
@@ -37,13 +31,15 @@ public class Stegosaur extends Dinosaur {
 		if (!this.isConscious()){
 			list.add(new Actions(new FeedAction(this)));
 		}
-		if (otherActor.hasCapability(Type.PLAYER)){
-			list.add(new Actions(new FeedAction(this)));
-			list.add(new Actions(new AttackAction(this)));
+		if (this.isConscious()){
+			if (otherActor.hasCapability(Type.PLAYER)){
+				list.add(new Actions(new FeedAction(this)));
+				list.add(new Actions(new AttackAction(this)));
+			}
 		}
 
-		if (otherActor.hasCapability(Type.STEGOSAUR)){
-			//list.add(new Actions( ));
+		if (otherActor.hasCapability(Type.STEGOSAUR) && Util.isOppositeGender(this, otherActor)){
+			list.add(new Actions(new BreedAction(otherActor)));
 		}
 
 		return list;
@@ -59,16 +55,15 @@ public class Stegosaur extends Dinosaur {
 	 */
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-
-		if (isHungry()) {
+		behaviour.clear();
+		tick();
+		if (isHungry(map)) {
 			behaviour.add(new SeekFoodBehaviour());
+			behaviour.add(new WanderBehaviour());
 			Action seekFood = behaviour.get(0).getAction(this, map);
 			if (seekFood != null)
 				return seekFood;
 		}
-
-
-
 		behaviour.add(new FollowBehaviour(this));
 
 
@@ -78,8 +73,14 @@ public class Stegosaur extends Dinosaur {
 	}
 
 	@Override
-	public boolean isHungry(){
-		return hitPoints <= 90;
+	public boolean isHungry(GameMap map){
+		boolean isHungry = false;
+		if (hitPoints <= 90 ){
+			Location here = map.locationOf(this);
+			System.out.println(this.name + " at (" + here.x() + "," + here.y() +") is getting hungry!!!");
+			isHungry = true;
+		}
+		return isHungry;
 	}
 
 }

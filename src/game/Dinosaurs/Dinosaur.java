@@ -1,6 +1,7 @@
 package game.Dinosaurs;
 
 import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.GameMap;
 import game.Behaviour;
 import game.Type;
 
@@ -18,15 +19,15 @@ abstract public class Dinosaur extends Actor {
 
     public Dinosaur(String name, char displayChar, int hitPoints, String gender){
         super(name, displayChar, hitPoints);
-        if (gender.equals("M")){
+        if (gender.equals("MALE")){
             addCapability(Type.MALE);
         }
-        if (gender.equals("F"))
+        if (gender.equals("FEMALE"))
             addCapability(Type.FEMALE);
 
     }
 
-    public boolean isHungry(){
+    public boolean isHungry(GameMap map){
         return hitPoints <= 50;
     }
 

@@ -4,7 +4,7 @@ import edu.monash.fit2099.engine.*;
 
 /**
  * @author Maurya Gamage
- * @version 1.0.0
+ * @version 1.0.1
  * A class that figures out a MoveAction that will move the actor one step
  * closer to a food source.
  */
@@ -13,7 +13,7 @@ public class SeekFoodBehaviour implements Behaviour {
     /**
      * Constructor.
      *
-     * @param subject the Actor to follow
+     * @param
      */
     public SeekFoodBehaviour() {
     }
@@ -24,16 +24,16 @@ public class SeekFoodBehaviour implements Behaviour {
         Location here = map.locationOf(actor);
         NumberRange widths = map.getXRange();
         NumberRange heights = map.getYRange();
-        int minimumDistance = 0;
-
+        int minimumDistance = 1000000;
         Location closestFood = null;
 
         for (int x : widths) {
             for (int y : heights) {
-                if (map.at(x, y).getGround().hasCapability(Type.FRUIT)) {
+                if (map.at(x, y).getGround().hasCapability(Type.BUSH)) {
                     Location there = map.at(x, y);
                     int currentDistance = Util.distance(here, there);
                     if (currentDistance < minimumDistance) {
+                        minimumDistance = currentDistance;
                         closestFood = map.at(x, y);
                     }
                 }

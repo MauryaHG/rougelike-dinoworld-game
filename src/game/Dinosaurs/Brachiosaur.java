@@ -41,7 +41,7 @@ public class Brachiosaur extends Dinosaur {
     }
 
     @Override
-    public boolean isHungry(){
+    public boolean isHungry(GameMap map){
         return hitPoints <= 140;
     }
 }
