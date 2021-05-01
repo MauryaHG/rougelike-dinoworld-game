@@ -41,10 +41,10 @@ public class Fruit extends PortableItem {
                 setOnGround();
             }
         } else if(isOnGround ){
-            age++;
             if(age > 15){
                 currentLocation.map().at(currentLocation.x(), currentLocation.y()).removeItem(this);
             }
+            age++;
         }
     }
 

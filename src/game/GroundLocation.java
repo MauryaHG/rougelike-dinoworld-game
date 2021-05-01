@@ -71,6 +71,7 @@ public class GroundLocation extends Location {
                 Fruit newFruit = new Fruit();
                 newFruit.setOnTree(true);
                 super.map().at(x(), y()).addItem(newFruit);
+                EcoPoint.increaseEcoPoint(1);
             }
         }
 

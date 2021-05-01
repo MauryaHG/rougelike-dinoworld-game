@@ -39,4 +39,8 @@ public class EcoPoint {
         return true;
     }
 
+    public static int getEcoPoint(){
+        return ecoPoint;
+    }
+
 }

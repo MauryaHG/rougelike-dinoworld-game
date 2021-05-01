@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.1
+ * @version 1.1.2
  * @see Fruit
  * @see CarnivoreMeal
  * @see VegetarianMeal
@@ -59,23 +59,23 @@ public class VendingMachine extends Ground {
         }
 
         for(int i = 0; i < NUM_CARNIVORE_MEAL; i++){
-            carnivoreMeals.add(new CarnivoreMeal("Carnivore meal" + (i+1)));
+            carnivoreMeals.add(new CarnivoreMeal("Carnivore meal"));
         }
 
         for(int i = 0; i < NUM_VEGETARIAN_MEAL; i++){
-            vegetarianMeals.add(new VegetarianMeal("Vegetarian meal" + (i+1)));
+            vegetarianMeals.add(new VegetarianMeal("Vegetarian meal"));
         }
 
         for(int i = 0; i < NUM_BRACHIOSAUR_EGG; i++){
-            brachiosaurEggs.add(new BrachiosaurEgg("Brachiosaur egg" + (i+1)));
+            brachiosaurEggs.add(new BrachiosaurEgg("Brachiosaur egg"));
         }
 
         for(int i = 0; i < NUM_STEGOSAUR_EGG; i++){
-            stegosaurEggs.add(new StegosaurEgg("Stegosaur egg" + (i+1)));
+            stegosaurEggs.add(new StegosaurEgg("Stegosaur egg"));
         }
 
         for(int i = 0; i < NUM_ALLOSAUR_EGG; i++){
-            allosaurEggs.add(new AllosaurEgg("Allosaur egg" + (i+1)));
+            allosaurEggs.add(new AllosaurEgg("Allosaur egg"));
         }
 
         laserGun.add(new LaserGun("Laser Gun", 'L', 10, "Shoots"));

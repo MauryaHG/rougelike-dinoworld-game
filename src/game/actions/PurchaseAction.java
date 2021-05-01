@@ -7,7 +7,7 @@ import game.grounds.VendingMachine;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.0
+ * @version 1.0.1
  * @see VendingMachine
  */
 public class PurchaseAction extends Action {
@@ -111,7 +111,7 @@ public class PurchaseAction extends Action {
                 }
                 break;
         }
-        return returnMsg;
+        return returnMsg + "\n";
     }
 
     /**
@@ -127,6 +127,8 @@ public class PurchaseAction extends Action {
         int numAllosaurEggs = machine.getAllosaurEggs().size();
         int numLaserGun = machine.getLaserGun().size();
 
+        System.out.println();
+        System.out.println("Eco Point : " + EcoPoint.getEcoPoint());
         System.out.println("Fruit (" + numFruits + ") - "+VendingMachine.FRUIT_PRICE+" points. Press 1" );
         System.out.println("Vegetarian Meal (" + numVegetarianMeals + ") - "+VendingMachine.VEGETARIAN_MEAL_PRICE+" points. Press 2" );
         System.out.println("Carnivore Meal (" + numCarnivoreMeals + ") - "+VendingMachine.CARNIVORE_MEAL_PRICE+" points. Press 3" );
@@ -134,6 +136,7 @@ public class PurchaseAction extends Action {
         System.out.println("Brachiosaur Egg (" + numBrachiosaurEggs + ") - "+VendingMachine.BRACHIOSAUR_EGG_PRICE+" points. Press 5" );
         System.out.println("Allosaur Egg (" + numAllosaurEggs + ") - "+VendingMachine.ALLOSAUR_EGG_PRICE+" points. Press 6" );
         System.out.println("Laser Gun (" + numLaserGun + ") - "+VendingMachine.LASER_GUN_PRICE+" points. Press 7" );
+        System.out.println("Cancel - press any");
 
     }
 

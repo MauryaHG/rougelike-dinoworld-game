@@ -1,6 +1,7 @@
 package game.actions;
 
 import edu.monash.fit2099.engine.*;
+import game.EcoPoint;
 import game.Type;
 import game.Util;
 import game.grounds.Bush;
@@ -9,7 +10,7 @@ import game.items.Fruit;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.0
+ * @version 1.1.1
  * @see Ground the target subclass of Ground are Bush and Tree
  * @see Bush
  * @see Tree
@@ -38,6 +39,7 @@ public class HarvestAction extends Action {
             fruit.setOnGround();
             fruit.resetAge();
             actor.addItemToInventory(fruit);
+            EcoPoint.increaseEcoPoint(10);
             return menuDescription(actor);
         }
         return actor + " fails to harvest from the tree or bush." ;
