@@ -18,6 +18,11 @@ public abstract class Util {
     public static final int ONE_PERCENT_CHANCE = 100;
 
     /**
+     * A constant used to 0.1% chance with Ra
+     */
+    public static final int ZERO_ONE_PERCENT_CHANCE = 1000;
+
+    /**
      * A constant used to 10% chance with Random object
      */
     public static final int TEN_PERCENT_CHANCE = 10;

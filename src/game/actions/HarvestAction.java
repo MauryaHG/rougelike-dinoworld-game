@@ -9,7 +9,7 @@ import game.items.Fruit;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.0
+ * @version 1.1.0
  * @see Ground the target subclass of Ground are Bush and Tree
  * @see Bush
  * @see Tree

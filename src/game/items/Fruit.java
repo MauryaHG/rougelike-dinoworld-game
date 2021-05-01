@@ -1,7 +1,6 @@
 package game.items;
 
 import edu.monash.fit2099.engine.*;
-import game.PortableItem;
 import game.Type;
 import game.Util;
 import game.actions.HarvestAction;
