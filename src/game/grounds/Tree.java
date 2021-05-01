@@ -19,8 +19,6 @@ import java.util.ArrayList;
  */
 public class Tree extends Ground {
 	private int age = 0;
-	private int counter = 0;
-
 
 	public Tree() {
 		super('+');
@@ -37,15 +35,6 @@ public class Tree extends Ground {
 		if (age == 20)
 			displayChar = 'T';
 
-		if( counter < 5 ){
-			counter++;
-		} else {
-			counter = 0;
-		}
-	}
-
-	public int getCounter(){
-		return counter;
 	}
 
 }

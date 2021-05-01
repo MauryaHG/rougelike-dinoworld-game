@@ -12,8 +12,6 @@ import game.items.Fruit;
  * @see Fruit
  */
 public class Bush extends Ground {
-    private boolean hasFruit = false;
-
     /**
      * Constructor.
      */
@@ -22,12 +20,4 @@ public class Bush extends Ground {
         addCapability(Type.BUSH);
     }
 
-
-    public boolean hasFruit() {
-        return hasFruit;
-    }
-
-    public void setHasFruitTrue() {
-        this.hasFruit = true;
-    }
 }

@@ -16,7 +16,7 @@ import java.util.Random;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.3
+ * @version 1.1.0
  * @see Type
  * @see game.grounds.Dirt
  * @see game.grounds.Tree
@@ -67,25 +67,30 @@ public class GroundLocation extends Location {
         }
 
         if(isTree){
-            // Tree has opportunity every 5 turns
-            if( ((Tree)thisGround).getCounter() == 0){
-                if( Util.calcPercentage(Util.TEN_PERCENT_CHANCE)){     // Supposed to be 50%, but I made 10% for now
-                    // Produces a fruit object at this location
-                    super.map().at(x(), y()).addItem(new Fruit());
-                }
+            if( Util.calcPercentage(Util.FIVE_PERCENT_CHANCE)){     // Supposed to be 50%, but I made 5% for now
+                // Produces a fruit object at this location
+                Fruit newFruit = new Fruit();
+                newFruit.setOnTree(true);
+                super.map().at(x(), y()).addItem(newFruit);
             }
         }
 
-        // If Bush at this location has no fruit, produce one and set true
+
         if(isBush){
-            if(!((Bush)thisGround).hasFruit()){
-                // Produces a fruit object at this location
-                if( Util.calcPercentage(Util.TEN_PERCENT_CHANCE)){
-                    super.map().at(x(), y()).addItem(new Fruit());
+            // Pre : If a Bush at this location has a fruit, terminate
+            for(Item item: map().at(x(), y()).getItems()){
+                if( item instanceof Fruit){
+                    if( ((Fruit)item).isOnBush()){
+                        return;
+                    }
                 }
-                ((Bush)thisGround).setHasFruitTrue();
             }
 
+            if( Util.calcPercentage(Util.ONE_PERCENT_CHANCE)){
+                Fruit newFruit = new Fruit();
+                newFruit.setOnBush(true);
+                super.map().at(x(), y()).addItem(newFruit);
+            }
         }
 
 
