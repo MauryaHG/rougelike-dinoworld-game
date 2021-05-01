@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Brachiosaur extends Dinosaur {
 
-    private static final int  BRACH_ADULT_AGE = 50;
+    protected static final int  BRACH_ADULT_AGE = 50;
     private int MIN_HUNGER = 140;
 
 
@@ -46,12 +46,13 @@ public class Brachiosaur extends Dinosaur {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();
         List<Action> a = actions.getUnmodifiableActionList();
-        if(this.hitPoints>=70) {
+        if(this.hitPoints>=70 && !(this.hasCapability(Type.PREGNANT))) {
             behaviour.add(new BreedBehaviour());
         }
         if (isHungry(MIN_HUNGER, map)) {
             behaviour.add(new SeekFoodBehaviour());
         }
+        behaviour.add(new WanderBehaviour());
         for (Behaviour index : behaviour) {
             Action action = index.getAction(this, map);
             if (action != null){

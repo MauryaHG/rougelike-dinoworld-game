@@ -109,6 +109,7 @@ public class Fruit extends PortableItem {
         isOnTree = false;
         isOnGround = true;
         isInInventory = true;
+        this.removeCapability(Type.ON_TREE);
         this.addCapability(Type.ON_GROUND);
     }
 

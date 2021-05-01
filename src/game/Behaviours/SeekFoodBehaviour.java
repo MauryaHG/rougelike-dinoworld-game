@@ -37,6 +37,8 @@ public class SeekFoodBehaviour implements Behaviour {
         Type groundTypeOne = null;
         Type groundTypeTwo = null;
         List<Item> itemsHere = here.getItems();
+
+
         if(actor.hasCapability(Type.STEGOSAUR)) {
             sourceOne = Type.ON_BUSH;
             sourceTwo = Type.ON_GROUND;
