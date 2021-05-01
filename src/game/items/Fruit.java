@@ -96,10 +96,12 @@ public class Fruit extends PortableItem {
 
     public void setOnTree(boolean onTree) {
         isOnTree = onTree;
+        this.addCapability(Type.ON_TREE);
     }
 
     public void setOnBush(boolean onBush) {
         isOnBush = onBush;
+        this.addCapability(Type.ON_BUSH);
     }
 
     public void setOnGround() {
@@ -107,6 +109,7 @@ public class Fruit extends PortableItem {
         isOnTree = false;
         isOnGround = true;
         isInInventory = true;
+        this.addCapability(Type.ON_GROUND);
     }
 
     public void resetAge() {

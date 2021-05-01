@@ -63,7 +63,6 @@ public class Stegosaur extends Dinosaur {
 
 		if (isHungry(MIN_HUNGER, map)) {
 			behaviour.add(new SeekFoodBehaviour());
-			behaviour.add(new WanderBehaviour());
 		}
 		for (Behaviour index : behaviour) {
 			Action action = index.getAction(this, map);
