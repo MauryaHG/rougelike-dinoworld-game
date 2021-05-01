@@ -46,6 +46,6 @@ public class EatFoodAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " eats " + item ;
+        return actor + " eats " + item;
     }
 }

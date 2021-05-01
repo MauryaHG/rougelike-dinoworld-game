@@ -14,8 +14,10 @@ import game.actions.*;
 public class Stegosaur extends Dinosaur {
 	// Will need to change this to a collection if Stegosaur gets additional Behaviours.
 
-	private int STEG_ADULT_AGE = 30;
+	protected int STEG_ADULT_AGE = 30;
 	private int MIN_HUNGER = 90;
+
+
 	/**
 	 * Constructor.
 	 * All Stegosaurs are represented by a 'd' and have 100 hit points.
@@ -58,7 +60,7 @@ public class Stegosaur extends Dinosaur {
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
 		behaviour.clear();
 
-		if(this.hitPoints>=50) {
+		if(this.hitPoints>=50 && !(this.hasCapability(Type.PREGNANT))) {
 			behaviour.add(new BreedBehaviour());
 		}
 
