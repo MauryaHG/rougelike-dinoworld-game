@@ -9,6 +9,9 @@ import edu.monash.fit2099.engine.Menu;
 
 /**
  * Class representing the Player.
+ *
+ * @author Jinyeop Oh
+ * @version 1.0.0
  */
 public class Player extends Actor {
 
@@ -23,6 +26,7 @@ public class Player extends Actor {
 	 */
 	public Player(String name, char displayChar, int hitPoints) {
 		super(name, displayChar, hitPoints);
+		addCapability(Type.PLAYER);		// Jinyeop
 	}
 
 	@Override

@@ -1,17 +1,22 @@
 package game;
 
 import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Ground;
+import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Location;
 import game.Dinosaurs.Brachiosaur;
 import game.Dinosaurs.Stegosaur;
 import game.grounds.Bush;
 import game.grounds.Egg;
+import game.grounds.Tree;
+import game.items.Fruit;
 
+import java.util.List;
 import java.util.Random;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.2
+ * @version 1.1.0
  * @see Type
  * @see game.grounds.Dirt
  * @see game.grounds.Tree
@@ -25,12 +30,6 @@ public class GroundLocation extends Location {
      * An Enum to set an action
      */
     private NextTurn action = NextTurn.SAME;
-
-    /**
-     * used to grow a bush by 1% chance at the start of game
-     * then turns into false
-     */
-    private boolean firstTurn = true;
 
     /**
      * Constructor.
@@ -48,18 +47,17 @@ public class GroundLocation extends Location {
 
     @Override
     public void tick() {
-        boolean isDirt = getGround().hasCapability(Type.DIRT);
-        boolean isTree = getGround().hasCapability(Type.TREE);
-        boolean isStegosaurEgg = getGround().hasCapability(Type.STEGOSAUR_EGG);
-        boolean isBrachiosaurEgg = getGround().hasCapability(Type.BRACHIOSAUR_EGG);
-        boolean isAllosaurEgg = getGround().hasCapability(Type.ALLOSAUR_EGG);
+        Ground thisGround = getGround();
+        boolean isDirt = thisGround.hasCapability(Type.DIRT);
+        boolean isTree = thisGround.hasCapability(Type.TREE);
+        boolean isBush = thisGround.hasCapability(Type.BUSH);
+        boolean isStegosaurEgg = thisGround.hasCapability(Type.STEGOSAUR_EGG);
+        boolean isBrachiosaurEgg = thisGround.hasCapability(Type.BRACHIOSAUR_EGG);
+        boolean isAllosaurEgg = thisGround.hasCapability(Type.ALLOSAUR_EGG);
 
 
         if( isDirt ){
-
-            if( firstTurn ) { // Let every dirt instance have 1% chance to grow a bush at the start of the game
-                performAction(NextTurn.GROW, Util.ONE_PERCENT_CHANCE);
-            } else if( neighboursTreeCount() > 0){  // Second turn onwards from this else-if
+            if( neighboursTreeCount() > 0){
                 return;
             } else if( neighboursBushCount() > 1){
                 performAction(NextTurn.GROW, Util.TEN_PERCENT_CHANCE);
@@ -69,10 +67,36 @@ public class GroundLocation extends Location {
         }
 
         if(isTree){
+            if( Util.calcPercentage(Util.FIVE_PERCENT_CHANCE)){     // Supposed to be 50%, but I made 5% for now
+                // Produces a fruit object at this location
+                Fruit newFruit = new Fruit();
+                newFruit.setOnTree(true);
+                super.map().at(x(), y()).addItem(newFruit);
+            }
         }
 
+
+        if(isBush){
+            // Pre : If a Bush at this location has a fruit, terminate
+            for(Item item: map().at(x(), y()).getItems()){
+                if( item instanceof Fruit){
+                    if( ((Fruit)item).isOnBush()){
+                        return;
+                    }
+                }
+            }
+
+            if( Util.calcPercentage(Util.ONE_PERCENT_CHANCE)){
+                Fruit newFruit = new Fruit();
+                newFruit.setOnBush(true);
+                super.map().at(x(), y()).addItem(newFruit);
+            }
+        }
+
+
+
         if(isStegosaurEgg){
-            if(((Egg) getGround()).getAge() > 30){
+            if(((Egg)thisGround).getAge() > 30){
                 if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
                     new Stegosaur("newStegoMale", "MALE");     // Naming will be looked later
                 } else{
@@ -83,7 +107,7 @@ public class GroundLocation extends Location {
         }
 
         if(isBrachiosaurEgg){
-            if(((Egg) getGround()).getAge() > 50){
+            if(((Egg)thisGround).getAge() > 50){
                 if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
                     new Brachiosaur("newBrachioMale", "MALE");     // Naming will be looked later
                 } else{
@@ -94,7 +118,7 @@ public class GroundLocation extends Location {
         }
 
         if(isAllosaurEgg){
-            if(((Egg) getGround()).getAge() > 50){
+            if(((Egg)thisGround ).getAge() > 50){
                 if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
                     //new Allosaur("newAlloMale", "MALE");     // Naming will be looked later
                 } else{
@@ -103,9 +127,6 @@ public class GroundLocation extends Location {
 
             }
         }
-
-        if( firstTurn )
-            firstTurn = false;
 
         super.tick();
     }

@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class DinosaurGameMap extends GameMap {
     public DinosaurGameMap(GroundFactory groundFactory, List<String> lines) {
@@ -18,5 +18,13 @@ public class DinosaurGameMap extends GameMap {
     @Override
     protected Location makeNewLocation(int x, int y) {
         return new GroundLocation(this, x, y);
+    }
+
+    public void growBushRandomly(){
+        for (int y : heights) {
+            for (int x : widths) {
+                super.at(x, y).tick();
+            }
+        }
     }
 }
