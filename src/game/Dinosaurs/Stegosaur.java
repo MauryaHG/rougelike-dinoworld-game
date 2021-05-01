@@ -3,10 +3,7 @@ package game.Dinosaurs;
 
 import edu.monash.fit2099.engine.*;
 import game.*;
-import game.Behaviours.Behaviour;
-import game.Behaviours.FollowBehaviour;
-import game.Behaviours.SeekFoodBehaviour;
-import game.Behaviours.WanderBehaviour;
+import game.Behaviours.*;
 import game.actions.*;
 /**
  * @author :Maurya
@@ -60,6 +57,10 @@ public class Stegosaur extends Dinosaur {
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
 		behaviour.clear();
+
+		if(this.hitPoints>=50) {
+			behaviour.add(new BreedBehaviour());
+		}
 
 		if (isHungry(MIN_HUNGER, map)) {
 			behaviour.add(new SeekFoodBehaviour());

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @author Maurya Gamage
- * @version 1.1.0
+ * @version 1.1.1
  * A class that figures out a MoveAction that will move the actor one step
  * closer to a food source.
  */
@@ -32,24 +32,37 @@ public class SeekFoodBehaviour implements Behaviour {
         NumberRange heights = map.getYRange();
         int minimumDistance = 1000000;
         Location closestFood = null;
-        Type source = Type.BUSH;
+        Type sourceOne = null;
+        Type sourceTwo = null;
+        Type groundTypeOne = null;
+        Type groundTypeTwo = null;
         List<Item> itemsHere = here.getItems();
-
-
         if(actor.hasCapability(Type.STEGOSAUR)) {
-            Ground groundHere = here.getGround();
-            for (Item indexItem : itemsHere) {
-                if (indexItem.hasCapability(Type.ON_BUSH) ||
-                        indexItem.hasCapability(Type.ON_GROUND)) {
-                    return new EatFoodAction(actor, map, itemsHere);
-                }
+            sourceOne = Type.ON_BUSH;
+            sourceTwo = Type.ON_GROUND;
+            groundTypeOne = Type.BUSH;
+            groundTypeTwo = Type.TREE;
+        }
+
+        if(actor.hasCapability(Type.BRACHIOSAUR)) {
+            sourceOne = Type.ON_TREE;
+            sourceTwo = Type.ON_TREE;
+            groundTypeOne = Type.TREE;
+            groundTypeTwo = Type.TREE;
+        }
+
+        for (Item indexItem : itemsHere) {
+            if (indexItem.hasCapability(sourceOne) ||
+                    indexItem.hasCapability(sourceTwo)) {
+                return new EatFoodAction(actor, map, itemsHere);
             }
         }
 
         for (int x : widths) {
             for (int y : heights) {
-                if (actor.hasCapability(Type.STEGOSAUR)) {
-                    if (map.at(x, y).getGround().hasCapability(Type.BUSH)) {
+                    Ground groundHere = map.at(x, y).getGround();
+                    if (groundHere.hasCapability(groundTypeOne) ||
+                            groundHere.hasCapability(groundTypeTwo)) {
                         Location there = map.at(x, y);
                         List<Item> itemsThere = there.getItems();
                         for (Item indexItem : itemsThere) {
@@ -57,15 +70,13 @@ public class SeekFoodBehaviour implements Behaviour {
                                 if (!(map.isAnActorAt(there))) {
                                     int currentDistance = Util.distance(here, there);
                                     if (currentDistance < minimumDistance) {
-                                    minimumDistance = currentDistance;
-                                    closestFood = map.at(x, y);
+                                        minimumDistance = currentDistance;
+                                        closestFood = map.at(x, y);
                                     }
                                 }
                             }
                         }
                     }
-                }
-
             }
         }
         Location there = closestFood;
