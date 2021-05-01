@@ -2,7 +2,7 @@ package game;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class EcoPoint {
     /**
@@ -18,17 +18,24 @@ public class EcoPoint {
         EcoPoint.ecoPoint += ecoPoint;
     }
 
+
     /**
-     * Checks for validity if ecoPoint goes down below 0. In this case, does not decrease and return false.
-     * Otherwise, decrease by given ecoPoint and return true
-     * @param ecoPoint An ineteger representing an ecoPoint wanting to be subtracted
-     * @return true if subtracted, otherwise false
+     * Subtract given ecoPoint from this.ecoPoint
+     * @param ecoPoint A point of item that player wants to buy
      */
-    public static boolean decreaseEcoPoint(int ecoPoint){
+    public static void decreaseEcoPoint(int ecoPoint){
+        EcoPoint.ecoPoint -= ecoPoint;
+    }
+
+    /**
+     * Checks for validity that if the player can purchase from vending machine
+     * @param ecoPoint An ineteger representing an ecoPoint wanting to be subtracted
+     * @return true if possible, otherwise false
+     */
+    public static boolean canDecreaseEcoPoint(int ecoPoint){
         if( (EcoPoint.ecoPoint - ecoPoint) < 0 ){
             return false;
         }
-        EcoPoint.ecoPoint -= ecoPoint;
         return true;
     }
 

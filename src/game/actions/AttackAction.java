@@ -1,7 +1,7 @@
 package game.actions;
 
 import edu.monash.fit2099.engine.*;
-import game.PortableItem;
+import game.items.PortableItem;
 
 import java.util.Random;
 

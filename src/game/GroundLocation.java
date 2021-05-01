@@ -7,11 +7,9 @@ import edu.monash.fit2099.engine.Location;
 import game.Dinosaurs.Brachiosaur;
 import game.Dinosaurs.Stegosaur;
 import game.grounds.Bush;
-import game.grounds.Egg;
-import game.grounds.Tree;
+import game.items.Egg;
 import game.items.Fruit;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -30,6 +28,8 @@ public class GroundLocation extends Location {
      * An Enum to set an action
      */
     private NextTurn action = NextTurn.SAME;
+
+    private boolean isStartOfGame = true;
 
     /**
      * Constructor.
@@ -51,18 +51,17 @@ public class GroundLocation extends Location {
         boolean isDirt = thisGround.hasCapability(Type.DIRT);
         boolean isTree = thisGround.hasCapability(Type.TREE);
         boolean isBush = thisGround.hasCapability(Type.BUSH);
-        boolean isStegosaurEgg = thisGround.hasCapability(Type.STEGOSAUR_EGG);
-        boolean isBrachiosaurEgg = thisGround.hasCapability(Type.BRACHIOSAUR_EGG);
-        boolean isAllosaurEgg = thisGround.hasCapability(Type.ALLOSAUR_EGG);
-
 
         if( isDirt ){
-            if( neighboursTreeCount() > 0){
+            if(isStartOfGame){
+                performAction(NextTurn.GROW, Util.ONE_PERCENT_CHANCE);
+                isStartOfGame = false;
+            } else if( neighboursTreeCount() > 0){
                 return;
             } else if( neighboursBushCount() > 1){
                 performAction(NextTurn.GROW, Util.TEN_PERCENT_CHANCE);
             } else {
-                performAction(NextTurn.GROW, Util.ONE_PERCENT_CHANCE);
+                performAction(NextTurn.GROW, Util.ZERO_ONE_PERCENT_CHANCE);
             }
         }
 
@@ -93,40 +92,6 @@ public class GroundLocation extends Location {
             }
         }
 
-
-
-        if(isStegosaurEgg){
-            if(((Egg)thisGround).getAge() > 30){
-                if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
-                    new Stegosaur("newStegoMale", "MALE");     // Naming will be looked later
-                } else{
-                    new Stegosaur("newStegoFemale", "FEMALE");
-                }
-
-            }
-        }
-
-        if(isBrachiosaurEgg){
-            if(((Egg)thisGround).getAge() > 50){
-                if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
-                    new Brachiosaur("newBrachioMale", "MALE");     // Naming will be looked later
-                } else{
-                    new Brachiosaur("newBrachioFemale", "FEMALE");
-                }
-
-            }
-        }
-
-        if(isAllosaurEgg){
-            if(((Egg)thisGround ).getAge() > 50){
-                if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
-                    //new Allosaur("newAlloMale", "MALE");     // Naming will be looked later
-                } else{
-                    //new Allosaur("newAlloFemale", "FEMALE");
-                }
-
-            }
-        }
 
         super.tick();
     }

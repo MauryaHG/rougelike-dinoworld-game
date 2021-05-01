@@ -10,6 +10,10 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.World;
 import game.Dinosaurs.*;
 import game.grounds.*;
+import game.items.AllosaurEgg;
+import game.items.BrachiosaurEgg;
+import game.items.Egg;
+import game.items.StegosaurEgg;
 
 /**
  * The main class for the Jurassic World game.
@@ -22,13 +26,14 @@ public class Application {
 	public static void main(String[] args) {
 		World world = new World(new Display());
 
-		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Tree(), new Egg(), new VendingMachine(), new Bush()); // Jinyeop
+		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(),
+																new Tree(), new VendingMachine(), new Bush()); // Jinyeop
 		
 		List<String> map = Arrays.asList(
 		"................................................................................",
 		"................................................................................",
 		".....#######....................................................................",
-		".....#_____#....................................................................",
+		".....#___M_#....................................................................",
 		".....#_+___#....................................................................",
 		".....###.###....................................................................",
 		"........+.......................................................................",
