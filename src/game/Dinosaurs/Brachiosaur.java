@@ -37,13 +37,16 @@ public class Brachiosaur extends Dinosaur {
                 list.add(new Actions(new AttackAction(this)));
             }
         }
+        if (otherActor.hasCapability(Type.ALLOSAUR)){
+            list.add(new Actions(new AttackAction(this)));
+        }
         return list;
     }
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();
-        if(this.hitPoints>=70 && !(this.hasCapability(Type.PREGNANT))) {
+        if(this.hitPoints >= MIN_HUNGER && !(this.hasCapability(Type.PREGNANT))) {
             behaviour.add(new BreedBehaviour());
         }
         if (isHungry(MIN_HUNGER, map)) {

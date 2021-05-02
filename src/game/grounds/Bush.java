@@ -16,7 +16,7 @@ public class Bush extends Ground {
      * Constructor.
      */
     public Bush() {
-        super(';');
+        super('*');
         addCapability(Type.BUSH);
     }
 

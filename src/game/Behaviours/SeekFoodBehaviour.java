@@ -4,6 +4,8 @@ import edu.monash.fit2099.engine.*;
 import game.Behaviours.Behaviour;
 import game.Type;
 import game.Util;
+import game.actions.AttackAction;
+import game.actions.BreedAction;
 import game.actions.EatFoodAction;
 
 import java.util.List;
@@ -53,18 +55,33 @@ public class SeekFoodBehaviour implements Behaviour {
             groundTypeTwo = Type.TREE;
         }
 
+        if(actor.hasCapability(Type.ALLOSAUR)) {
+            sourceOne = Type.EGG;
+            sourceTwo = Type.EGG;
+        }
+
         for (Item indexItem : itemsHere) {
             if (indexItem.hasCapability(sourceOne) ||
                     indexItem.hasCapability(sourceTwo)) {
-                return new EatFoodAction(actor, map, itemsHere);
+                return new EatFoodAction(actor, itemsHere);
+            }
+        }
+
+        if(actor.hasCapability(Type.ALLOSAUR)){
+            for (Exit exit : here.getExits()) {
+                Location destination = exit.getDestination();
+                Actor thisActor = destination.getActor();
+                if ((thisActor != null && thisActor.hasCapability(Type.STEGOSAUR))) {
+                        return new AttackAction(thisActor);
+                }
             }
         }
 
         for (int x : widths) {
             for (int y : heights) {
-                    Ground groundHere = map.at(x, y).getGround();
-                    if (groundHere.hasCapability(groundTypeOne) ||
-                            groundHere.hasCapability(groundTypeTwo)) {
+                Ground groundHere = map.at(x, y).getGround();
+                if (groundHere.hasCapability(groundTypeOne) ||
+                        groundHere.hasCapability(groundTypeTwo)) {
                         Location there = map.at(x, y);
                         List<Item> itemsThere = there.getItems();
                         for (Item indexItem : itemsThere) {
@@ -78,7 +95,7 @@ public class SeekFoodBehaviour implements Behaviour {
                                 }
                             }
                         }
-                    }
+                }
             }
         }
         Location there = closestFood;

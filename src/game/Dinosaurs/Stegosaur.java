@@ -31,6 +31,19 @@ public class Stegosaur extends Dinosaur {
 		this.age = STEG_ADULT_AGE;
 	}
 
+	/**
+	 * Constuctor.
+	 *Used to create Stegosaur with only name and gender given randomly
+	 * @param name
+	 */
+	public Stegosaur(String name) {
+		super(name, 'd', 100);
+		this.hitPoints = 50;
+		addCapability(Type.STEGOSAUR);
+		addCapability(Type.BABY);
+		this.age = 0;
+	}
+
 	@Override
 	public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
 		Actions list = super.getAllowableActions(otherActor, direction, map);
@@ -44,6 +57,9 @@ public class Stegosaur extends Dinosaur {
 				list.add(new Actions(new FeedAction(this)));
 				list.add(new Actions(new AttackAction(this)));
 			}
+		}
+		if (otherActor.hasCapability(Type.ALLOSAUR)){
+			list.add(new Actions(new AttackAction(this)));
 		}
 		return list;
 	}

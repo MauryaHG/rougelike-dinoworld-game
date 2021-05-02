@@ -32,6 +32,7 @@ public class BreedBehaviour implements Behaviour {
                 }
             }
         }
+
         for (int x : widths) {
             for (int y : heights) {
                 Actor thisActor = map.at(x, y).getActor();

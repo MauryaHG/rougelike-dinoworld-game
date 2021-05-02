@@ -5,6 +5,8 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 import game.Behaviours.Behaviour;
 import game.Type;
+import game.Util;
+import game.items.AllosaurEgg;
 import game.items.BrachiosaurEgg;
 import game.items.StegosaurEgg;
 
@@ -38,6 +40,19 @@ abstract public class Dinosaur extends Actor {
 
     }
 
+    public Dinosaur(String name, char displayChar, int hitPoints ) {
+        super(name, displayChar, hitPoints);
+        String gender = Util.getGender();
+        if (gender.equals("MALE")) {
+            addCapability(Type.MALE);
+        }
+        if (gender.equals("FEMALE")) {
+            addCapability(Type.FEMALE);
+        }
+        this.breedingCount = 0;
+
+    }
+
     public boolean isHungry(int minHunger, GameMap map) {
         boolean isHungry = false;
         if (hitPoints < minHunger) {
@@ -54,6 +69,7 @@ abstract public class Dinosaur extends Actor {
         if (actor.hasCapability(Type.PREGNANT)) {
             if(breedingCount == breedLength){
                 Location here = map.locationOf(actor);
+
                 if(actor.hasCapability(Type.STEGOSAUR)){
                here.addItem(new StegosaurEgg("DaBaby"));
                 }
@@ -61,6 +77,11 @@ abstract public class Dinosaur extends Actor {
                 if(actor.hasCapability(Type.BRACHIOSAUR)){
                     here.addItem(new BrachiosaurEgg("DaBaby_2"));
                 }
+
+                if(actor.hasCapability(Type.ALLOSAUR)){
+                    here.addItem(new AllosaurEgg("DaBaby_3"));
+                }
+
                 actor.removeCapability(Type.PREGNANT);
                 breedingCount = 0;
                 System.out.println(actor + " laid egg on (" + here.x() + "," + here.y() + ")");

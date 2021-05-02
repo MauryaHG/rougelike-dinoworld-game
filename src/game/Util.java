@@ -7,7 +7,7 @@ import java.util.Random;
 
 /**
  * @author Jinyeop Oh and Maurya Gamage
- * @version 1.0.0
+ * @version 1.0.1
  */
 public abstract class Util {
     private static Random random = new Random();
@@ -76,5 +76,18 @@ public abstract class Util {
             }
         }
         return isValid;
+    }
+
+
+    /**
+     * Gender MALE or FEMALE is chosen randomly and returned
+     * @return
+     */
+    public static String getGender(){
+        if(new Random().nextBoolean()) {
+            return "MALE";
+        } else {
+            return "FEMALE";
+        }
     }
 }

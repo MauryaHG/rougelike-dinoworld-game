@@ -9,10 +9,17 @@ public class EatFoodAction extends Action {
 
 
     protected Item item;
+    protected Type foodSource;
 
-    public EatFoodAction(Actor actor, GameMap map, List<Item> itemsHere) {
+    public EatFoodAction(Actor actor, List<Item> itemsHere) {
+        if(actor.hasCapability(Type.ALLOSAUR)){
+            foodSource = Type.EGG;
+        }
+        if(actor.hasCapability(Type.STEGOSAUR) || (actor.hasCapability(Type.BRACHIOSAUR))){
+            foodSource = Type.FRUIT;
+        }
         for (Item indexItem : itemsHere) {
-            if (indexItem.hasCapability(Type.FRUIT)) {
+            if (indexItem.hasCapability(foodSource)){
                 this.item = indexItem;
             }
         }
@@ -34,6 +41,9 @@ public class EatFoodAction extends Action {
         }
         if(actor.hasCapability(Type.BRACHIOSAUR)) {
             actor.heal(5);
+        }
+        if(actor.hasCapability(Type.ALLOSAUR)) {
+            actor.heal(10);
         }
         return menuDescription(actor);
     }
