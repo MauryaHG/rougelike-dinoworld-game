@@ -6,11 +6,9 @@ import game.Behaviours.*;
 import game.actions.*;
 
 
-import java.util.List;
-
 /**
  * @author :Maurya
- * @version :1.0.0
+ * @version :1.1.0
  */
 
 public class Brachiosaur extends Dinosaur {
@@ -45,7 +43,6 @@ public class Brachiosaur extends Dinosaur {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();
-        List<Action> a = actions.getUnmodifiableActionList();
         if(this.hitPoints>=70 && !(this.hasCapability(Type.PREGNANT))) {
             behaviour.add(new BreedBehaviour());
         }
@@ -56,11 +53,11 @@ public class Brachiosaur extends Dinosaur {
         for (Behaviour index : behaviour) {
             Action action = index.getAction(this, map);
             if (action != null){
-                tick();
+                tick(this, map);
             return action;
             }
         }
-        tick();
+        tick(this, map);
         return new DoNothingAction();
     }
 }

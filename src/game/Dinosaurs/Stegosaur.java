@@ -7,7 +7,7 @@ import game.Behaviours.*;
 import game.actions.*;
 /**
  * @author :Maurya
- * @version :1.0.2
+ * @version :1.1.0
  * A herbivorous dinosaur.
  *
  */
@@ -59,7 +59,6 @@ public class Stegosaur extends Dinosaur {
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
 		behaviour.clear();
-
 		if(this.hitPoints>=50 && !(this.hasCapability(Type.PREGNANT))) {
 			behaviour.add(new BreedBehaviour());
 		}
@@ -70,11 +69,11 @@ public class Stegosaur extends Dinosaur {
 		for (Behaviour index : behaviour) {
 			Action action = index.getAction(this, map);
 			if (action != null) {
-				tick();
+				tick(this, map);
 				return action;
 			}
 		}
-		tick();
+		tick(this, map);
 		return new DoNothingAction();
 	}
 }

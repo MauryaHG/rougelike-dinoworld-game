@@ -1,9 +1,6 @@
 package game.Dinosaurs;
 
-import edu.monash.fit2099.engine.Action;
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.*;
 
 public class Allosaur extends Dinosaur{
     public Allosaur(String name, char displayChar, int hitPoints, String gender) {
@@ -16,8 +13,8 @@ public class Allosaur extends Dinosaur{
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void tick(Actor actor, GameMap map) {
+        super.tick(actor, map);
     }
 
     @Override

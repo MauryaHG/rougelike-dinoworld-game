@@ -5,21 +5,25 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 import game.Behaviours.Behaviour;
 import game.Type;
-import game.actions.BreedAction;
+import game.items.BrachiosaurEgg;
 import game.items.StegosaurEgg;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static game.actions.BreedAction.breedLength;
+
 /**
  * @author :Maurya
- * @version :1.0.1
+ * @version :1.1.0
  */
 abstract public class Dinosaur extends Actor {
 
     protected List<Behaviour> behaviour = new ArrayList<Behaviour>();
     protected int unconsciousCount = 0;
     protected int age;
+    protected int breedingCount;
 
 
     public Dinosaur(String name, char displayChar, int hitPoints, String gender) {
@@ -27,8 +31,10 @@ abstract public class Dinosaur extends Actor {
         if (gender.equals("MALE")) {
             addCapability(Type.MALE);
         }
-        if (gender.equals("FEMALE"))
+        if (gender.equals("FEMALE")) {
             addCapability(Type.FEMALE);
+        }
+        this.breedingCount = 0;
 
     }
 
@@ -42,10 +48,26 @@ abstract public class Dinosaur extends Actor {
         return isHungry;
     }
 
-    public void tick() {
+    public void tick(Actor actor, GameMap map) {
         age++;
 
-        if (isConscious()) {
+        if (actor.hasCapability(Type.PREGNANT)) {
+            if(breedingCount == breedLength){
+                Location here = map.locationOf(actor);
+                if(actor.hasCapability(Type.STEGOSAUR)){
+               here.addItem(new StegosaurEgg("DaBaby"));
+                }
+
+                if(actor.hasCapability(Type.BRACHIOSAUR)){
+                    here.addItem(new BrachiosaurEgg("DaBaby_2"));
+                }
+                actor.removeCapability(Type.PREGNANT);
+                breedingCount = 0;
+                System.out.println(actor + " laid egg on (" + here.x() + "," + here.y() + ")");
+            }
+            breedingCount++;
+        }
+        if (actor.isConscious()) {
             hitPoints--;
         }
 
@@ -58,5 +80,4 @@ abstract public class Dinosaur extends Actor {
 
         }
     }
-
 }
