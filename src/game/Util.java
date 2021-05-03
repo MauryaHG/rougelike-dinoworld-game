@@ -83,11 +83,11 @@ public abstract class Util {
      * Gender MALE or FEMALE is chosen randomly and returned
      * @return
      */
-    public static String getGender(){
+    public static Type getGender(){
         if(new Random().nextBoolean()) {
-            return "MALE";
+            return Type.MALE;
         } else {
-            return "FEMALE";
+            return Type.FEMALE;
         }
     }
 }

@@ -28,12 +28,12 @@ abstract public class Dinosaur extends Actor {
     protected int breedingCount;
 
 
-    public Dinosaur(String name, char displayChar, int hitPoints, String gender) {
+    public Dinosaur(String name, char displayChar, int hitPoints, Type gender) {
         super(name, displayChar, hitPoints);
-        if (gender.equals("MALE")) {
+        if (gender == Type.MALE) {
             addCapability(Type.MALE);
         }
-        if (gender.equals("FEMALE")) {
+        if (gender == Type.FEMALE) {
             addCapability(Type.FEMALE);
         }
         this.breedingCount = 0;
@@ -42,11 +42,11 @@ abstract public class Dinosaur extends Actor {
 
     public Dinosaur(String name, char displayChar, int hitPoints ) {
         super(name, displayChar, hitPoints);
-        String gender = Util.getGender();
-        if (gender.equals("MALE")) {
+        Type gender = Util.getGender();
+        if (gender == Type.MALE) {
             addCapability(Type.MALE);
         }
-        if (gender.equals("FEMALE")) {
+        if (gender == Type.FEMALE) {
             addCapability(Type.FEMALE);
         }
         this.breedingCount = 0;

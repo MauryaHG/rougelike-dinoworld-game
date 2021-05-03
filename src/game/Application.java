@@ -10,10 +10,6 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.World;
 import game.Dinosaurs.*;
 import game.grounds.*;
-import game.items.AllosaurEgg;
-import game.items.BrachiosaurEgg;
-import game.items.Egg;
-import game.items.StegosaurEgg;
 
 /**
  * The main class for the Jurassic World game.
@@ -63,12 +59,12 @@ public class Application {
 		world.addPlayer(player, gameMap.at(9, 4));
 		
 		// Place a pair of stegosaurs in the middle of the map
-		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur-1","MALE"));
-		gameMap.at(31, 12).addActor(new Stegosaur("Stegosaur-2","FEMALE"));
-		gameMap.at(10, 12).addActor(new Brachiosaur("Brachiosaur-1","FEMALE"));
-		gameMap.at(12, 12).addActor(new Brachiosaur("Brachiosaur-2","FEMALE"));
-		gameMap.at(10, 14).addActor(new Brachiosaur("Brachiosaur-3","MALE"));
-		gameMap.at(12, 14).addActor(new Brachiosaur("Brachiosaur-4","MALE"));
+		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur-1",Type.MALE));
+		gameMap.at(31, 12).addActor(new Stegosaur("Stegosaur-2",Type.FEMALE));
+		gameMap.at(10, 12).addActor(new Brachiosaur("Brachiosaur-1",Type.FEMALE));
+		gameMap.at(12, 12).addActor(new Brachiosaur("Brachiosaur-2",Type.FEMALE));
+		gameMap.at(10, 14).addActor(new Brachiosaur("Brachiosaur-3",Type.MALE));
+		gameMap.at(12, 14).addActor(new Brachiosaur("Brachiosaur-4",Type.MALE));
 
 			
 		world.run();

@@ -24,7 +24,7 @@ public class Stegosaur extends Dinosaur {
 	 *
 	 * @param name the name of this Stegosaur
 	 */
-	public Stegosaur(String name, String gender) {
+	public Stegosaur(String name, Type gender) {
 		super(name, 'd', 100, gender);
 		this.hitPoints = 50;
 		addCapability(Type.STEGOSAUR);

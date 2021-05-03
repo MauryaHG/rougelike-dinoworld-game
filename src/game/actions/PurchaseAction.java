@@ -2,13 +2,14 @@ package game.actions;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoint;
+import game.Type;
 import game.grounds.VendingMachine;
 
 
 /**
  * @author Jinyeop Oh
  * @version 1.0.1
- * @see VendingMachine
+ * @see Type
  */
 public class PurchaseAction extends Action {
 
@@ -58,7 +59,8 @@ public class PurchaseAction extends Action {
                 size = machine.getFruits().size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.FRUIT_PRICE)){
                     actor.addItemToInventory(machine.getFruits().get(size-1));
-                    machine.removeItem(VendingMachine.MenuCode.FRUIT);
+                    machine.removeItem(Type.FRUIT);
+                    EcoPoint.decreaseEcoPoint(VendingMachine.FRUIT_PRICE);
                     returnMsg = "Successfully purchased the fruit from the vending machine";
                 }
                 break;
@@ -66,7 +68,8 @@ public class PurchaseAction extends Action {
                 size = machine.getVegetarianMeals().size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.VEGETARIAN_MEAL_PRICE)){
                     actor.addItemToInventory(machine.getVegetarianMeals().get(size-1));
-                    machine.removeItem(VendingMachine.MenuCode.VEGETARIAN_MEAL);
+                    machine.removeItem(Type.VEGETARIAN_MEAL);
+                    EcoPoint.decreaseEcoPoint(VendingMachine.VEGETARIAN_MEAL_PRICE);
                     returnMsg = "Successfully purchased the vegetarian meal kit from the vending machine";
                 }
                 break;
@@ -74,7 +77,8 @@ public class PurchaseAction extends Action {
                 size = machine.getCarnivoreMeals().size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.CARNIVORE_MEAL_PRICE)){
                     actor.addItemToInventory(machine.getCarnivoreMeals().get(size-1));
-                    machine.removeItem(VendingMachine.MenuCode.CARNIVORE_MEAL);
+                    machine.removeItem(Type.CARNIVORE_MEAL);
+                    EcoPoint.decreaseEcoPoint(VendingMachine.CARNIVORE_MEAL_PRICE);
                     returnMsg = "Successfully purchased the carnivore meal kit from the vending machine";
                 }
                 break;
@@ -82,7 +86,8 @@ public class PurchaseAction extends Action {
                 size = machine.getStegosaurEggs().size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.STEGOSAUR_EGG_PRICE)){
                     actor.addItemToInventory(machine.getStegosaurEggs().get(size-1));
-                    machine.removeItem(VendingMachine.MenuCode.STEGOSAUR_EGG);
+                    machine.removeItem(Type.STEGOSAUR_EGG);
+                    EcoPoint.decreaseEcoPoint(VendingMachine.STEGOSAUR_EGG_PRICE);
                     returnMsg = "Successfully purchased the stegosaur egg from the vending machine";
                 }
                 break;
@@ -90,7 +95,8 @@ public class PurchaseAction extends Action {
                 size = machine.getBrachiosaurEggs().size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.BRACHIOSAUR_EGG_PRICE)){
                     actor.addItemToInventory(machine.getBrachiosaurEggs().get(size-1));
-                    machine.removeItem(VendingMachine.MenuCode.BRACHIOSAUR_EGG);
+                    machine.removeItem(Type.BRACHIOSAUR_EGG);
+                    EcoPoint.decreaseEcoPoint(VendingMachine.BRACHIOSAUR_EGG_PRICE);
                     returnMsg = "Successfully purchased the brachiosaur egg from the vending machine";
                 }
                 break;
@@ -98,7 +104,8 @@ public class PurchaseAction extends Action {
                 size = machine.getAllosaurEggs().size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.ALLOSAUR_EGG_PRICE)){
                     actor.addItemToInventory(machine.getAllosaurEggs().get(size-1));
-                    machine.removeItem(VendingMachine.MenuCode.ALLOSAUR_EGG);
+                    machine.removeItem(Type.ALLOSAUR_EGG);
+                    EcoPoint.decreaseEcoPoint(VendingMachine.ALLOSAUR_EGG_PRICE);
                     returnMsg = "Successfully purchased the allosaur egg from the vending machine";
                 }
                 break;
@@ -106,7 +113,8 @@ public class PurchaseAction extends Action {
                 size = machine.getLaserGun().size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.LASER_GUN_PRICE)){
                     actor.addItemToInventory(machine.getLaserGun().get(size-1));
-                    machine.removeItem(VendingMachine.MenuCode.LASER_GUN);
+                    machine.removeItem(Type.LASER_GUN);
+                    EcoPoint.decreaseEcoPoint(VendingMachine.LASER_GUN_PRICE);
                     returnMsg = "Successfully purchased the laser gub from the vending machine";
                 }
                 break;
@@ -129,13 +137,13 @@ public class PurchaseAction extends Action {
 
         System.out.println();
         System.out.println("Eco Point : " + EcoPoint.getEcoPoint());
-        System.out.println("Fruit (" + numFruits + ") - "+VendingMachine.FRUIT_PRICE+" points. Press 1" );
-        System.out.println("Vegetarian Meal (" + numVegetarianMeals + ") - "+VendingMachine.VEGETARIAN_MEAL_PRICE+" points. Press 2" );
-        System.out.println("Carnivore Meal (" + numCarnivoreMeals + ") - "+VendingMachine.CARNIVORE_MEAL_PRICE+" points. Press 3" );
-        System.out.println("Stegosaur Egg (" + numStegosaurEggs + ") - "+VendingMachine.STEGOSAUR_EGG_PRICE+" points. Press 4" );
-        System.out.println("Brachiosaur Egg (" + numBrachiosaurEggs + ") - "+VendingMachine.BRACHIOSAUR_EGG_PRICE+" points. Press 5" );
-        System.out.println("Allosaur Egg (" + numAllosaurEggs + ") - "+VendingMachine.ALLOSAUR_EGG_PRICE+" points. Press 6" );
-        System.out.println("Laser Gun (" + numLaserGun + ") - "+VendingMachine.LASER_GUN_PRICE+" points. Press 7" );
+        System.out.println("Fruit (" + numFruits + ") - "+ VendingMachine.FRUIT_PRICE+" points. Press 1" );
+        System.out.println("Vegetarian Meal (" + numVegetarianMeals + ") - "+ VendingMachine.VEGETARIAN_MEAL_PRICE+" points. Press 2" );
+        System.out.println("Carnivore Meal (" + numCarnivoreMeals + ") - "+ VendingMachine.CARNIVORE_MEAL_PRICE+" points. Press 3" );
+        System.out.println("Stegosaur Egg (" + numStegosaurEggs + ") - "+ VendingMachine.STEGOSAUR_EGG_PRICE+" points. Press 4" );
+        System.out.println("Brachiosaur Egg (" + numBrachiosaurEggs + ") - "+ VendingMachine.BRACHIOSAUR_EGG_PRICE+" points. Press 5" );
+        System.out.println("Allosaur Egg (" + numAllosaurEggs + ") - "+ VendingMachine.ALLOSAUR_EGG_PRICE+" points. Press 6" );
+        System.out.println("Laser Gun (" + numLaserGun + ") - "+ VendingMachine.LASER_GUN_PRICE+" points. Press 7" );
         System.out.println("Cancel - press any");
 
     }

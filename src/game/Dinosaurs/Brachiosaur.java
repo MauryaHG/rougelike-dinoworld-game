@@ -17,7 +17,7 @@ public class Brachiosaur extends Dinosaur {
     private int MIN_HUNGER = 140;
 
 
-    public Brachiosaur(String name, String gender) {
+    public Brachiosaur(String name, Type gender) {
         super(name, 'b', 160, gender);
         this.hitPoints = 100;
         addCapability(Type.BRACHIOSAUR);

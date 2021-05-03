@@ -2,6 +2,7 @@ package game.grounds;
 
 import edu.monash.fit2099.engine.*;
 import game.Player;
+import game.Type;
 import game.actions.PurchaseAction;
 import game.items.*;
 
@@ -103,7 +104,7 @@ public class VendingMachine extends Ground {
      * When all the validity checking is complete in PurchaseAction, remove corresponding items from the list
      * @param menuCode A code to distinguish
      */
-    public void removeItem(VendingMachine.MenuCode menuCode){
+    public void removeItem(Type menuCode){
         switch (menuCode){
             case FRUIT:
                 fruits.remove(fruits.size()-1);
@@ -187,7 +188,4 @@ public class VendingMachine extends Ground {
         this.laserGun = laserGun;
     }
 
-    public enum MenuCode{
-        FRUIT, CARNIVORE_MEAL, VEGETARIAN_MEAL, STEGOSAUR_EGG, BRACHIOSAUR_EGG, ALLOSAUR_EGG, LASER_GUN
-    }
 }
