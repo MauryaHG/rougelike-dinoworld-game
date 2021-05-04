@@ -8,8 +8,7 @@ import game.actions.*;
 
 /**
  * @author :Maurya
- * @version :1.1.0
- * A herbivorous dinosaur.
+ * @version :1.1.1
  */
 
 public class Brachiosaur extends Dinosaur {
@@ -29,18 +28,10 @@ public class Brachiosaur extends Dinosaur {
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions list = super.getAllowableActions(otherActor, direction, map);
 
-        if (!this.isConscious()){
+        if (otherActor.hasCapability(Type.PLAYER)) {
             list.add(new Actions(new FeedAction(this)));
         }
-        if (this.isConscious()){
-            if (otherActor.hasCapability(Type.PLAYER)){
-                list.add(new Actions(new FeedAction(this)));
-                //list.add(new Actions(new AttackAction(this)));        //Jinyeop - spec says player kills stegosaur only
-            }
-        }
-        if (otherActor.hasCapability(Type.ALLOSAUR)){
-            list.add(new Actions(new AttackAction(this)));
-        }
+        // Jinyeop - Brachiosaur does not get attacted by the player nor allosaur
         return list;
     }
 

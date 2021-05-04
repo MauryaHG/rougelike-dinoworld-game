@@ -67,7 +67,7 @@ public class Application {
 		gameMap.at(12, 14).addActor(new Brachiosaur("Brachiosaur-4",Type.MALE));
 		//gameMap.at(30, 10).addActor(new Allosaur("allo-4",Type.MALE));
 
-			
+
 		world.run();
 	}
 }
