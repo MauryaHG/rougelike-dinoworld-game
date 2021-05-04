@@ -11,13 +11,22 @@ import game.actions.FeedAction;
  * @author :Maurya
  * @version :1.1.0
  * A carnivorous dinosaur.
- *
  */
 public class Allosaur extends Dinosaur{
-
+    /**
+     * age of a adult allosaur
+     */
     protected int ALLO_ADULT_AGE = 50;
+    /**
+     * minimum int where dinosaur will be hungry
+     */
     private int MIN_HUNGER = 90;
 
+    /**
+     * adds adult dinosaur with specified gender
+     * @param name name of dinosaur
+     * @param gender gender of dinosaur
+     */
     public Allosaur(String name, Type gender) {
         super(name, 'a', 100, gender);
         this.hitPoints = 50;
@@ -25,6 +34,10 @@ public class Allosaur extends Dinosaur{
         this.age = ALLO_ADULT_AGE;
     }
 
+    /**
+     * add baby Allosaur with a gender chosen randomly
+     * @param name
+     */
     public Allosaur(String name) {
         super(name, 'a', 100);
         this.hitPoints = 20;
@@ -33,6 +46,14 @@ public class Allosaur extends Dinosaur{
         this.age = 0;
 
     }
+
+    /**
+     *
+     * @param otherActor the Actor that might be performing attack
+     * @param direction  String representing the direction of the other Actor
+     * @param map        current GameMap
+     * @return
+     */
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions list = super.getAllowableActions(otherActor, direction, map);
@@ -40,6 +61,14 @@ public class Allosaur extends Dinosaur{
         return list;
     }
 
+    /**
+     *
+     * @param actions    collection of possible Actions for this Actor
+     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+     * @param map        the map containing the Actor
+     * @param display    the I/O object to which messages may be written
+     * @return
+     */
         @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
             if (this.isConscious()) {
@@ -64,6 +93,10 @@ public class Allosaur extends Dinosaur{
 
     }
 
+    /**
+     * returns weapon used according to actor age
+     * @return weapon of actor
+     */
     @Override
     protected IntrinsicWeapon getIntrinsicWeapon() {
         if(this.hasCapability(Type.BABY)) {

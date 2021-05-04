@@ -9,6 +9,7 @@ import game.actions.*;
 /**
  * @author :Maurya
  * @version :1.1.0
+ * A herbivorous dinosaur.
  */
 
 public class Brachiosaur extends Dinosaur {
