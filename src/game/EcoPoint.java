@@ -2,9 +2,9 @@ package game;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.1
+ * @version 1.0.2
  */
-public class EcoPoint {
+abstract public class EcoPoint {
     /**
      *  An integer representing the eco point used in the game
      */
