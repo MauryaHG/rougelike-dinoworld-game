@@ -37,7 +37,7 @@ public class AttackAction extends Action {
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 
 		target.hurt(damage);
-
+		actor.heal(damage);
 		if(!target.isConscious()){
 			map.locationOf(target).addItem(new StegosaurCorpse());
 			map.removeActor(target);

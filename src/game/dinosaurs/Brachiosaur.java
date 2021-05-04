@@ -1,8 +1,8 @@
-package game.Dinosaurs;
+package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
 import game.*;
-import game.Behaviours.*;
+import game.behaviours.*;
 import game.actions.*;
 
 
@@ -46,18 +46,20 @@ public class Brachiosaur extends Dinosaur {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();
-        if(this.hitPoints >= MIN_HUNGER && !(this.hasCapability(Type.PREGNANT))) {
-            behaviour.add(new BreedBehaviour());
-        }
-        if (isHungry(MIN_HUNGER, map)) {
-            behaviour.add(new SeekFoodBehaviour());
-        }
-        behaviour.add(new WanderBehaviour());
-        for (Behaviour index : behaviour) {
-            Action action = index.getAction(this, map);
-            if (action != null){
-                tick(this, map);
-            return action;
+        if (this.isConscious()) {
+            if (this.hitPoints >= MIN_HUNGER && !(this.hasCapability(Type.PREGNANT))) {
+                behaviour.add(new BreedBehaviour());
+            }
+            if (isHungry(MIN_HUNGER, map)) {
+                behaviour.add(new SeekFoodBehaviour());
+            }
+            behaviour.add(new WanderBehaviour());
+            for (Behaviour index : behaviour) {
+                Action action = index.getAction(this, map);
+                if (action != null) {
+                    tick(this, map);
+                    return action;
+                }
             }
         }
         tick(this, map);

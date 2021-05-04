@@ -1,8 +1,7 @@
-package game.Behaviours;
+package game.behaviours;
 
 
 import edu.monash.fit2099.engine.*;
-import game.Type;
 import game.Util;
 import game.actions.BreedAction;
 

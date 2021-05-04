@@ -1,18 +1,16 @@
-package game.Behaviours;
+package game.behaviours;
 
 import edu.monash.fit2099.engine.*;
-import game.Behaviours.Behaviour;
 import game.Type;
 import game.Util;
 import game.actions.AttackAction;
-import game.actions.BreedAction;
 import game.actions.EatFoodAction;
 
 import java.util.List;
 
 /**
  * @author Maurya Gamage
- * @version 1.1.1
+ * @version 1.2.0
  * A class that figures out a MoveAction that will move the actor one step
  * closer to a food source.
  */
@@ -57,7 +55,7 @@ public class SeekFoodBehaviour implements Behaviour {
 
         if(actor.hasCapability(Type.ALLOSAUR)) {
             sourceOne = Type.EGG;
-            sourceTwo = Type.EGG;
+            sourceTwo = Type.CORPSE;
         }
 
         for (Item indexItem : itemsHere) {
@@ -75,13 +73,28 @@ public class SeekFoodBehaviour implements Behaviour {
                         return new AttackAction(thisActor);
                 }
             }
+            for (int x : widths) {
+                for (int y : heights) {
+                    Actor thisActor = map.at(x, y).getActor();
+                    if ((thisActor != null && thisActor.hasCapability(Type.STEGOSAUR))) {
+                        Location there = map.at(x, y);
+                        int currentDistance = Util.distance(here, there);
+                        if (currentDistance < minimumDistance) {
+                            minimumDistance = currentDistance;
+                            closestFood = map.at(x, y);
+                        }
+                    }
+                }
+            }
+
         }
 
-        for (int x : widths) {
-            for (int y : heights) {
-                Ground groundHere = map.at(x, y).getGround();
-                if (groundHere.hasCapability(groundTypeOne) ||
-                        groundHere.hasCapability(groundTypeTwo)) {
+        if ((actor.hasCapability(Type.STEGOSAUR)) || (actor.hasCapability(Type.BRACHIOSAUR))) {
+            for (int x : widths) {
+                for (int y : heights) {
+                    Ground groundHere = map.at(x, y).getGround();
+                    if (groundHere.hasCapability(groundTypeOne) ||
+                            groundHere.hasCapability(groundTypeTwo)) {
                         Location there = map.at(x, y);
                         List<Item> itemsThere = there.getItems();
                         for (Item indexItem : itemsThere) {
@@ -95,6 +108,7 @@ public class SeekFoodBehaviour implements Behaviour {
                                 }
                             }
                         }
+                    }
                 }
             }
         }
@@ -115,8 +129,4 @@ public class SeekFoodBehaviour implements Behaviour {
         return null;
     }
 
-
-    public boolean isValidGround(Actor actor, GameMap map){
-        return true;
-    }
 }

@@ -1,9 +1,9 @@
-package game.Dinosaurs;
+package game.dinosaurs;
 
 
 import edu.monash.fit2099.engine.*;
 import game.*;
-import game.Behaviours.*;
+import game.behaviours.*;
 import game.actions.*;
 /**
  * @author :Maurya
@@ -74,19 +74,21 @@ public class Stegosaur extends Dinosaur {
 	 */
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-		behaviour.clear();
-		if(this.hitPoints>=50 && !(this.hasCapability(Type.PREGNANT))) {
-			behaviour.add(new BreedBehaviour());
-		}
+		if (this.isConscious()) {
+			behaviour.clear();
+			if (this.hitPoints >= 50 && !(this.hasCapability(Type.PREGNANT))) {
+				behaviour.add(new BreedBehaviour());
+			}
 
-		if (isHungry(MIN_HUNGER, map)) {
-			behaviour.add(new SeekFoodBehaviour());
-		}
-		for (Behaviour index : behaviour) {
-			Action action = index.getAction(this, map);
-			if (action != null) {
-				tick(this, map);
-				return action;
+			if (isHungry(MIN_HUNGER, map)) {
+				behaviour.add(new SeekFoodBehaviour());
+			}
+			for (Behaviour index : behaviour) {
+				Action action = index.getAction(this, map);
+				if (action != null) {
+					tick(this, map);
+					return action;
+				}
 			}
 		}
 		tick(this, map);

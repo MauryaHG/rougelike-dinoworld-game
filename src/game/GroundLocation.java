@@ -4,10 +4,9 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Location;
-import game.Dinosaurs.Brachiosaur;
-import game.Dinosaurs.Stegosaur;
+import game.dinosaurs.Brachiosaur;
+import game.dinosaurs.Stegosaur;
 import game.grounds.Bush;
-import game.items.Egg;
 import game.items.Fruit;
 
 import java.util.Random;
