@@ -1,7 +1,9 @@
 package game.actions;
 
 import edu.monash.fit2099.engine.*;
+import game.Type;
 import game.items.PortableItem;
+import game.items.StegosaurCorpse;
 
 import java.util.Random;
 
@@ -30,30 +32,20 @@ public class AttackAction extends Action {
 
 	@Override
 	public String execute(Actor actor, GameMap map) {
-
 		Weapon weapon = actor.getWeapon();
-
-		if (rand.nextBoolean()) {
-			return actor + " misses " + target + ".";
-		}
-
 		int damage = weapon.damage();
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 
 		target.hurt(damage);
-		if (!target.isConscious()) {
-			Item corpse = new PortableItem("dead " + target, '%');
-			map.locationOf(target).addItem(corpse);
-			
-			Actions dropActions = new Actions();
-			for (Item item : target.getInventory())
-				dropActions.add(item.getDropAction());
-			for (Action drop : dropActions)		
-				drop.execute(target, map);
-			map.removeActor(target);	
-			
-			result += System.lineSeparator() + target + " is killed.";
+
+		if(!target.isConscious()){
+			map.locationOf(target).addItem(new StegosaurCorpse());
+			map.removeActor(target);
 		}
+
+		if(actor.hasCapability(Type.ALLOSAUR))
+			actor.heal(damage);
+
 
 		return result;
 	}

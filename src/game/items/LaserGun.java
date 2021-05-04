@@ -2,18 +2,13 @@ package game.items;
 
 import edu.monash.fit2099.engine.WeaponItem;
 
+/**
+ * @author jinyeopoh
+ */
 public class LaserGun extends WeaponItem {
-    public LaserGun(String name, char displayChar, int damage, String verb) {
-        super(name, displayChar, damage, verb);
+
+    public LaserGun() {
+        super("Laser gun", 'L', 70, "fires");
     }
 
-    @Override
-    public int damage() {
-        return super.damage();
-    }
-
-    @Override
-    public String verb() {
-        return super.verb();
-    }
 }

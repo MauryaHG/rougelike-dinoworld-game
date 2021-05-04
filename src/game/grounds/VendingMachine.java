@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.2
+ * @version 1.1.3
  * @see Fruit
  * @see CarnivoreMeal
  * @see VegetarianMeal
@@ -79,7 +79,7 @@ public class VendingMachine extends Ground {
             allosaurEggs.add(new AllosaurEgg("Allosaur egg"));
         }
 
-        laserGun.add(new LaserGun("Laser Gun", 'L', 10, "Shoots"));
+        laserGun.add(new LaserGun());
 
 
 

@@ -34,7 +34,7 @@ public class Brachiosaur extends Dinosaur {
         if (this.isConscious()){
             if (otherActor.hasCapability(Type.PLAYER)){
                 list.add(new Actions(new FeedAction(this)));
-                list.add(new Actions(new AttackAction(this)));
+                //list.add(new Actions(new AttackAction(this)));        //Jinyeop - spec says player kills stegosaur only
             }
         }
         if (otherActor.hasCapability(Type.ALLOSAUR)){

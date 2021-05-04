@@ -73,17 +73,19 @@ public class FeedAction extends Action {
             if( option == '1' && hasFruits){
                 target.heal(20);
                 for(Item item: items){
-                    if( item instanceof Fruit)
+                    if( item instanceof Fruit){
                         actor.removeItemFromInventory(item);
-                    break;
+                        break;
+                    }
                 }
 
             } else if ( option == '2' && hasVegeMeals){
                 target.heal(10000); // max hitPoints will be set
                 for(Item item: items){
-                    if( item instanceof VegetarianMeal)
+                    if( item instanceof VegetarianMeal){
                         actor.removeItemFromInventory(item);
-                    break;
+                        break;
+                    }
                 }
             } else {
                 return "Wrong input given!!";
@@ -102,9 +104,10 @@ public class FeedAction extends Action {
             if( option == '3' && hasCarnMeals){
                 target.heal(10000);
                 for(Item item: items){
-                    if( item instanceof CarnivoreMeal )
+                    if( item instanceof CarnivoreMeal ){
                         actor.removeItemFromInventory(item);
-                    break;
+                        break;
+                    }
                 }
             } else {
                 return "Wrong input given!!";

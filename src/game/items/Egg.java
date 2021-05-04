@@ -9,7 +9,7 @@ import game.Util;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class Egg extends PortableItem {
     /**
@@ -28,7 +28,7 @@ public class Egg extends PortableItem {
     @Override
     public void tick(Location location) {
         super.tick(location);
-        if( age > hatchAfter ){
+        if( ++age > hatchAfter ){
             // Pre : check if any actor is on the same location
             if(location.containsAnActor())
                 return;
@@ -46,8 +46,6 @@ public class Egg extends PortableItem {
                     location.addActor(new Allosaur("ALlosaurNewBorn"));
                     break;
             }
-        } else {
-            age++;
         }
     }
 
