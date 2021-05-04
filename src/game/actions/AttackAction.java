@@ -1,10 +1,9 @@
 package game.actions;
 
 import edu.monash.fit2099.engine.*;
-import game.Dinosaurs.Allosaur;
-import game.Dinosaurs.Stegosaur;
+import game.dinosaurs.Allosaur;
+import game.dinosaurs.Stegosaur;
 import game.Type;
-import game.items.PortableItem;
 import game.items.StegosaurCorpse;
 
 import java.util.Random;
