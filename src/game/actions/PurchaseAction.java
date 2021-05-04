@@ -5,10 +5,14 @@ import game.EcoPoint;
 import game.Type;
 import game.grounds.VendingMachine;
 
+import javax.imageio.stream.ImageInputStream;
+import java.util.ArrayList;
+import java.util.Map;
+
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.1
+ * @version 1.1.0
  * @see Type
  */
 public class PurchaseAction extends Action {
@@ -44,75 +48,77 @@ public class PurchaseAction extends Action {
             return "No vending machine found. Try again.";
         }
 
+        // Get the Map from the machine
+        Map<Type, ArrayList<Item>> products = machine.getProducts();
 
         // Ask user a menu option
-        showMenuOptions(machine);
+        showMenuOptions(products);
 
         System.out.print("Menu option : ");
         char option = display.readChar();
 
         // Check validity of given input, quantity of items and eco point first then perform corresponding action
         int size = 0;
-        String returnMsg = "There was an typo or not enough eco points!";
+        String returnMsg = "There was an typo, not enough eco points or no more item in the machine!!!!";
         switch (option){
             case '1':
-                size = machine.getFruits().size();
+                size = products.get(Type.FRUIT).size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.FRUIT_PRICE)){
-                    actor.addItemToInventory(machine.getFruits().get(size-1));
+                    actor.addItemToInventory(products.get(Type.FRUIT).get(0));
                     machine.removeItem(Type.FRUIT);
                     EcoPoint.decreaseEcoPoint(VendingMachine.FRUIT_PRICE);
                     returnMsg = "Successfully purchased the fruit from the vending machine";
                 }
                 break;
             case '2':
-                size = machine.getVegetarianMeals().size();
+                size = products.get(Type.VEGETARIAN_MEAL).size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.VEGETARIAN_MEAL_PRICE)){
-                    actor.addItemToInventory(machine.getVegetarianMeals().get(size-1));
+                    actor.addItemToInventory(products.get(Type.VEGETARIAN_MEAL).get(0));
                     machine.removeItem(Type.VEGETARIAN_MEAL);
                     EcoPoint.decreaseEcoPoint(VendingMachine.VEGETARIAN_MEAL_PRICE);
                     returnMsg = "Successfully purchased the vegetarian meal kit from the vending machine";
                 }
                 break;
             case '3':
-                size = machine.getCarnivoreMeals().size();
+                size = products.get(Type.CARNIVORE_MEAL).size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.CARNIVORE_MEAL_PRICE)){
-                    actor.addItemToInventory(machine.getCarnivoreMeals().get(size-1));
+                    actor.addItemToInventory(products.get(Type.CARNIVORE_MEAL).get(0));
                     machine.removeItem(Type.CARNIVORE_MEAL);
                     EcoPoint.decreaseEcoPoint(VendingMachine.CARNIVORE_MEAL_PRICE);
                     returnMsg = "Successfully purchased the carnivore meal kit from the vending machine";
                 }
                 break;
             case '4':
-                size = machine.getStegosaurEggs().size();
+                size = products.get(Type.STEGOSAUR_EGG).size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.STEGOSAUR_EGG_PRICE)){
-                    actor.addItemToInventory(machine.getStegosaurEggs().get(size-1));
+                    actor.addItemToInventory(products.get(Type.STEGOSAUR_EGG).get(0));
                     machine.removeItem(Type.STEGOSAUR_EGG);
                     EcoPoint.decreaseEcoPoint(VendingMachine.STEGOSAUR_EGG_PRICE);
                     returnMsg = "Successfully purchased the stegosaur egg from the vending machine";
                 }
                 break;
             case '5':
-                size = machine.getBrachiosaurEggs().size();
+                size = products.get(Type.BRACHIOSAUR_EGG).size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.BRACHIOSAUR_EGG_PRICE)){
-                    actor.addItemToInventory(machine.getBrachiosaurEggs().get(size-1));
+                    actor.addItemToInventory(products.get(Type.BRACHIOSAUR_EGG).get(0));
                     machine.removeItem(Type.BRACHIOSAUR_EGG);
                     EcoPoint.decreaseEcoPoint(VendingMachine.BRACHIOSAUR_EGG_PRICE);
                     returnMsg = "Successfully purchased the brachiosaur egg from the vending machine";
                 }
                 break;
             case '6':
-                size = machine.getAllosaurEggs().size();
+                size = products.get(Type.ALLOSAUR_EGG).size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.ALLOSAUR_EGG_PRICE)){
-                    actor.addItemToInventory(machine.getAllosaurEggs().get(size-1));
+                    actor.addItemToInventory(products.get(Type.ALLOSAUR_EGG).get(0));
                     machine.removeItem(Type.ALLOSAUR_EGG);
                     EcoPoint.decreaseEcoPoint(VendingMachine.ALLOSAUR_EGG_PRICE);
                     returnMsg = "Successfully purchased the allosaur egg from the vending machine";
                 }
                 break;
             case '7':
-                size = machine.getLaserGun().size();
+                size = products.get(Type.LASER_GUN).size();
                 if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.LASER_GUN_PRICE)){
-                    actor.addItemToInventory(machine.getLaserGun().get(size-1));
+                    actor.addItemToInventory(products.get(Type.LASER_GUN).get(0));
                     machine.removeItem(Type.LASER_GUN);
                     EcoPoint.decreaseEcoPoint(VendingMachine.LASER_GUN_PRICE);
                     returnMsg = "Successfully purchased the laser gub from the vending machine";
@@ -126,14 +132,14 @@ public class PurchaseAction extends Action {
      * Simply shows menu options within the vending machine
      * @param machine
      */
-    private void showMenuOptions(VendingMachine machine){
-        int numFruits = machine.getFruits().size();
-        int numCarnivoreMeals = machine.getCarnivoreMeals().size();
-        int numVegetarianMeals = machine.getVegetarianMeals().size();
-        int numStegosaurEggs = machine.getStegosaurEggs().size();
-        int numBrachiosaurEggs = machine.getBrachiosaurEggs().size();
-        int numAllosaurEggs = machine.getAllosaurEggs().size();
-        int numLaserGun = machine.getLaserGun().size();
+    private void showMenuOptions(Map<Type, ArrayList<Item>> products){
+        int numFruits = products.get(Type.FRUIT).size();
+        int numCarnivoreMeals = products.get(Type.CARNIVORE_MEAL).size();
+        int numVegetarianMeals = products.get(Type.VEGETARIAN_MEAL).size();
+        int numStegosaurEggs = products.get(Type.STEGOSAUR_EGG).size();
+        int numBrachiosaurEggs = products.get(Type.BRACHIOSAUR_EGG).size();
+        int numAllosaurEggs = products.get(Type.ALLOSAUR_EGG).size();
+        int numLaserGun = products.get(Type.LASER_GUN).size();
 
         System.out.println();
         System.out.println("Eco Point : " + EcoPoint.getEcoPoint());

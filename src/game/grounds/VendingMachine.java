@@ -7,10 +7,12 @@ import game.actions.PurchaseAction;
 import game.items.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.3
+ * @version 1.2.0
  * @see Fruit
  * @see CarnivoreMeal
  * @see VegetarianMeal
@@ -21,13 +23,7 @@ import java.util.ArrayList;
  *
  */
 public class VendingMachine extends Ground {
-    private ArrayList<Fruit> fruits = new ArrayList<>();
-    private ArrayList<CarnivoreMeal> carnivoreMeals = new ArrayList<>();
-    private ArrayList<VegetarianMeal> vegetarianMeals = new ArrayList<>();
-    private ArrayList<StegosaurEgg> stegosaurEggs = new ArrayList<>();
-    private ArrayList<BrachiosaurEgg> brachiosaurEggs = new ArrayList<>();
-    private ArrayList<AllosaurEgg> allosaurEggs = new ArrayList<>();
-    private ArrayList<LaserGun> laserGun = new ArrayList<>();
+    private Map<Type, ArrayList<Item>> products = new HashMap<>();
 
     private final int NUM_FRUITS = 10;
     private final int NUM_CARNIVORE_MEAL = 5;
@@ -53,36 +49,13 @@ public class VendingMachine extends Ground {
     public VendingMachine() {
         super('M');
 
-        for(int i = 0; i < NUM_FRUITS; i++){
-            Fruit newFruit = new Fruit();
-            newFruit.setOnGround();
-            fruits.add(newFruit);
-        }
-
-        for(int i = 0; i < NUM_CARNIVORE_MEAL; i++){
-            carnivoreMeals.add(new CarnivoreMeal("Carnivore meal"));
-        }
-
-        for(int i = 0; i < NUM_VEGETARIAN_MEAL; i++){
-            vegetarianMeals.add(new VegetarianMeal("Vegetarian meal"));
-        }
-
-        for(int i = 0; i < NUM_BRACHIOSAUR_EGG; i++){
-            brachiosaurEggs.add(new BrachiosaurEgg("Brachiosaur egg"));
-        }
-
-        for(int i = 0; i < NUM_STEGOSAUR_EGG; i++){
-            stegosaurEggs.add(new StegosaurEgg("Stegosaur egg"));
-        }
-
-        for(int i = 0; i < NUM_ALLOSAUR_EGG; i++){
-            allosaurEggs.add(new AllosaurEgg("Allosaur egg"));
-        }
-
-        laserGun.add(new LaserGun());
-
-
-
+        products.put(Type.FRUIT, getMachineItems(Type.FRUIT));
+        products.put(Type.VEGETARIAN_MEAL, getMachineItems(Type.VEGETARIAN_MEAL));
+        products.put(Type.CARNIVORE_MEAL, getMachineItems(Type.CARNIVORE_MEAL));
+        products.put(Type.STEGOSAUR_EGG, getMachineItems(Type.STEGOSAUR_EGG));
+        products.put(Type.BRACHIOSAUR_EGG, getMachineItems(Type.BRACHIOSAUR_EGG));
+        products.put(Type.ALLOSAUR_EGG, getMachineItems(Type.ALLOSAUR_EGG));
+        products.put(Type.LASER_GUN, getMachineItems(Type.LASER_GUN));
     }
 
     /**
@@ -101,91 +74,87 @@ public class VendingMachine extends Ground {
     }
 
     /**
+     * Produces corresponding items to put into the map
+     * @param type The type of items to put in
+     * @return ArrayList containing item objects
+     */
+    private ArrayList<Item> getMachineItems(Type type){
+        ArrayList<Item> items = new ArrayList<>();
+        switch (type){
+            case FRUIT:
+                for(int i = 0; i < NUM_FRUITS; i++){
+                    Fruit newFruit = new Fruit();
+                    newFruit.setOnGround();
+                    items.add(newFruit);
+                }
+                break;
+            case CARNIVORE_MEAL:
+                for(int i = 0; i < NUM_CARNIVORE_MEAL; i++){
+                    items.add(new CarnivoreMeal("Carnivore meal"));
+                }
+                break;
+            case VEGETARIAN_MEAL:
+                for(int i = 0; i < NUM_VEGETARIAN_MEAL; i++){
+                    items.add(new VegetarianMeal("Vegetarian meal"));
+                }
+                break;
+            case BRACHIOSAUR_EGG:
+                for(int i = 0; i < NUM_BRACHIOSAUR_EGG; i++){
+                    items.add(new BrachiosaurEgg("Brachiosaur egg"));
+                }
+                break;
+            case STEGOSAUR_EGG:
+                for(int i = 0; i < NUM_STEGOSAUR_EGG; i++){
+                    items.add(new StegosaurEgg("Stegosaur egg"));
+                }
+                break;
+            case ALLOSAUR_EGG:
+                for(int i = 0; i < NUM_ALLOSAUR_EGG; i++){
+                    items.add(new AllosaurEgg("Allosaur egg"));
+                }
+                break;
+            case LASER_GUN:
+                items.add(new LaserGun());
+                break;
+        }
+        return items;
+    }
+
+    /**
      * When all the validity checking is complete in PurchaseAction, remove corresponding items from the list
      * @param menuCode A code to distinguish
      */
     public void removeItem(Type menuCode){
+        Item toRemove;
+
         switch (menuCode){
             case FRUIT:
-                fruits.remove(fruits.size()-1);
+                products.get(Type.FRUIT).remove(0);
                 break;
             case VEGETARIAN_MEAL:
-                vegetarianMeals.remove(vegetarianMeals.size()-1);
+                products.get(Type.VEGETARIAN_MEAL).remove(0);
                 break;
             case CARNIVORE_MEAL:
-                carnivoreMeals.remove(carnivoreMeals.size()-1);
+                products.get(Type.CARNIVORE_MEAL).remove(0);
                 break;
             case STEGOSAUR_EGG:
-                stegosaurEggs.remove(stegosaurEggs.size()-1);
+                products.get(Type.STEGOSAUR_EGG).remove(0);
                 break;
             case BRACHIOSAUR_EGG:
-                brachiosaurEggs.remove(brachiosaurEggs.size()-1);
+                products.get(Type.BRACHIOSAUR_EGG).remove(0);
                 break;
             case ALLOSAUR_EGG:
-                allosaurEggs.remove(allosaurEggs.size()-1);
+                products.get(Type.ALLOSAUR_EGG).remove(0);
                 break;
             case LASER_GUN:
-                laserGun.remove(laserGun.size()-1);
+                products.get(Type.LASER_GUN).remove(0);
                 break;
 
         }
     }
 
     // setters and getters
-    public ArrayList<Fruit> getFruits() {
-        return fruits;
+    public Map<Type, ArrayList<Item>> getProducts() {
+        return products;
     }
-
-    public void setFruits(ArrayList<Fruit> fruits) {
-        this.fruits = fruits;
-    }
-
-    public ArrayList<CarnivoreMeal> getCarnivoreMeals() {
-        return carnivoreMeals;
-    }
-
-    public void setCarnivoreMeals(ArrayList<CarnivoreMeal> carnivoreMeals) {
-        this.carnivoreMeals = carnivoreMeals;
-    }
-
-    public ArrayList<VegetarianMeal> getVegetarianMeals() {
-        return vegetarianMeals;
-    }
-
-    public void setVegetarianMeals(ArrayList<VegetarianMeal> vegetarianMeals) {
-        this.vegetarianMeals = vegetarianMeals;
-    }
-
-    public ArrayList<StegosaurEgg> getStegosaurEggs() {
-        return stegosaurEggs;
-    }
-
-    public void setStegosaurEggs(ArrayList<StegosaurEgg> stegosaurEggs) {
-        this.stegosaurEggs = stegosaurEggs;
-    }
-
-    public ArrayList<BrachiosaurEgg> getBrachiosaurEggs() {
-        return brachiosaurEggs;
-    }
-
-    public void setBrachiosaurEggs(ArrayList<BrachiosaurEgg> brachiosaurEggs) {
-        this.brachiosaurEggs = brachiosaurEggs;
-    }
-
-    public ArrayList<AllosaurEgg> getAllosaurEggs() {
-        return allosaurEggs;
-    }
-
-    public void setAllosaurEggs(ArrayList<AllosaurEgg> allosaurEggs) {
-        this.allosaurEggs = allosaurEggs;
-    }
-
-    public ArrayList<LaserGun> getLaserGun() {
-        return laserGun;
-    }
-
-    public void setLaserGun(ArrayList<LaserGun> laserGun) {
-        this.laserGun = laserGun;
-    }
-
 }
