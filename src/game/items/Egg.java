@@ -1,9 +1,9 @@
 package game.items;
 
 import edu.monash.fit2099.engine.Location;
-import game.Dinosaurs.Allosaur;
-import game.Dinosaurs.Brachiosaur;
-import game.Dinosaurs.Stegosaur;
+import game.dinosaurs.Allosaur;
+import game.dinosaurs.Brachiosaur;
+import game.dinosaurs.Stegosaur;
 import game.Type;
 import game.Util;
 

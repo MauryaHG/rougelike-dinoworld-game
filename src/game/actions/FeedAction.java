@@ -1,9 +1,9 @@
 package game.actions;
 
 import edu.monash.fit2099.engine.*;
-import game.Dinosaurs.Allosaur;
-import game.Dinosaurs.Brachiosaur;
-import game.Dinosaurs.Stegosaur;
+import game.dinosaurs.Allosaur;
+import game.dinosaurs.Brachiosaur;
+import game.dinosaurs.Stegosaur;
 import game.items.CarnivoreMeal;
 import game.items.Fruit;
 import game.items.VegetarianMeal;

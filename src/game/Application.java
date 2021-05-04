@@ -8,7 +8,7 @@ import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.FancyGroundFactory;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.World;
-import game.Dinosaurs.*;
+import game.dinosaurs.*;
 import game.grounds.*;
 
 /**
@@ -65,6 +65,7 @@ public class Application {
 		gameMap.at(12, 12).addActor(new Brachiosaur("Brachiosaur-2",Type.FEMALE));
 		gameMap.at(10, 14).addActor(new Brachiosaur("Brachiosaur-3",Type.MALE));
 		gameMap.at(12, 14).addActor(new Brachiosaur("Brachiosaur-4",Type.MALE));
+		gameMap.at(30, 10).addActor(new Allosaur("allo-4",Type.MALE));
 
 
 		world.run();

@@ -1,14 +1,12 @@
-package game.Dinosaurs;
+package game.dinosaurs;
 
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
-import game.Behaviours.Behaviour;
+import game.behaviours.Behaviour;
 import game.Type;
 import game.Util;
-import game.items.AllosaurEgg;
-import game.items.BrachiosaurEgg;
-import game.items.StegosaurEgg;
+import game.items.*;
 
 
 import java.util.ArrayList;
@@ -93,12 +91,27 @@ abstract public class Dinosaur extends Actor {
         }
 
         if (!isConscious()) {
+            DinosaurCorpse corpse = null;
             addCapability(Type.UNCONSCIOUS);
-            unconsciousCount += 1;
-            if (unconsciousCount == 20) {
-                addCapability(Type.DEAD);
+            int maxUnconsciouis = 0;
+            if (actor.hasCapability(Type.STEGOSAUR)){
+                corpse = new StegosaurCorpse();
+                maxUnconsciouis = 20;
             }
+            if (actor.hasCapability(Type.BRACHIOSAUR)){
+                corpse = new BrachiosaurCorpse();
+                maxUnconsciouis = 15;
+            }
+            if (actor.hasCapability(Type.ALLOSAUR)){
+                corpse = new AllosaurCorpse();
+                maxUnconsciouis = 25;
+            }
+            if (unconsciousCount == maxUnconsciouis) {
 
+                map.locationOf(actor).addItem(corpse);
+                map.removeActor(actor);
+            }
+            unconsciousCount += 1;
         }
     }
 }
