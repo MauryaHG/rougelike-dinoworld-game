@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.Location;
 import game.Dinosaurs.Brachiosaur;
 import game.Dinosaurs.Stegosaur;
 import game.grounds.Bush;
+import game.grounds.Dirt;
 import game.items.Egg;
 import game.items.Fruit;
 
@@ -55,9 +56,8 @@ public class GroundLocation extends Location {
         if( isDirt ){
             if(isStartOfGame){
                 performAction(NextTurn.GROW, Util.ONE_PERCENT_CHANCE);
-                isStartOfGame = false;
             } else if( neighboursTreeCount() > 0){
-                return;
+                // Do nothing
             } else if( neighboursBushCount() > 1){
                 performAction(NextTurn.GROW, Util.TEN_PERCENT_CHANCE);
             } else {
@@ -65,31 +65,46 @@ public class GroundLocation extends Location {
             }
         }
 
+        isStartOfGame = false;
+
         if(isTree){
             if( Util.calcPercentage(Util.FIVE_PERCENT_CHANCE)){     // Supposed to be 50%, but I made 5% for now
                 // Produces a fruit object at this location
                 Fruit newFruit = new Fruit();
                 newFruit.setOnTree(true);
-                super.map().at(x(), y()).addItem(newFruit);
+                addItem(newFruit);
                 EcoPoint.increaseEcoPoint(1);
             }
         }
 
 
         if(isBush){
-            // Pre : If a Bush at this location has a fruit, terminate
-            for(Item item: map().at(x(), y()).getItems()){
+            // This flag determines whether there is a fruit on bush
+            boolean fruitFlag = true;
+
+            // Pre : If a Bush at this location has a fruit, fruitFlag = false
+            for(Item item: getItems()){
                 if( item instanceof Fruit){
                     if( ((Fruit)item).isOnBush()){
-                        return;
+                        fruitFlag = false;
+                        break;
                     }
                 }
             }
 
-            if( Util.calcPercentage(Util.ONE_PERCENT_CHANCE)){
+            // This will be true iff this bush has no fruit on it
+            if( fruitFlag && Util.calcPercentage(Util.ONE_PERCENT_CHANCE)){
                 Fruit newFruit = new Fruit();
                 newFruit.setOnBush(true);
-                super.map().at(x(), y()).addItem(newFruit);
+                addItem(newFruit);
+
+            }
+
+            // If Brachiosaur is on the same square, 50% chance to kill bush
+            if(getActor() != null && getActor().hasCapability(Type.BRACHIOSAUR)){
+                if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
+                    setGround(new Dirt());
+                }
             }
         }
 

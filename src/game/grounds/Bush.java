@@ -8,8 +8,8 @@ import game.items.Fruit;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.0
- * @see Fruit
+ * @version 1.1.1
+ * @see Ground
  */
 public class Bush extends Ground {
     /**
@@ -19,5 +19,4 @@ public class Bush extends Ground {
         super('*');
         addCapability(Type.BUSH);
     }
-
 }

@@ -16,6 +16,8 @@ public class Stegosaur extends Dinosaur {
 
 	protected int STEG_ADULT_AGE = 30;
 	private int MIN_HUNGER = 90;
+	private boolean getAttacked = false;
+	private int turns = 0;
 
 
 	/**
@@ -90,6 +92,22 @@ public class Stegosaur extends Dinosaur {
 			}
 		}
 		tick(this, map);
+
+		//Jinyeop - if this Stegosaur get attacked, no more getting attack for 20 turns( when only attacked by Allosaur)
+		if(getAttacked){
+			if( ++turns > 20){
+				getAttacked = false;
+			}
+		}
+
 		return new DoNothingAction();
+	}
+
+	public boolean isGetAttacked() {	// Jinyeop
+		return getAttacked;
+	}
+
+	public void setGetAttacked(boolean getAttacked) {	//Jinyeop
+		this.getAttacked = getAttacked;
 	}
 }

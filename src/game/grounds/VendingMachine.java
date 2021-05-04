@@ -153,8 +153,15 @@ public class VendingMachine extends Ground {
         }
     }
 
+    @Override
+    public boolean canActorEnter(Actor actor) {
+        return false;
+    }
+
     // setters and getters
     public Map<Type, ArrayList<Item>> getProducts() {
         return products;
     }
+
+
 }
