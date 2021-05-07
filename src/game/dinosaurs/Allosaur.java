@@ -23,7 +23,7 @@ public class Allosaur extends Dinosaur{
     private int MIN_HUNGER = 90;
 
     /**
-     * adds adult dinosaur with specified gender
+     * creates adult dinosaur with specified gender
      * @param name name of dinosaur
      * @param gender gender of dinosaur
      */
@@ -36,7 +36,7 @@ public class Allosaur extends Dinosaur{
 
     /**
      * add baby Allosaur with a gender chosen randomly
-     * @param name
+     * @param name name of allosaur
      */
     public Allosaur(String name) {
         super(name, 'a', 100);
@@ -67,7 +67,7 @@ public class Allosaur extends Dinosaur{
      * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
      * @param map        the map containing the Actor
      * @param display    the I/O object to which messages may be written
-     * @return
+     * @return action to be done this turn
      */
         @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {

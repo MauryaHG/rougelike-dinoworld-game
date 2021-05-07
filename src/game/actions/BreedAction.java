@@ -70,7 +70,7 @@ public class BreedAction extends Action {
     /**
      * returns actors who mated
      * @param actor The actor performing the action.
-     * @return string
+     * @return string the action done by the actors
      */
     @Override
     public String menuDescription(Actor actor) {

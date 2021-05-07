@@ -12,7 +12,6 @@ import game.actions.*;
  *
  */
 public class Stegosaur extends Dinosaur {
-	// Will need to change this to a collection if Stegosaur gets additional Behaviours.
 
 	protected int STEG_ADULT_AGE = 30;
 	private int MIN_HUNGER = 90;

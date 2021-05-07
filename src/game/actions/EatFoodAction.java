@@ -6,8 +6,12 @@ import game.Type;
 import java.util.List;
 
 /**
- *  * @author :Maurya
- *  * @version :1.0.0
+ * @author :Maurya
+ * @version :1.0.0
+ * @see : Action
+ * @see : Fruit
+ * @see : Actor
+ * @see : GameMap
  */
 public class EatFoodAction extends Action {
 

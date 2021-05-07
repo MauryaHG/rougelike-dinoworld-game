@@ -9,14 +9,25 @@ import game.actions.*;
 /**
  * @author :Maurya
  * @version :1.1.1
+ * A herbivorous dinosaur.
  */
 
 public class Brachiosaur extends Dinosaur {
 
+    /**
+     * age of a adult brachiosaur
+     */
     protected static final int  BRACH_ADULT_AGE = 50;
+    /**
+     * minimum int where dinosaur will be hungry
+     */
     private int MIN_HUNGER = 140;
 
-
+    /**
+     * creates adult dinosaur with specified gender
+     * @param name name of dinosaur
+     * @param gender gender of dinosaur
+     */
     public Brachiosaur(String name, Type gender) {
         super(name, 'b', 160, gender);
         this.hitPoints = 100;
@@ -24,6 +35,13 @@ public class Brachiosaur extends Dinosaur {
         this.age = BRACH_ADULT_AGE;
     }
 
+    /**
+     *
+     * @param otherActor the Actor that might be performing attack
+     * @param direction  String representing the direction of the other Actor
+     * @param map        current GameMap
+     * @return
+     */
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions list = super.getAllowableActions(otherActor, direction, map);
@@ -35,6 +53,14 @@ public class Brachiosaur extends Dinosaur {
         return list;
     }
 
+    /**
+     *
+     * @param actions    collection of possible Actions for this Actor
+     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+     * @param map        the map containing the Actor
+     * @param display    the I/O object to which messages may be written
+     * @return action to be done this turn
+     */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();

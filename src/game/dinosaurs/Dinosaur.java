@@ -17,15 +17,37 @@ import static game.actions.BreedAction.breedLength;
 /**
  * @author :Maurya
  * @version :1.1.0
+ * @see: Actor
+ * @see: Stegosaur
+ * @see: Brachiosaur
+ * @see: Allosaur
+ * Parent class of dinosaur
  */
 abstract public class Dinosaur extends Actor {
-
+    /**
+     * list of behaviours
+     */
     protected List<Behaviour> behaviour = new ArrayList<Behaviour>();
+    /**
+     * number of turns the dinosaur has been unconciouis
+     */
     protected int unconsciousCount = 0;
+    /**
+     * age of dinosaur (increase by one every turn)
+     */
     protected int age;
+    /**
+     * number of turns female dinosaur has been pregnant
+     */
     protected int breedingCount;
 
-
+    /**
+     * Create dinosaur with specified gender
+     * @param name name of dinosaur
+     * @param displayChar display character which will be shown on map
+     * @param hitPoints health of dinosaur
+     * @param gender gender of dinosaur
+     */
     public Dinosaur(String name, char displayChar, int hitPoints, Type gender) {
         super(name, displayChar, hitPoints);
         if (gender == Type.MALE) {
@@ -38,6 +60,12 @@ abstract public class Dinosaur extends Actor {
 
     }
 
+    /**
+     * createa dinosaur with random gender
+     * @param name name of dinosaur
+     * @param displayChar display character which will be shown on map
+     * @param hitPoints health of dinosaur
+     */
     public Dinosaur(String name, char displayChar, int hitPoints ) {
         super(name, displayChar, hitPoints);
         Type gender = Util.getGender();
@@ -51,6 +79,12 @@ abstract public class Dinosaur extends Actor {
 
     }
 
+    /**
+     * check if dinosaur is hungry
+     * @param minHunger min hunger of dinosaur species
+     * @param map game map actor is located
+     * @return boolean
+     */
     public boolean isHungry(int minHunger, GameMap map) {
         boolean isHungry = false;
         if (hitPoints < minHunger) {
@@ -61,6 +95,11 @@ abstract public class Dinosaur extends Actor {
         return isHungry;
     }
 
+    /**
+     * ticks every turn and changes relevant attributes of dinosaur
+     * @param actor
+     * @param map
+     */
     public void tick(Actor actor, GameMap map) {
         age++;
 
@@ -69,15 +108,15 @@ abstract public class Dinosaur extends Actor {
                 Location here = map.locationOf(actor);
 
                 if(actor.hasCapability(Type.STEGOSAUR)){
-               here.addItem(new StegosaurEgg("DaBaby"));
+               here.addItem(new StegosaurEgg("newStegosaur"));
                 }
 
                 if(actor.hasCapability(Type.BRACHIOSAUR)){
-                    here.addItem(new BrachiosaurEgg("DaBaby_2"));
+                    here.addItem(new BrachiosaurEgg("newBrachiosaur"));
                 }
 
                 if(actor.hasCapability(Type.ALLOSAUR)){
-                    here.addItem(new AllosaurEgg("DaBaby_3"));
+                    here.addItem(new AllosaurEgg("newAllosaur"));
                 }
 
                 actor.removeCapability(Type.PREGNANT);
