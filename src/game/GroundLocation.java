@@ -98,11 +98,16 @@ public class GroundLocation extends Location {
 
             }
 
-            Actor a = getActor();
-            // If Brachiosaur is on the same square, 50% chance to kill bush
+            // If Brachiosaur is on the same square, 50% chance to kill bush and if so, destroys all the fruits on the square
             if(getActor() != null && getActor().hasCapability(Type.BRACHIOSAUR)){
                 if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
                     setGround(new Dirt());
+
+                    for(Item item: getItems()){
+                        if(item instanceof Fruit){
+                            removeItem(item);
+                        }
+                    }
                 }
             }
         }
