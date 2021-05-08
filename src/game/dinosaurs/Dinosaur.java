@@ -108,15 +108,15 @@ abstract public class Dinosaur extends Actor {
                 Location here = map.locationOf(actor);
 
                 if(actor.hasCapability(Type.STEGOSAUR)){
-               here.addItem(new StegosaurEgg("newStegosaur"));
+               here.addItem(new StegosaurEgg());
                 }
 
                 if(actor.hasCapability(Type.BRACHIOSAUR)){
-                    here.addItem(new BrachiosaurEgg("newBrachiosaur"));
+                    here.addItem(new BrachiosaurEgg());
                 }
 
                 if(actor.hasCapability(Type.ALLOSAUR)){
-                    here.addItem(new AllosaurEgg("newAllosaur"));
+                    here.addItem(new AllosaurEgg());
                 }
 
                 actor.removeCapability(Type.PREGNANT);

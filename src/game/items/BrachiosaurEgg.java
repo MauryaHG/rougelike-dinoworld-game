@@ -21,8 +21,8 @@ public class BrachiosaurEgg extends Egg{
      * Sets the the number of turns before hatching and egg type
      * @param name
      */
-    public BrachiosaurEgg(String name) {
-        super(name);
+    public BrachiosaurEgg() {
+        super("Brachiosaur Egg");
         super.setHatchAfter(HATCH_AFTER);
         super.setEggType(Type.BRACHIOSAUR_EGG);
     }

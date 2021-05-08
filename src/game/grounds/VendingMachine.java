@@ -109,17 +109,17 @@ public class VendingMachine extends Ground {
                 break;
             case BRACHIOSAUR_EGG:
                 for(int i = 0; i < NUM_BRACHIOSAUR_EGG; i++){
-                    items.add(new BrachiosaurEgg("Brachiosaur egg"));
+                    items.add(new BrachiosaurEgg());
                 }
                 break;
             case STEGOSAUR_EGG:
                 for(int i = 0; i < NUM_STEGOSAUR_EGG; i++){
-                    items.add(new StegosaurEgg("Stegosaur egg"));
+                    items.add(new StegosaurEgg());
                 }
                 break;
             case ALLOSAUR_EGG:
                 for(int i = 0; i < NUM_ALLOSAUR_EGG; i++){
-                    items.add(new AllosaurEgg("Allosaur egg"));
+                    items.add(new AllosaurEgg());
                 }
                 break;
             case LASER_GUN:

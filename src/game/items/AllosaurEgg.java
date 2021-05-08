@@ -4,7 +4,7 @@ import game.Type;
 
 /**
  * @author jinyeopoh
- * @version 1.0.0
+ * @version 1.0.1
  * @see Egg
  * @see Type
  */
@@ -20,8 +20,8 @@ public class AllosaurEgg extends Egg{
      * Sets the the number of turns before hatching and egg type
      * @param name
      */
-    public AllosaurEgg(String name) {
-        super(name);
+    public AllosaurEgg() {
+        super("Allosaur Egg");
         super.setHatchAfter(HATCH_AFTER);
         super.setEggType(Type.ALLOSAUR_EGG);
     }

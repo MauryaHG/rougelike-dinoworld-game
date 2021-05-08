@@ -21,8 +21,8 @@ public class StegosaurEgg extends Egg{
      * Sets the the number of turns before hatching and egg type
      * @param name
      */
-    public StegosaurEgg(String name) {
-        super(name);
+    public StegosaurEgg() {
+        super("Stegosaur Egg");
         super.setHatchAfter(HATCH_AFTER);
         super.setEggType(Type.STEGOSAUR_EGG);
     }
