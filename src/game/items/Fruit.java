@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.2
+ * @version 1.1.3
  * @see Util
  */
 public class Fruit extends PortableItem {
@@ -18,11 +18,31 @@ public class Fruit extends PortableItem {
      * An age of this fruit. It is incremented every turn
      */
     private int age = 0;
+
+    /**
+     * Representing whether this is on the tree or not
+     */
     private boolean isOnTree = false;
+
+    /**
+     * Representing whether this is on the bush or not
+     */
     private boolean isOnBush = false;
+
+    /**
+     * Representing whether this is on the ground or not
+     */
     private boolean isOnGround = false;
+
+    /**
+     * Representing whether this is in the inventory or not
+     */
     private boolean isInInventory = false;
 
+    /**
+     * Constructor.
+     * add capability
+     */
     public Fruit() {
         super("Fruit", 'F');
         addCapability(Type.FRUIT);
@@ -74,13 +94,15 @@ public class Fruit extends PortableItem {
         return allowableActions;
     }
 
+    /**
+     * Returns iff this is in the player's inventory
+     * @return instance of DropItemAction if this is in the inventory, otherwise returns null
+     */
     @Override
     public DropItemAction getDropAction() {
-        if( portable ){
-            if( isInInventory ){
-                return new DropItemAction(this);
-            }
-        }
+        if( portable && isInInventory)
+            return new DropItemAction(this);
+
         return null;
     }
 
@@ -104,6 +126,10 @@ public class Fruit extends PortableItem {
         this.addCapability(Type.ON_BUSH);
     }
 
+    /**
+     * Sets isOnGround = true, isInInventory = true and set the others as false.
+     *
+     */
     public void setOnGround() {
         isOnBush = false;
         isOnTree = false;

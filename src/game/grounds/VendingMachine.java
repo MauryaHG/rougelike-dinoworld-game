@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * @author Jinyeop Oh
- * @version 1.2.0
+ * @version 1.2.1
  * @see Fruit
  * @see CarnivoreMeal
  * @see VegetarianMeal
@@ -23,8 +23,14 @@ import java.util.Map;
  *
  */
 public class VendingMachine extends Ground {
+    /**
+     * Items in the vending machine
+     */
     private Map<Type, ArrayList<Item>> products = new HashMap<>();
 
+    /**
+     * The quantities of each items in the machine
+     */
     private final int NUM_FRUITS = 10;
     private final int NUM_CARNIVORE_MEAL = 5;
     private final int NUM_VEGETARIAN_MEAL = 5;
@@ -32,6 +38,9 @@ public class VendingMachine extends Ground {
     private final int NUM_BRACHIOSAUR_EGG = 3;
     private final int NUM_ALLOSAUR_EGG = 3;
 
+    /**
+     * The price of each items in the machine
+     */
     public static final int FRUIT_PRICE = 30;
     public static final int VEGETARIAN_MEAL_PRICE = 100;
     public static final int CARNIVORE_MEAL_PRICE = 500;
@@ -153,12 +162,21 @@ public class VendingMachine extends Ground {
         }
     }
 
+    /**
+     * Prevents actor to pass through
+     * @param actor the Actor to check
+     * @return Boolean value of false
+     */
     @Override
     public boolean canActorEnter(Actor actor) {
         return false;
     }
 
-    // setters and getters
+
+    /**
+     * Returns products instance
+     * @return Returns products instance
+     */
     public Map<Type, ArrayList<Item>> getProducts() {
         return products;
     }

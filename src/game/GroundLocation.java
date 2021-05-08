@@ -44,7 +44,10 @@ public class GroundLocation extends Location {
     }
 
 
-
+    /**
+     * Called in every turns
+     * Checks what Ground object is on the every square and grow a bush or produces fruit(s)
+     */
     @Override
     public void tick() {
         Ground thisGround = getGround();

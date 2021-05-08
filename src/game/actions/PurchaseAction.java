@@ -12,14 +12,14 @@ import java.util.Map;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.0
+ * @version 1.1.1
  * @see Type
  */
 public class PurchaseAction extends Action {
 
     /**
      * Retrieve the VendingMachine object first and then prompts user the options to choose.
-     * Check validity(input, quantity and eco points) and then do action
+     * Check validity, which are input, quantity and eco points, and then do action
      *
      * @param actor The actor performing the action.
      * @param map The map the actor is on.
@@ -62,8 +62,7 @@ public class PurchaseAction extends Action {
         String returnMsg = "There was an typo, not enough eco points or no more item in the machine!!!!";
         switch (option){
             case '1':
-                size = products.get(Type.FRUIT).size();
-                if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.FRUIT_PRICE)){
+                if (products.get(Type.FRUIT).size() > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.FRUIT_PRICE)){
                     actor.addItemToInventory(products.get(Type.FRUIT).get(0));
                     machine.removeItem(Type.FRUIT);
                     EcoPoint.decreaseEcoPoint(VendingMachine.FRUIT_PRICE);
@@ -71,8 +70,7 @@ public class PurchaseAction extends Action {
                 }
                 break;
             case '2':
-                size = products.get(Type.VEGETARIAN_MEAL).size();
-                if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.VEGETARIAN_MEAL_PRICE)){
+                if (products.get(Type.VEGETARIAN_MEAL).size() > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.VEGETARIAN_MEAL_PRICE)){
                     actor.addItemToInventory(products.get(Type.VEGETARIAN_MEAL).get(0));
                     machine.removeItem(Type.VEGETARIAN_MEAL);
                     EcoPoint.decreaseEcoPoint(VendingMachine.VEGETARIAN_MEAL_PRICE);
@@ -80,8 +78,7 @@ public class PurchaseAction extends Action {
                 }
                 break;
             case '3':
-                size = products.get(Type.CARNIVORE_MEAL).size();
-                if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.CARNIVORE_MEAL_PRICE)){
+                if (products.get(Type.CARNIVORE_MEAL).size() > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.CARNIVORE_MEAL_PRICE)){
                     actor.addItemToInventory(products.get(Type.CARNIVORE_MEAL).get(0));
                     machine.removeItem(Type.CARNIVORE_MEAL);
                     EcoPoint.decreaseEcoPoint(VendingMachine.CARNIVORE_MEAL_PRICE);
@@ -89,8 +86,7 @@ public class PurchaseAction extends Action {
                 }
                 break;
             case '4':
-                size = products.get(Type.STEGOSAUR_EGG).size();
-                if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.STEGOSAUR_EGG_PRICE)){
+                if (products.get(Type.STEGOSAUR_EGG).size() > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.STEGOSAUR_EGG_PRICE)){
                     actor.addItemToInventory(products.get(Type.STEGOSAUR_EGG).get(0));
                     machine.removeItem(Type.STEGOSAUR_EGG);
                     EcoPoint.decreaseEcoPoint(VendingMachine.STEGOSAUR_EGG_PRICE);
@@ -98,8 +94,7 @@ public class PurchaseAction extends Action {
                 }
                 break;
             case '5':
-                size = products.get(Type.BRACHIOSAUR_EGG).size();
-                if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.BRACHIOSAUR_EGG_PRICE)){
+                if (products.get(Type.BRACHIOSAUR_EGG).size() > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.BRACHIOSAUR_EGG_PRICE)){
                     actor.addItemToInventory(products.get(Type.BRACHIOSAUR_EGG).get(0));
                     machine.removeItem(Type.BRACHIOSAUR_EGG);
                     EcoPoint.decreaseEcoPoint(VendingMachine.BRACHIOSAUR_EGG_PRICE);
@@ -107,8 +102,7 @@ public class PurchaseAction extends Action {
                 }
                 break;
             case '6':
-                size = products.get(Type.ALLOSAUR_EGG).size();
-                if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.ALLOSAUR_EGG_PRICE)){
+                if (products.get(Type.ALLOSAUR_EGG).size() > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.ALLOSAUR_EGG_PRICE)){
                     actor.addItemToInventory(products.get(Type.ALLOSAUR_EGG).get(0));
                     machine.removeItem(Type.ALLOSAUR_EGG);
                     EcoPoint.decreaseEcoPoint(VendingMachine.ALLOSAUR_EGG_PRICE);
@@ -116,8 +110,7 @@ public class PurchaseAction extends Action {
                 }
                 break;
             case '7':
-                size = products.get(Type.LASER_GUN).size();
-                if (size > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.LASER_GUN_PRICE)){
+                if (products.get(Type.LASER_GUN).size() > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.LASER_GUN_PRICE)){
                     actor.addItemToInventory(products.get(Type.LASER_GUN).get(0));
                     machine.removeItem(Type.LASER_GUN);
                     EcoPoint.decreaseEcoPoint(VendingMachine.LASER_GUN_PRICE);
@@ -130,7 +123,7 @@ public class PurchaseAction extends Action {
 
     /**
      * Simply shows menu options within the vending machine
-     * @param machine
+     * @param products Items in the vending machine
      */
     private void showMenuOptions(Map<Type, ArrayList<Item>> products){
         int numFruits = products.get(Type.FRUIT).size();

@@ -17,14 +17,30 @@ public class Egg extends PortableItem {
      */
     private int age;
     private int hatchAfter;
+
+    /**
+     * This is used in the subclass to distinguish the type
+     */
     private Type eggType;
 
+    /**
+     * Constructor
+     * Initialise age as 0 and add capability
+     * @param name
+     */
     public Egg(String name) {
         super(name, '0');
         this.addCapability(Type.EGG);//Maurya - code added to see if item on floor is egg
         this.age = 0;
     }
 
+    /**
+     * Invoked when this is on the ground
+     * Pre checking is that if there is another actor on the same square, then just skip for this turn
+     * Check whether it is time to hatch, if so, check for the type and remove this and create new instance of corresponding
+     * Dinosaur on the same square.
+     * @param location The location of this Egg
+     */
     @Override
     public void tick(Location location) {
         super.tick(location);
@@ -49,10 +65,18 @@ public class Egg extends PortableItem {
         }
     }
 
+    /**
+     * Sets the number of turns of hatching
+     * @param hatchAfter
+     */
     public void setHatchAfter(int hatchAfter) {
         this.hatchAfter = hatchAfter;
     }
 
+    /**
+     * Sets the eggType
+     * @param eggType
+     */
     public void setEggType(Type eggType) {
         this.eggType = eggType;
     }
