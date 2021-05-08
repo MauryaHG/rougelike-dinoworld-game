@@ -1,5 +1,7 @@
 package game.items;
 
+import game.Type;
+
 /**
  * @author jinyeopoh
  * @version 1.0.1
@@ -16,6 +18,7 @@ public class BrachiosaurCorpse extends DinosaurCorpse {
      */
     public BrachiosaurCorpse() {
         super("Brachio corpse");
+        this.addCapability(Type.BRACHIOSAUR_CORPSE);
         super.setRotAge(ROT_AGE);
     }
 }
