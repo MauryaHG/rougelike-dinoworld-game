@@ -6,19 +6,23 @@ import game.Util;
 import game.actions.BreedAction;
 
 /**
- *
+ * @author :Maurya
+ * @version :1.0.0
+ * @see : Actor
+ * @see : GameMap
+ * Breeds Actors together or gets them to move closer
  */
 public class BreedBehaviour implements Behaviour {
 
     /**
-     *
+     *Constructor
      */
     public BreedBehaviour() {
 
     }
 
     /**
-     *
+     *Directs actor to closest mate if no mate adjacent to it, where if it is it will mate with it
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
      * @return
