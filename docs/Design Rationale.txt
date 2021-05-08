@@ -7,8 +7,8 @@ Overview
         - Dirt, Tree, Stegosaur
     Classes to be created
         - Bush, Egg, VendingMachine, Fruit, Dinosaur, Brachiosaur, Allosaur, HarvestAction, PurchaseAction, ShootAction,
-          FeedAction, BreedBehaviour, LayEggBehaviour, SeekFoodBehaviour, HatchBehaviour, GroundLocation, FruitHarvested,
-          CanivoreMeal, vegetarian, LaserGun, Type(Enum), EcoPoint(static)
+          FeedAction, BreedBehaviour, LayEggBehaviour, SeekFoodBehaviour, HatchBehaviour, GroundLocation,
+          CanivoreMeal, vegetarianMeal, LaserGun, Type(Enum), EcoPoint(static)
 
     We have designed most of the classes to inherit from the existing classes from the engine. Since engine provides the
     most of necessary parent classes, it should be able to reduce dependencies and fulfil given requirements.
@@ -30,12 +30,26 @@ Overview
     PurchaseAction gets reference to the VendingMachine and displays menu items, quantities, removes the item player selects and decreases eco points.
 
 
+     Hungry dinosaur
+     for the "food level" of the dinosaurs hitpoints variable of Actor was chosen because the health of the dinosaur is the same as the food level.
+     the tick() method in Dinosaur class reduces the food level by 1 every turn so it can be called for every turn by each dinosaur.
+     SeekFoodBehaviour (extends Behaviour) is called if the dinosaur's food level is below its minimum hunger
+     Returns EatFoodAction if dinosaur is standing on food source else makes sure dinosaur goes to the closest food source for it.
+
+
+    Breeding
+
+    BreedBehaviour extends Behaviour because they share the same methods so getAction was overridden so it returns BreedAction is actor has a mate next to it
+    or else it returns FollowBehaviour which makes the actor move towards the closest mate.This returns FollowBehaviour's getAction method so we reduce the repetition
+    BreedAction extends Action to over ride the execute  method
+    When executed it make the female dinosaur have a enum pregnant which gives the dinosaur a breeding length so in the tick method of the dinosaur the breeding time and laying egg can be managed
+
+    Death
+    tick() method in Dinosaur class because all the dinosaurs share the same tick method.If the actor is unconscious for certain amount of turns it gets removed from the map and an corpse item is added
 
 
 
-
-
-Design of each classes
+Initial Design of each classes
     Dirt (extends Ground)
         - Responsible for produce fruits
         - This overrides tick() method from Ground class.
@@ -151,5 +165,22 @@ Design of each classes
         - Any class needs to add or subtract the point, static methods will be used.
 
 
-    /////////Added classes
-    DinosaurGameMap(extends GameMap)
+    We mostly stuck to the initial design but added a few extra classes
+
+    Added classes:
+
+    BreedAction (extends Action)
+        - which makes actor mate with an actor with is next to it
+
+    eatFoodAction (extends Action)
+        - which makes actor eat the item on the floor
+    corpse (extends PortableItem )
+        - this extends PortableItem so it can be moved by player
+        - Parent class of StegosaurCorpse,AllosaurCorpse,BrachiosaurCorpse because they share the same methods
+
+    StegosaurCorpse,AllosaurCorpse,BrachiosaurCorpse (extends Corpse)
+        -Has capabilities of its corpse so it can be identified by other classes
+        fruit class which extended from ground class in the first design was changed to extend from fruit class ass the methods in item were more appropriate
+
+    FruitHarvested class was removed because it was not needed
+    hatchBehaviour class was removed and its functionality was added into be Egg class which has tick method which checks if the egg is ready to hatch and adds a new dinosaur to that location

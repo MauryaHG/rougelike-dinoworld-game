@@ -5,13 +5,24 @@ import edu.monash.fit2099.engine.*;
 import game.Util;
 import game.actions.BreedAction;
 
+/**
+ *
+ */
 public class BreedBehaviour implements Behaviour {
 
-
+    /**
+     *
+     */
     public BreedBehaviour() {
 
     }
 
+    /**
+     *
+     * @param actor the Actor acting
+     * @param map the GameMap containing the Actor
+     * @return
+     */
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
