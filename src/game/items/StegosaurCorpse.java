@@ -1,5 +1,7 @@
 package game.items;
 
+import game.Type;
+
 /**
  * @author jinyeopoh
  * @version 1.0.0
@@ -16,6 +18,7 @@ public class StegosaurCorpse extends DinosaurCorpse {
      */
     public StegosaurCorpse() {
         super("Stego corpse");
+        this.addCapability(Type.STEGOSAUR_CORPSE);
         super.setRotAge(ROT_AGE);
     }
 }

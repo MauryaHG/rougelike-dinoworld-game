@@ -1,5 +1,7 @@
 package game.items;
 
+import game.Type;
+
 /**
  * @author jinyeopoh
  * @version 1.0.1
@@ -16,6 +18,7 @@ public class AllosaurCorpse extends DinosaurCorpse {
      */
     public AllosaurCorpse() {
         super("Allosaur corpse");
+        this.addCapability(Type.ALLOSAUR_CORPSE);
         super.setRotAge(ROT_AGE);
     }
 }

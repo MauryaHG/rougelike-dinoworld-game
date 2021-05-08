@@ -19,10 +19,6 @@ public class EatFoodAction extends Action {
      * item which will be eaten by dinosaur
      */
     protected  Item item;
-    /**
-     * type of food that species can eat
-     */
-    protected Type foodSource;
 
     /**
      * searches the item list and adds all the
@@ -65,9 +61,9 @@ public class EatFoodAction extends Action {
             actor.heal(5);
         }
         if(actor.hasCapability(Type.ALLOSAUR)) {
-            if((item.hasCapability(Type.ALLOSAUR)) || (item.hasCapability(Type.STEGOSAUR))){
+            if((item.hasCapability(Type.ALLOSAUR_CORPSE)) || (item.hasCapability(Type.STEGOSAUR_CORPSE))){
                 heal = 50;
-            } else if(item.hasCapability(Type.BRACHIOSAUR)){
+            } else if(item.hasCapability(Type.BRACHIOSAUR_CORPSE)){
                 heal = 100;
             }else if (item.hasCapability(Type.EGG)){
                 heal = 10;
