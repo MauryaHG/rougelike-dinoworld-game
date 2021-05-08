@@ -12,11 +12,9 @@ import game.items.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.actions.BreedAction.breedLength;
-
 /**
  * @author :Maurya
- * @version :1.1.0
+ * @version :1.2.0
  * @see: Actor
  * @see: Stegosaur
  * @see: Brachiosaur
@@ -28,18 +26,51 @@ abstract public class Dinosaur extends Actor {
      * list of behaviours
      */
     protected List<Behaviour> behaviour = new ArrayList<Behaviour>();
+
     /**
      * number of turns the dinosaur has been unconciouis
      */
     protected int unconsciousCount = 0;
+
     /**
      * age of dinosaur (increase by one every turn)
      */
     protected int age;
+
     /**
      * number of turns female dinosaur has been pregnant
      */
     protected int breedingCount;
+
+    /**
+     * age of a adult allosaur
+     */
+    protected int ALLO_ADULT_AGE = 50;
+
+    /**
+     * age of a adult Stegosaur
+     */
+    protected int STEG_ADULT_AGE = 50;
+
+    /**
+     * age of a adult Brachiosaur
+     */
+    protected int BRACH_ADULT_AGE = 50;
+
+    /**
+     * constant integer of breeding length of Stegosaur
+     */
+    private int STEG_BREEDING_LENGTH = 10;
+
+    /**
+     * constant integer of breeding length of Brachiosaur
+     */
+    private int BRACH_BREEDING_LENGTH = 30;
+
+    /**
+     * constant integer of breeding length of Allosaur
+     */
+    private int ALLO_BREEDING_LENGTH = 50;
 
     /**
      * Create dinosaur with specified gender
@@ -101,57 +132,64 @@ abstract public class Dinosaur extends Actor {
      * @param map
      */
     public void tick(Actor actor, GameMap map) {
-        age++;
 
+        DinosaurCorpse corpse = null;
+        int maxUnconscious = 0;
+        int adultAge  = 0;
+        Egg eggItem = null;
+        Location here = map.locationOf(actor);
+        int breedLength = 0;
+
+        if(actor.hasCapability(Type.STEGOSAUR)){
+            eggItem = new StegosaurEgg();
+            corpse = new StegosaurCorpse();
+            maxUnconscious = 20;
+            adultAge = STEG_ADULT_AGE;
+            breedLength = STEG_BREEDING_LENGTH;
+        }
+
+        if(actor.hasCapability(Type.BRACHIOSAUR)){
+            eggItem = new BrachiosaurEgg();
+            corpse = new BrachiosaurCorpse();
+            maxUnconscious = 15;
+            adultAge = BRACH_ADULT_AGE;
+            breedLength = BRACH_BREEDING_LENGTH;
+        }
+
+        if(actor.hasCapability(Type.ALLOSAUR)){
+            eggItem = new AllosaurEgg();
+            corpse = new AllosaurCorpse();
+            maxUnconscious = 25;
+            adultAge = ALLO_ADULT_AGE;
+            breedLength = ALLO_BREEDING_LENGTH;
+        }
 
         if (actor.isConscious()) {
-            hitPoints--;
+            if(actor.hasCapability(Type.BABY)){
+                if ((age >= adultAge)){
+                    removeCapability(Type.BABY);
+                }
+            }
             if (actor.hasCapability(Type.PREGNANT)) {
                 if(breedingCount == breedLength){
-                    Location here = map.locationOf(actor);
-
-                    if(actor.hasCapability(Type.STEGOSAUR)){
-                        here.addItem(new StegosaurEgg());
-                    }
-
-                    if(actor.hasCapability(Type.BRACHIOSAUR)){
-                        here.addItem(new BrachiosaurEgg());
-                    }
-
-                    if(actor.hasCapability(Type.ALLOSAUR)){
-                        here.addItem(new AllosaurEgg());
-                    }
-
                     actor.removeCapability(Type.PREGNANT);
+                    here.addItem(eggItem);
                     breedingCount = 0;
                     System.out.println(actor + " laid egg on (" + here.x() + "," + here.y() + ")");
                 }
                 breedingCount++;
             }
+            hitPoints--;
         }
 
         if (!isConscious()) {
-            DinosaurCorpse corpse = null;
             addCapability(Type.UNCONSCIOUS);
-            int maxUnconsciouis = 0;
-            if (actor.hasCapability(Type.STEGOSAUR)){
-                corpse = new StegosaurCorpse();
-                maxUnconsciouis = 20;
-            }
-            if (actor.hasCapability(Type.BRACHIOSAUR)){
-                corpse = new BrachiosaurCorpse();
-                maxUnconsciouis = 15;
-            }
-            if (actor.hasCapability(Type.ALLOSAUR)){
-                corpse = new AllosaurCorpse();
-                maxUnconsciouis = 25;
-            }
-            if (unconsciousCount == maxUnconsciouis) {
-
+            if (unconsciousCount == maxUnconscious) {
                 map.locationOf(actor).addItem(corpse);
                 map.removeActor(actor);
             }
             unconsciousCount += 1;
         }
+        age++;
     }
 }

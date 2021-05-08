@@ -13,8 +13,11 @@ import game.actions.*;
  */
 public class Stegosaur extends Dinosaur {
 
-	protected int STEG_ADULT_AGE = 30;
+	/**
+	 * minimum int where dinosaur will be hungry
+	 */
 	private int MIN_HUNGER = 90;
+
 	private boolean getAttacked = false;
 	private int turns = 0;
 
@@ -29,7 +32,7 @@ public class Stegosaur extends Dinosaur {
 		super(name, 's', 100, gender);
 		this.hitPoints = 50;
 		addCapability(Type.STEGOSAUR);
-		this.age = STEG_ADULT_AGE;
+		this.age = BRACH_ADULT_AGE;
 	}
 
 	/**

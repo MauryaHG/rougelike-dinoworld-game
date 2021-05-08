@@ -14,10 +14,6 @@ import game.actions.FeedAction;
  */
 public class Allosaur extends Dinosaur{
     /**
-     * age of a adult allosaur
-     */
-    protected int ALLO_ADULT_AGE = 50;
-    /**
      * minimum int where dinosaur will be hungry
      */
     private int MIN_HUNGER = 90;

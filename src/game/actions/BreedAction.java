@@ -19,18 +19,8 @@ public class BreedAction extends Action {
      * actor with type female
      */
     private Actor femaleDinosaur;
-    /**
-     * breeding length of particular actor
-     */
-    public static int breedLength;
-    /**
-     * constant integer of breeding length of Stegosaur
-     */
-    private int STEG_BREEDING_LENGTH = 10;
-    /**
-     * constant integer of breeding length of Brachiosaur
-     */
-    private int BRACH_BREEDING_LENGTH = 30;
+
+
 
     /**
      * take 2 actors and initialise them into male and female according to their gender
@@ -58,12 +48,6 @@ public class BreedAction extends Action {
     public String execute(Actor actor, GameMap map) {
         femaleDinosaur.addCapability(Type.PREGNANT);
 
-        if(maleDinosaur.hasCapability(Type.STEGOSAUR)) {
-            breedLength = STEG_BREEDING_LENGTH;
-        }
-        if(maleDinosaur.hasCapability(Type.BRACHIOSAUR)) {
-            this.breedLength = BRACH_BREEDING_LENGTH;
-        }
         return menuDescription(actor);
     }
 
