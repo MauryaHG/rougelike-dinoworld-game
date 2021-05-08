@@ -1,4 +1,4 @@
-(Updated)
+(Updated - Assignment2)
 Design Rationale
     - To fulfill some missing parts of the game Jurassic World via creating and modifying classes.
 
@@ -6,20 +6,37 @@ Overview
     Classes to be modified
         - Dirt, Tree, Stegosaur
     Classes to be created
-        - Bush, Egg, VendingMachine, Fruit, Dinosaur, Brachiosaur, Allosaur, HarvestAction, PurchaseAction, ShootAction,
-          FeedAction, BreedBehaviour, LayEggBehaviour, SeekFoodBehaviour, HatchBehaviour, GroundLocation,
+        - Bush, Egg, VendingMachine, Fruit, Dinosaur, Brachiosaur, Allosaur, HarvestAction, PurchaseAction,
+          FeedAction, BreedBehaviour, SeekFoodBehaviour, HatchBehaviour, GroundLocation,
           CanivoreMeal, vegetarianMeal, LaserGun, Type(Enum), EcoPoint(static)
+
+    Calsses added (in Assignment2)
+        -  BreedAction, eatFoodAction, Corpse, StegosaurCorpse, AllosaurCorpse, BrachiosaurCorpse, Util, DinosaurGameMap
+
+    Classes removed (in Assignment2)
+        - LayEggBehaviour, FruitHarvested, ShootAction
+
+    Classes modified (in Assignment2)
+        - Fruit
 
     We have designed most of the classes to inherit from the existing classes from the engine. Since engine provides the
     most of necessary parent classes, it should be able to reduce dependencies and fulfil given requirements.
+
+    Dirt, tree and bush
     First of all, we created DinosaurGameMap that extends GampMap in order to create new GroundLocation instead of Location instance.
     We also overrode tick() in GroundLocation, hence we were able to do ‘other work’ before tick() in Ground is invoked.
     Dirt, Tree and Bush extends Ground. tick() in GroundLocation checks what Ground object is on the square and functions as on the specification, depending on the objects.
     Dirt, Tree and Bush classes have no such functions but GroundLocation fulfils the requirements of each classes.
     The reason behind GroundLocation takes care of those requirements is simply we can manage all Ground objects in a single class and reduce dependancy(EcoPoint)
 
-    Stegosaur,
-    Brachiosaur and Allosaur are going to have same attributes and methods, so we designed to create parent class of them, which is Dinosaur, and the parent class extends the Actor in the engine.
+    Hungry dinosaur
+    for the "food level" of the dinosaurs hitpoints variable of Actor was chosen because the health of the dinosaur is the same as the food level.
+    the tick() method in Dinosaur class reduces the food level by 1 every turn so it can be called for every turn by each dinosaur.
+    SeekFoodBehaviour (extends Behaviour) is called if the dinosaur's food level is below its minimum hunger
+    Returns EatFoodAction if dinosaur is standing on food source else makes sure dinosaur goes to the closest food source for it.
+
+    Brachiosaur, Steogosaur and Allosaur
+    Stegosaur, Brachiosaur and Allosaur are going to have same attributes and methods, so we designed to create parent class of them, which is Dinosaur, and the parent class extends the Actor in the engine.
     Hence, we look forward to reduce repetition(DRY) of codes.
 
     Eco points and purchasing
@@ -29,23 +46,14 @@ Overview
     VendingMachine extends Ground only for displaying ‘M’ character and its main role is to manipulate Items in the machine.
     PurchaseAction gets reference to the VendingMachine and displays menu items, quantities, removes the item player selects and decreases eco points.
 
-
-     Hungry dinosaur
-     for the "food level" of the dinosaurs hitpoints variable of Actor was chosen because the health of the dinosaur is the same as the food level.
-     the tick() method in Dinosaur class reduces the food level by 1 every turn so it can be called for every turn by each dinosaur.
-     SeekFoodBehaviour (extends Behaviour) is called if the dinosaur's food level is below its minimum hunger
-     Returns EatFoodAction if dinosaur is standing on food source else makes sure dinosaur goes to the closest food source for it.
-
-
     Breeding
-
     BreedBehaviour extends Behaviour because they share the same methods so getAction was overridden so it returns BreedAction is actor has a mate next to it
     or else it returns FollowBehaviour which makes the actor move towards the closest mate.This returns FollowBehaviour's getAction method so we reduce the repetition
     BreedAction extends Action to over ride the execute  method
     When executed it make the female dinosaur have a enum pregnant which gives the dinosaur a breeding length so in the tick method of the dinosaur the breeding time and laying egg can be managed
 
     Death
-    tick() method in Dinosaur class because all the dinosaurs share the same tick method.If the actor is unconscious for certain amount of turns it gets removed from the map and an corpse item is added
+    tick() method in Dinosaur counts when Dinosaur is unconscious class because all the dinosaurs share the same tick method.If the actor is unconscious for certain amount of turns it gets removed from the map and an corpse item is added
 
 
 
@@ -103,7 +111,7 @@ Initial Design of each classes
         - This overrides getAction() from Behaviour class
         - Create distance() method to check for adjacency with the target before performing an action.
 
-    LayEggBehaviour( implements Behaviour, Dinosaur)
+    LayEggBehaviour( implements Behaviour, Dinosaur) ////// Removed
         - Responsible for laying an egg in a given condition
         - This implements Behaviour to override methods.
         - Override canLayEgg() methods from Dinosaur and getAction() from Behaviour before an action.
@@ -114,7 +122,7 @@ Initial Design of each classes
           will be responsible for creating an instance of it on the same spot.
         - Interacting through GroundLocation class after appropriate turns pass to create an instance.
 
-    EcoPoint( static class)
+    EcoPoint(abstract)
         - Responsible for collecting point from different situations
         - As this class is static, any classes need this will interact via static methods
         - Any classes that need to check add or subtract will use this class using static methods and a variable.
@@ -134,10 +142,6 @@ Initial Design of each classes
         - This will extends Action. getAllowableActions() will be overridden in VendingMachine class and then PurchaseAction will be added.
         - Since PurchaseAction is added to VendingMachine, if player approaches to the VendingMachine player may perform PurchaseAction
 
-    Fruit (association with Tree and Bush)
-        - Responsible for staying in the same spot for 15 turns.
-        - This class does not directly interact with the existing system, but once tick() in Tree and Bush will use Fruit class.
-        - Since tick() in Tree or Bush will be called every turn, rotCounter will be incremented if they have Fruits
 
     CarnivoreMeal, vegeterianMeal and FruitHarvested (extends PortableItem)
         - Responsible for carried by the player and disappear when fed
@@ -168,19 +172,31 @@ Initial Design of each classes
     We mostly stuck to the initial design but added a few extra classes
 
     Added classes:
+        BreedAction (extends Action)
+            - which makes actor mate with an actor with is next to it
 
-    BreedAction (extends Action)
-        - which makes actor mate with an actor with is next to it
+        eatFoodAction (extends Action)
+            - which makes actor eat the item on the floor
+        corpse (extends PortableItem )
+            - this extends PortableItem so it can be moved by player
+            - Parent class of StegosaurCorpse,AllosaurCorpse,BrachiosaurCorpse because they share the same methods
 
-    eatFoodAction (extends Action)
-        - which makes actor eat the item on the floor
-    corpse (extends PortableItem )
-        - this extends PortableItem so it can be moved by player
-        - Parent class of StegosaurCorpse,AllosaurCorpse,BrachiosaurCorpse because they share the same methods
+        StegosaurCorpse,AllosaurCorpse,BrachiosaurCorpse (extends Corpse)
+            -Has capabilities of its corpse so it can be identified by other classes
+            fruit class which extended from ground class in the first design was changed to extend from fruit class ass the methods in item were more appropriate
 
-    StegosaurCorpse,AllosaurCorpse,BrachiosaurCorpse (extends Corpse)
-        -Has capabilities of its corpse so it can be identified by other classes
-        fruit class which extended from ground class in the first design was changed to extend from fruit class ass the methods in item were more appropriate
+        Util
+            - This contains several methods that are used widely
+
+        DinosaurGameMap(extends GameMap)
+            - Responsible for create Location as GroundLocation
+
+    Modified from existing design:
+        Fruit (extends PortableItem)
+            - Can be set in Location or carried with player.
+            - Fruit has attributes telling its state. Because fruits may be on bush, tree, ground or in the inventory
+
 
     FruitHarvested class was removed because it was not needed
+    ShootAction class was removed because it was not needed
     hatchBehaviour class was removed and its functionality was added into be Egg class which has tick method which checks if the egg is ready to hatch and adds a new dinosaur to that location
