@@ -103,30 +103,31 @@ abstract public class Dinosaur extends Actor {
     public void tick(Actor actor, GameMap map) {
         age++;
 
-        if (actor.hasCapability(Type.PREGNANT)) {
-            if(breedingCount == breedLength){
-                Location here = map.locationOf(actor);
 
-                if(actor.hasCapability(Type.STEGOSAUR)){
-               here.addItem(new StegosaurEgg());
-                }
-
-                if(actor.hasCapability(Type.BRACHIOSAUR)){
-                    here.addItem(new BrachiosaurEgg());
-                }
-
-                if(actor.hasCapability(Type.ALLOSAUR)){
-                    here.addItem(new AllosaurEgg());
-                }
-
-                actor.removeCapability(Type.PREGNANT);
-                breedingCount = 0;
-                System.out.println(actor + " laid egg on (" + here.x() + "," + here.y() + ")");
-            }
-            breedingCount++;
-        }
         if (actor.isConscious()) {
             hitPoints--;
+            if (actor.hasCapability(Type.PREGNANT)) {
+                if(breedingCount == breedLength){
+                    Location here = map.locationOf(actor);
+
+                    if(actor.hasCapability(Type.STEGOSAUR)){
+                        here.addItem(new StegosaurEgg());
+                    }
+
+                    if(actor.hasCapability(Type.BRACHIOSAUR)){
+                        here.addItem(new BrachiosaurEgg());
+                    }
+
+                    if(actor.hasCapability(Type.ALLOSAUR)){
+                        here.addItem(new AllosaurEgg());
+                    }
+
+                    actor.removeCapability(Type.PREGNANT);
+                    breedingCount = 0;
+                    System.out.println(actor + " laid egg on (" + here.x() + "," + here.y() + ")");
+                }
+                breedingCount++;
+            }
         }
 
         if (!isConscious()) {
