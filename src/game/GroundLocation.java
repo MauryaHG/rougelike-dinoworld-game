@@ -1,20 +1,18 @@
 package game;
 
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Ground;
-import edu.monash.fit2099.engine.Item;
-import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.*;
 import game.dinosaurs.Brachiosaur;
 import game.dinosaurs.Stegosaur;
 import game.grounds.Bush;
 import game.grounds.Dirt;
+import game.grounds.Tree;
 import game.items.Fruit;
 
 import java.util.Random;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.0
+ * @version 1.1.1
  * @see Type
  * @see game.grounds.Dirt
  * @see game.grounds.Tree
@@ -23,12 +21,10 @@ import java.util.Random;
  * @see Brachiosaur
  */
 public class GroundLocation extends Location {
-
     /**
-     * An Enum to set an action
+     * This is used to grow bush at the start of game.
+     * This will be set false from the second turn
      */
-    private NextTurn action = NextTurn.SAME;
-
     private boolean isStartOfGame = true;
 
     /**
@@ -57,13 +53,13 @@ public class GroundLocation extends Location {
 
         if( isDirt ){
             if(isStartOfGame){
-                performAction(NextTurn.GROW, Util.ONE_PERCENT_CHANCE);
+                growBush(Util.ONE_PERCENT_CHANCE);
             } else if( neighboursTreeCount() > 0){
                 // Do nothing
             } else if( neighboursBushCount() > 1){
-                performAction(NextTurn.GROW, Util.TEN_PERCENT_CHANCE);
+                growBush(Util.TEN_PERCENT_CHANCE);
             } else {
-                performAction(NextTurn.GROW, Util.ZERO_ONE_PERCENT_CHANCE);
+                growBush(Util.ZERO_ONE_PERCENT_CHANCE);
             }
         }
 
@@ -102,6 +98,7 @@ public class GroundLocation extends Location {
 
             }
 
+            Actor a = getActor();
             // If Brachiosaur is on the same square, 50% chance to kill bush
             if(getActor() != null && getActor().hasCapability(Type.BRACHIOSAUR)){
                 if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
@@ -134,25 +131,12 @@ public class GroundLocation extends Location {
 
     /**
      * Performs an set action by given chance
-     * @param action An Enum type
      * @param chance chance of performing an action
-     * @return true if set new ground, otherwise false
      */
-    private boolean performAction(NextTurn action, int chance){
-        if(new Random().nextInt(chance) == 0){
-            if( action == NextTurn.GROW ){
+    private void growBush(int chance){
+        if(Util.calcPercentage(chance)){
                 setGround(new Bush());
-                return true;
-            }
+                return;
         }
-        return false;
-
-    }
-
-    /**
-     * An Enum for set next action after checking conditions
-     */
-    private enum NextTurn {
-        SAME, GROW
     }
 }

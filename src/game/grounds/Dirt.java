@@ -9,8 +9,6 @@ import game.Type;
  * @version 1.0.1
  */
 public class Dirt extends Ground {
-	private boolean isBush = false;
-
 	public Dirt() {
 		super('.');
 		addCapability(Type.DIRT);

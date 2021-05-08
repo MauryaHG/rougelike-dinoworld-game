@@ -1,3 +1,4 @@
+(Updated)
 Design Rationale
     - To fulfill some missing parts of the game Jurassic World via creating and modifying classes.
 
@@ -10,12 +11,28 @@ Overview
           CanivoreMeal, vegetarian, LaserGun, Type(Enum), EcoPoint(static)
 
     We have designed most of the classes to inherit from the existing classes from the engine. Since engine provides the
-    most of necessary parent classes, it should be able to reduce dependencies and fulfill given requirements. Stegosaur,
+    most of necessary parent classes, it should be able to reduce dependencies and fulfil given requirements.
+    First of all, we created DinosaurGameMap that extends GampMap in order to create new GroundLocation instead of Location instance.
+    We also overrode tick() in GroundLocation, hence we were able to do ‘other work’ before tick() in Ground is invoked.
+    Dirt, Tree and Bush extends Ground. tick() in GroundLocation checks what Ground object is on the square and functions as on the specification, depending on the objects.
+    Dirt, Tree and Bush classes have no such functions but GroundLocation fulfils the requirements of each classes.
+    The reason behind GroundLocation takes care of those requirements is simply we can manage all Ground objects in a single class and reduce dependancy(EcoPoint)
+
+    Stegosaur,
     Brachiosaur and Allosaur are going to have same attributes and methods, so we designed to create parent class of them, which is Dinosaur, and the parent class extends the Actor in the engine.
-    Hence, we look forward to reduce repetition(DRY) of codes. EcoPoint class will have static attributes and methods in order to access from any where it needs.
-    The reason for the EcoPoint being a static class is that in each turn, we do not know how many points will be obtained from each objects.
-    Hence, any classes need to interact with EcoPoint will access via static methods. We decided to create enum called Type
-    to specify objects in tick() in GroundLocation in order for corresponding performance for different objects.
+    Hence, we look forward to reduce repetition(DRY) of codes.
+
+    Eco points and purchasing
+    EcoPoint is an abstract class to prevent not to create as an instance and all attributes and methods are static, meaning that eco points are decreased and increased without getting the EcoPoint reference.
+    This is because eco point is obtained in diverse ways. Furthermore, manipulating eco points via static methods is better in terms of future maintenance. Because we may other classes that manipluates eco points as well.
+    We made a VendingMachine class that allows PurchaseAction if the player is nearby.
+    VendingMachine extends Ground only for displaying ‘M’ character and its main role is to manipulate Items in the machine.
+    PurchaseAction gets reference to the VendingMachine and displays menu items, quantities, removes the item player selects and decreases eco points.
+
+
+
+
+
 
 
 Design of each classes

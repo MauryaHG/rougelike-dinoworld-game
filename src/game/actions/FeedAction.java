@@ -1,6 +1,8 @@
 package game.actions;
 
 import edu.monash.fit2099.engine.*;
+import game.EcoPoint;
+import game.Util;
 import game.dinosaurs.Allosaur;
 import game.dinosaurs.Brachiosaur;
 import game.dinosaurs.Stegosaur;
@@ -191,6 +193,7 @@ public class FeedAction extends Action {
 
         }
 
+        EcoPoint.increaseEcoPoint(10);
         return "Successfully fed the dinosaur!!";
     }
 

@@ -1,6 +1,7 @@
 package game.items;
 
 import edu.monash.fit2099.engine.Location;
+import game.EcoPoint;
 import game.dinosaurs.Allosaur;
 import game.dinosaurs.Brachiosaur;
 import game.dinosaurs.Stegosaur;
@@ -54,12 +55,15 @@ public class Egg extends PortableItem {
             switch (eggType){
                 case STEGOSAUR_EGG:
                     location.addActor(new Stegosaur("StegosaurNewBorn", Util.getGender()));
+                    EcoPoint.increaseEcoPoint(100);
                     break;
                 case BRACHIOSAUR_EGG:
                     location.addActor(new Brachiosaur("BrachiosaurNewBorn", Util.getGender()));
+                    EcoPoint.increaseEcoPoint(1000);
                     break;
                 case ALLOSAUR_EGG:
                     location.addActor(new Allosaur("ALlosaurNewBorn"));
+                    EcoPoint.increaseEcoPoint(1000);
                     break;
             }
         }

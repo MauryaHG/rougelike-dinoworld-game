@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * @author Jinyeop Oh
  * @version 1.1.0
  * @see Ground parent class
- * @see Fruit Association
  */
 public class Tree extends Ground {
 	private int age = 0;
