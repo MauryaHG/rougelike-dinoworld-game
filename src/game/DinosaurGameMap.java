@@ -3,12 +3,14 @@ package game;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.GroundFactory;
 import edu.monash.fit2099.engine.Location;
+import game.grounds.Dirt;
 
 import java.util.List;
 
 /**
  * @author Jinyeop Oh
  * @version 1.0.2
+ * @deprecated
  */
 public class DinosaurGameMap extends GameMap {
 
@@ -34,7 +36,8 @@ public class DinosaurGameMap extends GameMap {
     public void growBushRandomly(){
         for (int y : heights) {
             for (int x : widths) {
-                super.at(x, y).tick();
+                if(at(x, y).getGround() instanceof Dirt)
+                    at(x, y).tick();
             }
         }
     }

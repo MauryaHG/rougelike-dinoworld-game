@@ -39,6 +39,10 @@ public class HarvestAction extends Action {
             fruit.setOnGround();
             fruit.resetAge();
             actor.addItemToInventory(fruit);
+
+            if( map.locationOf(actor).getGround() instanceof Bush)
+                ((Bush) map.locationOf(actor).getGround()).setHasNoFruit();
+
             EcoPoint.increaseEcoPoint(10);
             return menuDescription(actor);
         }

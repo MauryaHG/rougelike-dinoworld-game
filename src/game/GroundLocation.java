@@ -19,6 +19,7 @@ import java.util.Random;
  * @see Bush
  * @see Stegosaur
  * @see Brachiosaur
+ * @deprecated see Dirt, Bush and Tree
  */
 public class GroundLocation extends Location {
     /**
@@ -113,7 +114,7 @@ public class GroundLocation extends Location {
         }
 
 
-        super.tick();
+        //super.tick();
     }
 
     /**

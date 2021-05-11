@@ -51,8 +51,14 @@ public class Application {
 		".........................................................................++++...",
 		"..........................................................................++....",
 		"................................................................................");
-		GameMap gameMap = new DinosaurGameMap(groundFactory, map ); // Jinyeop
-		((DinosaurGameMap)gameMap).growBushRandomly();	// Jinyeop
+		GameMap gameMap = new GameMap(groundFactory, map ); // Jinyeop
+		// Produces a bush from each dirts before the start of game
+		for (int y : gameMap.getYRange()) {
+			for (int x : gameMap.getXRange()) {
+				if(gameMap.at(x, y).getGround() instanceof Dirt)
+					gameMap.at(x, y).tick();
+			}
+		}
 		world.addGameMap(gameMap);
 		
 		Actor player = new Player("Player", '@', 100);
