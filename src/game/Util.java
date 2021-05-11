@@ -7,38 +7,29 @@ import java.util.Random;
 
 /**
  * @author Jinyeop Oh and Maurya Gamage
- * @version 1.0.1
+ * @version 1.1.0
  */
 public abstract class Util {
     private static Random random = new Random();
 
-    /**
-     * A constant used to 1% chance with Ra
-     */
-    public static final int ONE_PERCENT_CHANCE = 100;
+    public static final int ONE_PERCENT_CHANCE = 10;
+    public static final int ZERO_ONE_PERCENT_CHANCE = 1;
+    public static final int TEN_PERCENT_CHANCE = 100;
+    public static final int FIVE_PERCENT_CHANCE = 50;
+    public static final int FIFTY_PERCENT_CHANCE = 500;
+    public static final int TWENTY_PERCENT_CHANCE = 200;
+    public static final int SIXTY_PERCENT_CHANCE = 600;
+
+    private static boolean raining = false;
 
     /**
-     * A constant used to 0.1% chance with Ra
+     * Retrieves target chance, calculate it and then return boolean value
+     * @param chance An int of target percentage
+     * @return A Boolean that outcome of calculation
      */
-    public static final int ZERO_ONE_PERCENT_CHANCE = 1000;
-
-    /**
-     * A constant used to 10% chance with Random object
-     */
-    public static final int TEN_PERCENT_CHANCE = 10;
-
-    /**
-     * A constant used to 5% chance with Random object
-     */
-    public static final int FIVE_PERCENT_CHANCE = 20;
-
-    /**
-     * A constant used to 50% chance with Random object
-     */
-    public static final int FIFTY_PERCENT_CHANCE = 2;
-
     public static boolean calcPercentage(int chance){
-        if( random.nextInt(chance) == 0)
+        // Range 1 to 1000
+        if( random.nextInt(1000)+1 <= chance)
             return true;
         return false;
     }
@@ -90,5 +81,13 @@ public abstract class Util {
         } else {
             return Type.FEMALE;
         }
+    }
+
+    public static boolean isRaining() {
+        return raining;
+    }
+
+    public static void setRaining(boolean isRaining) {
+        Util.raining = isRaining;
     }
 }

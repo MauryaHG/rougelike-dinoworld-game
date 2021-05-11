@@ -8,14 +8,19 @@ import game.Util;
 /**
  * A class that represents bare dirt. (Modified by the author)
  * @author Jinyeop Oh
- * @version 1.1.0
+ * @version 1.2.1
  */
 public class Dirt extends Ground {
+
 	public Dirt() {
 		super('.');
 		addCapability(Type.DIRT);
 	}
 
+	/**
+	 * Grows bush by different percentages
+	 * @param location The location of the Ground
+	 */
 	@Override
 	public void tick(Location location) {
  		if( neighboursTreeCount(location) > 0){
@@ -28,14 +33,12 @@ public class Dirt extends Ground {
 	}
 
 	/**
-	 * Performs an set action by given chance
+	 * Creates Bush by different chance
 	 * @param chance chance of performing an action
 	 */
 	private void growBush(Location location, int chance){
-		if(Util.calcPercentage(chance)){
+		if(Util.calcPercentage(chance))
 			location.setGround(new Bush());
-			return;
-		}
 	}
 
 	/**

@@ -25,6 +25,10 @@ public class Tree extends Ground {
 		addCapability(Type.TREE);
 	}
 
+	/**
+	 * Increments the age of this Tree and produces a fruit by 50% chance in every turns.
+	 * @param location The location of the Ground
+	 */
 	@Override
 	public void tick(Location location) {
 		age++;

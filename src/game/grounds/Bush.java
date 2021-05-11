@@ -24,26 +24,27 @@ public class Bush extends Ground {
         addCapability(Type.BUSH);
     }
 
+    /**
+     * Checks if this bush has bush and if so, don't produce more fruits, else produce one by 1% chance.
+     * After that, checks if actor on the same square is a Brachiosaur and if so, kill the bush and all fruits(on the bush and on the ground) by 50% chance
+     * @param location The location of the Ground
+     */
     @Override
     public void tick(Location location) {
         // If this bush has no fruit, produce fruit by 1% chance
-        if( !hasFruit ){
-            if( Util.calcPercentage(Util.ONE_PERCENT_CHANCE)){
-                Fruit fruit = new Fruit();
-                fruit.setOnBush(true);
-                location.addItem(fruit);
-                hasFruit = true;
-            }
+        if( !hasFruit && Util.calcPercentage(Util.ONE_PERCENT_CHANCE)){
+            Fruit fruit = new Fruit();
+            fruit.setOnBush(true);
+            location.addItem(fruit);
+            hasFruit = true;
         }
 
         // Get reference to the actor on the this location
         Actor actor = location.getActor();
 
         // Pre : If a actor on the same location is not a Brachiosaur, terminate
-        if( !(actor instanceof Brachiosaur) ){
+        if( !(actor instanceof Brachiosaur) )
             return;
-        }
-
 
         // Brachiosaur has 50% chance to kill bush and all the fruits
         if(Util.calcPercentage(Util.FIFTY_PERCENT_CHANCE)){
