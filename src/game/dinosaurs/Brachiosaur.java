@@ -15,10 +15,6 @@ import game.actions.*;
 public class Brachiosaur extends Dinosaur {
 
     /**
-     * age of a adult brachiosaur
-     */
-    protected static final int  BRACH_ADULT_AGE = 50;
-    /**
      * minimum int where dinosaur will be hungry
      */
     private int MIN_HUNGER = 140;

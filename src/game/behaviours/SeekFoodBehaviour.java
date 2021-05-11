@@ -24,6 +24,12 @@ public class SeekFoodBehaviour implements Behaviour {
     public SeekFoodBehaviour() {
     }
 
+    /**
+     * finds closest food or eats food around the actor
+     * @param actor the Actor acting
+     * @param map the GameMap containing the Actor
+     * @return
+     */
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
@@ -58,6 +64,7 @@ public class SeekFoodBehaviour implements Behaviour {
             sourceTwo = Type.CORPSE;
         }
 
+        // if actor is standing on food EatFoodaction is called
         for (Item indexItem : itemsHere) {
             if (indexItem.hasCapability(sourceOne) ||
                     indexItem.hasCapability(sourceTwo)) {
@@ -65,6 +72,7 @@ public class SeekFoodBehaviour implements Behaviour {
             }
         }
 
+        //if stegosaur is next to Allosaur it will attack it
         if(actor.hasCapability(Type.ALLOSAUR)) {
             for (Exit exit : here.getExits()) {
                 Location destination = exit.getDestination();
@@ -73,6 +81,7 @@ public class SeekFoodBehaviour implements Behaviour {
                     return new AttackAction(thisActor);
                 }
             }
+            //scan the map and search for closest food allosaur can eat or actors it can attack
             for (int x : widths) {
                 for (int y : heights) {
                     Actor thisActor = map.at(x, y).getActor();
@@ -93,7 +102,7 @@ public class SeekFoodBehaviour implements Behaviour {
             }
         }
 
-
+        //scan the map and search for closest food STEGOSAUR/BRACHIOSAUR can eat
         if ((actor.hasCapability(Type.STEGOSAUR)) || (actor.hasCapability(Type.BRACHIOSAUR))) {
             for (int x : widths) {
                 for (int y : heights) {
@@ -119,6 +128,7 @@ public class SeekFoodBehaviour implements Behaviour {
         }
         Location there = closestFood;
 
+        //get direction to move to get closer
         if (there != null) {
             int currentDistance = Util.distance(here, closestFood);
             for (Exit exit : here.getExits()) {
