@@ -15,17 +15,48 @@ import game.grounds.*;
  * The main class for the Jurassic World game.
  * @author Jinyeop
  * @author Maurya Gamage
- * @version 1.0.3
+ * @version 1.1.0
  */
 public class Application {
 
 	public static void main(String[] args) {
 		World world = new World(new Display());
 
-		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(),
-																new Tree(), new VendingMachine(), new Bush(), new Lake()); // Jinyeop
-		
-		List<String> map = Arrays.asList(
+		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Tree(), new VendingMachine(), new Bush(), new Lake()); // Jinyeop
+
+		List<String> mapNorth = Arrays.asList(
+		"................................................................................",
+		"................................................................................",
+		".....#######....................................................................",
+		"....._______....................................................................",
+		"................................................~...............................",
+		"................................................................................",
+		"........+.......................................................................",
+		"......................................+++............~..........................",
+		".......................................++++.....................................",
+		"...................................+............................................",
+		"................................................................................",
+		"......................................+++.......................................",
+		".....................................+++........................................",
+		"................................................................................",
+		"................................................................................",
+		"................................................................................",
+		"................................................................................",
+		"......................................................~~~.......................",
+		"......................................................~~~.......................",
+		"................................................................................",
+		".........................................................................++.....",
+		"........................................................................++.++...",
+		".........................................................................++++...",
+		"..........................................................................++....",
+		"................................................................................");
+		GameMap gameMapNorth = new DinosaurGameMap(groundFactory, mapNorth ); // Jinyeop
+		((DinosaurGameMap)gameMapNorth).setNorthMap(true);
+		((DinosaurGameMap)gameMapNorth).growBush();
+		world.addGameMap(gameMapNorth);
+
+
+		List<String> mapSouth = Arrays.asList(
 		"................................................................................",
 		"................................................................................",
 		".....#######....................................................................",
@@ -51,26 +82,27 @@ public class Application {
 		".........................................................................++++...",
 		"..........................................................................++....",
 		"................................................................................");
-		GameMap gameMap = new GameMap(groundFactory, map ); // Jinyeop
-		// Produces a bush from each dirts before the start of game
-		for (int y : gameMap.getYRange()) {
-			for (int x : gameMap.getXRange()) {
-				if(gameMap.at(x, y).getGround() instanceof Dirt)
-					gameMap.at(x, y).tick();
-			}
-		}
-		world.addGameMap(gameMap);
+		GameMap gameMapSouth = new DinosaurGameMap(groundFactory, mapSouth ); // Jinyeop
+		((DinosaurGameMap)gameMapSouth).setSouthMap(true);
+		((DinosaurGameMap)gameMapSouth).growBush();
+		world.addGameMap(gameMapSouth);
+
+		// Each map holds the other map for switching
+		((DinosaurGameMap)gameMapNorth).setOtherGameMap(gameMapSouth);
+		((DinosaurGameMap)gameMapSouth).setOtherGameMap(gameMapNorth);
+
+
 		
 		Actor player = new Player("Player", '@', 100);
-		world.addPlayer(player, gameMap.at(9, 4));
+		world.addPlayer(player, gameMapSouth.at(9, 4));
 		
 		// Place a pair of stegosaurs in the middle of the map
-		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur-1",Type.MALE));
-		gameMap.at(31, 12).addActor(new Stegosaur("Stegosaur-2",Type.FEMALE));
-		gameMap.at(10, 12).addActor(new Brachiosaur("Brachiosaur-1",Type.FEMALE));
-		gameMap.at(12, 12).addActor(new Brachiosaur("Brachiosaur-2",Type.FEMALE));
-		gameMap.at(10, 14).addActor(new Brachiosaur("Brachiosaur-3",Type.MALE));
-		gameMap.at(12, 14).addActor(new Brachiosaur("Brachiosaur-4",Type.MALE));
+		gameMapSouth.at(30, 12).addActor(new Stegosaur("Stegosaur-1",Type.MALE));
+		gameMapSouth.at(31, 12).addActor(new Stegosaur("Stegosaur-2",Type.FEMALE));
+		gameMapSouth.at(10, 12).addActor(new Brachiosaur("Brachiosaur-1",Type.FEMALE));
+		gameMapSouth.at(12, 12).addActor(new Brachiosaur("Brachiosaur-2",Type.FEMALE));
+		gameMapSouth.at(10, 14).addActor(new Brachiosaur("Brachiosaur-3",Type.MALE));
+		gameMapSouth.at(12, 14).addActor(new Brachiosaur("Brachiosaur-4",Type.MALE));
 		//gameMap.at(30, 10).addActor(new Allosaur("allo-4",Type.MALE));
 
 
