@@ -5,14 +5,13 @@ import game.EcoPoint;
 import game.Type;
 import game.grounds.VendingMachine;
 
-import javax.imageio.stream.ImageInputStream;
 import java.util.ArrayList;
 import java.util.Map;
 
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.1
+ * @version 1.1.2
  * @see Type
  */
 public class PurchaseAction extends Action {
@@ -110,6 +109,14 @@ public class PurchaseAction extends Action {
                 }
                 break;
             case '7':
+                if (products.get(Type.PTERODACTYLS_EGG).size() > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.PTERODACTYLS_EGG_PRICE)){
+                    actor.addItemToInventory(products.get(Type.PTERODACTYLS_EGG).get(0));
+                    machine.removeItem(Type.PTERODACTYLS_EGG);
+                    EcoPoint.decreaseEcoPoint(VendingMachine.PTERODACTYLS_EGG_PRICE);
+                    returnMsg = "Successfully purchased the Pterodactyls egg from the vending machine";
+                }
+                break;
+            case '8':
                 if (products.get(Type.LASER_GUN).size() > 0 && EcoPoint.canDecreaseEcoPoint(VendingMachine.LASER_GUN_PRICE)){
                     actor.addItemToInventory(products.get(Type.LASER_GUN).get(0));
                     machine.removeItem(Type.LASER_GUN);
@@ -133,6 +140,7 @@ public class PurchaseAction extends Action {
         int numBrachiosaurEggs = products.get(Type.BRACHIOSAUR_EGG).size();
         int numAllosaurEggs = products.get(Type.ALLOSAUR_EGG).size();
         int numLaserGun = products.get(Type.LASER_GUN).size();
+        int numPterodactylsEggs = products.get(Type.PTERODACTYLS_EGG).size();
 
         System.out.println();
         System.out.println("Eco Point : " + EcoPoint.getEcoPoint());
@@ -142,7 +150,8 @@ public class PurchaseAction extends Action {
         System.out.println("Stegosaur Egg (" + numStegosaurEggs + ") - "+ VendingMachine.STEGOSAUR_EGG_PRICE+" points. Press 4" );
         System.out.println("Brachiosaur Egg (" + numBrachiosaurEggs + ") - "+ VendingMachine.BRACHIOSAUR_EGG_PRICE+" points. Press 5" );
         System.out.println("Allosaur Egg (" + numAllosaurEggs + ") - "+ VendingMachine.ALLOSAUR_EGG_PRICE+" points. Press 6" );
-        System.out.println("Laser Gun (" + numLaserGun + ") - "+ VendingMachine.LASER_GUN_PRICE+" points. Press 7" );
+        System.out.println("Pterodactyls Egg (" + numPterodactylsEggs + ") - "+ VendingMachine.PTERODACTYLS_EGG_PRICE+" points. Press 7" );
+        System.out.println("Laser Gun (" + numLaserGun + ") - "+ VendingMachine.LASER_GUN_PRICE+" points. Press 8" );
         System.out.println("Cancel - press any");
 
     }

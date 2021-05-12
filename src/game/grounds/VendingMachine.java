@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * @author Jinyeop Oh
- * @version 1.2.1
+ * @version 1.2.2
  * @see Fruit
  * @see CarnivoreMeal
  * @see VegetarianMeal
@@ -20,7 +20,7 @@ import java.util.Map;
  * @see BrachiosaurEgg
  * @see AllosaurEgg
  * @see LaserGun
- *
+ * @see PterodactylsEgg
  */
 public class VendingMachine extends Ground {
     /**
@@ -37,6 +37,7 @@ public class VendingMachine extends Ground {
     private final int NUM_STEGOSAUR_EGG = 3;
     private final int NUM_BRACHIOSAUR_EGG = 3;
     private final int NUM_ALLOSAUR_EGG = 3;
+    private final int NUM_PTERODACTYLS_EGG = 3;
 
     /**
      * The price of each items in the machine
@@ -48,6 +49,7 @@ public class VendingMachine extends Ground {
     public static final int BRACHIOSAUR_EGG_PRICE = 500;
     public static final int ALLOSAUR_EGG_PRICE = 1000;
     public static final int LASER_GUN_PRICE = 500;
+    public static final int PTERODACTYLS_EGG_PRICE = 200;
 
 
 
@@ -65,6 +67,7 @@ public class VendingMachine extends Ground {
         products.put(Type.BRACHIOSAUR_EGG, getMachineItems(Type.BRACHIOSAUR_EGG));
         products.put(Type.ALLOSAUR_EGG, getMachineItems(Type.ALLOSAUR_EGG));
         products.put(Type.LASER_GUN, getMachineItems(Type.LASER_GUN));
+        products.put(Type.PTERODACTYLS_EGG, getMachineItems(Type.PTERODACTYLS_EGG));
     }
 
     /**
@@ -125,6 +128,11 @@ public class VendingMachine extends Ground {
             case LASER_GUN:
                 items.add(new LaserGun());
                 break;
+            case PTERODACTYLS_EGG:
+                for(int i = 0; i < NUM_PTERODACTYLS_EGG; i++){
+                    items.add(new PterodactylsEgg());
+                }
+                break;
         }
         return items;
     }
@@ -157,6 +165,9 @@ public class VendingMachine extends Ground {
                 break;
             case LASER_GUN:
                 products.get(Type.LASER_GUN).remove(0);
+                break;
+            case PTERODACTYLS_EGG:
+                products.get(Type.PTERODACTYLS_EGG).remove(0);
                 break;
 
         }
