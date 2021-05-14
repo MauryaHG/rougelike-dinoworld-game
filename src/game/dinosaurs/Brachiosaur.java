@@ -27,6 +27,7 @@ public class Brachiosaur extends Dinosaur {
     public Brachiosaur(String name, Type gender) {
         super(name, 'b', 160, gender);
         this.hitPoints = 100;
+        this.maxWaterLevel = 200;
         addCapability(Type.BRACHIOSAUR);
         this.age = BRACH_ADULT_AGE;
     }

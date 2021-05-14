@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @author :Maurya
- * @version :1.2.0
+ * @version :1.3.0
  * @see: Actor
  * @see: Stegosaur
  * @see: Brachiosaur
@@ -43,6 +43,16 @@ abstract public class Dinosaur extends Actor {
     protected int breedingCount;
 
     /**
+     * water level of dinosaur
+     */
+    protected int waterLevel;
+
+    /**
+     * max water level of dinosaur
+     */
+    protected int maxWaterLevel;
+
+    /**
      * age of a adult allosaur
      */
     protected int ALLO_ADULT_AGE = 50;
@@ -58,19 +68,39 @@ abstract public class Dinosaur extends Actor {
     protected int BRACH_ADULT_AGE = 50;
 
     /**
+     * age of a adult Pterodactyl
+     */
+    protected int PET_ADULT_AGE = 50;
+
+    /**
      * constant integer of breeding length of Stegosaur
      */
-    private int STEG_BREEDING_LENGTH = 10;
+    private final int STEG_BREEDING_LENGTH = 10;
 
     /**
      * constant integer of breeding length of Brachiosaur
      */
-    private int BRACH_BREEDING_LENGTH = 30;
+    private final int BRACH_BREEDING_LENGTH = 30;
 
     /**
      * constant integer of breeding length of Allosaur
      */
-    private int ALLO_BREEDING_LENGTH = 50;
+    private final int ALLO_BREEDING_LENGTH = 50;
+
+    /**
+     * constant integer starting water level
+     */
+    private final int START_WATER_LVL = 60;
+
+    /**
+     * constant integer maximum water level
+     */
+    private final int MAX_WATER_LVL = 100;
+
+    /**
+     * number of turns of unconciousness actor can live after dehydrated
+     */
+    private final int DEATH_BY_DEHYDRATION = 15;
 
     /**
      * Create dinosaur with specified gender
@@ -81,6 +111,8 @@ abstract public class Dinosaur extends Actor {
      */
     public Dinosaur(String name, char displayChar, int hitPoints, Type gender) {
         super(name, displayChar, hitPoints);
+        this.waterLevel = START_WATER_LVL;
+        this.maxWaterLevel = MAX_WATER_LVL;
         if (gender == Type.MALE) {
             addCapability(Type.MALE);
         }
@@ -126,6 +158,11 @@ abstract public class Dinosaur extends Actor {
         return isHungry;
     }
 
+
+    public boolean isHydrated() {
+        return waterLevel > 0;
+    }
+
     /**
      * ticks every turn and changes relevant attributes of dinosaur
      * @param actor
@@ -164,7 +201,7 @@ abstract public class Dinosaur extends Actor {
             breedLength = ALLO_BREEDING_LENGTH;
         }
 
-        if (actor.isConscious()) {
+        if (actor.isConscious() && this.isHydrated()) {
             if(actor.hasCapability(Type.BABY)){
                 if ((age >= adultAge)){
                     removeCapability(Type.BABY);
@@ -180,6 +217,7 @@ abstract public class Dinosaur extends Actor {
                 breedingCount++;
             }
             hitPoints--;
+            waterLevel--;
         }
 
         if (!isConscious()) {
@@ -190,6 +228,15 @@ abstract public class Dinosaur extends Actor {
             }
             unconsciousCount += 1;
         }
+
+         if (!isHydrated()){
+             addCapability(Type.UNCONSCIOUS);
+             if (unconsciousCount == DEATH_BY_DEHYDRATION) {
+                 map.locationOf(actor).addItem(corpse);
+                 map.removeActor(actor);
+             }
+             unconsciousCount += 1;
+         }
         age++;
     }
 }
