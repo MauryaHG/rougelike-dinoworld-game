@@ -107,6 +107,11 @@ public class Stegosaur extends Dinosaur {
 		return new DoNothingAction();
 	}
 
+	@Override
+	public int getMIN_HUNGER() {
+		return MIN_HUNGER;
+	}
+
 	public boolean isGetAttacked() {	// Jinyeop
 		return getAttacked;
 	}

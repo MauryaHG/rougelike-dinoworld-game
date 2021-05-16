@@ -53,13 +53,18 @@ public class EatFoodAction extends Action {
     public String execute(Actor actor, GameMap map) {
         Location here = map.locationOf(actor);
         int heal = 0;
-        here.removeItem(item);
+
         if(actor.hasCapability(Type.STEGOSAUR)) {
             actor.heal(10);
         }
         if(actor.hasCapability(Type.BRACHIOSAUR)) {
             actor.heal(5);
         }
+
+        if(actor.hasCapability(Type.PTERODACTYLS)) {
+            actor.heal(10);
+        }
+
         if(actor.hasCapability(Type.ALLOSAUR)) {
             if((item.hasCapability(Type.ALLOSAUR_CORPSE)) || (item.hasCapability(Type.STEGOSAUR_CORPSE))){
                 heal = 50;
@@ -70,6 +75,10 @@ public class EatFoodAction extends Action {
             }
             actor.heal(heal);
         }
+        //if (item.life == 0 ){
+        //     here.removeItem(item);
+        // }
+
         return menuDescription(actor);
     }
 

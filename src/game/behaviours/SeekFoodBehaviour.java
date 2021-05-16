@@ -64,6 +64,11 @@ public class SeekFoodBehaviour implements Behaviour {
             sourceTwo = Type.CORPSE;
         }
 
+        if(actor.hasCapability(Type.PTERODACTYLS)) {
+            sourceOne = Type.CORPSE;
+            sourceTwo = Type.CORPSE;
+        }
+
         // if actor is standing on food EatFoodaction is called
         for (Item indexItem : itemsHere) {
             if (indexItem.hasCapability(sourceOne) ||
@@ -126,6 +131,44 @@ public class SeekFoodBehaviour implements Behaviour {
                 }
             }
         }
+
+
+
+        if (actor.hasCapability(Type.PTERODACTYLS)){
+            boolean landable = true;
+            for (Item indexItem : itemsHere) {
+                if (indexItem.hasCapability(sourceOne)) {
+                    for (Exit exit : here.getExits()) {
+                        Location destination = exit.getDestination();
+                        Actor thisActor = destination.getActor();
+                        if (thisActor != null) {
+                            landable = false;
+                        }
+                    }
+                }
+            }
+            if (landable){
+                return new EatFoodAction(actor, itemsHere);
+            }
+
+            for (int x : widths) {
+                for (int y : heights) {
+                    List<Item> itemsThere = map.at(x, y).getItems();
+                    for (Item indexItem : itemsThere) {
+                        if ((indexItem.hasCapability(sourceOne)) ||
+                                (indexItem.hasCapability(sourceTwo))) {
+                            Location there = map.at(x, y);
+                            int currentDistance = Util.distance(here, there);
+                            if (currentDistance < minimumDistance) {
+                                minimumDistance = currentDistance;
+                                closestFood = map.at(x, y);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         Location there = closestFood;
 
         //get direction to move to get closer

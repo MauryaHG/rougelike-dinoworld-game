@@ -32,6 +32,11 @@ public class Brachiosaur extends Dinosaur {
         this.age = BRACH_ADULT_AGE;
     }
 
+    @Override
+    public int getMIN_HUNGER() {
+        return MIN_HUNGER;
+    }
+
     /**
      *
      * @param otherActor the Actor that might be performing attack
@@ -50,34 +55,5 @@ public class Brachiosaur extends Dinosaur {
         return list;
     }
 
-    /**
-     *
-     * @param actions    collection of possible Actions for this Actor
-     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
-     * @param map        the map containing the Actor
-     * @param display    the I/O object to which messages may be written
-     * @return action to be done this turn
-     */
-    @Override
-    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        behaviour.clear();
-        if (this.isConscious()) {
-            if (this.hitPoints >= MIN_HUNGER && !(this.hasCapability(Type.PREGNANT))) {
-                behaviour.add(new BreedBehaviour());
-            }
-            if (isHungry(MIN_HUNGER, map)) {
-                behaviour.add(new SeekFoodBehaviour());
-            }
-            behaviour.add(new WanderBehaviour());
-            for (Behaviour index : behaviour) {
-                Action action = index.getAction(this, map);
-                if (action != null) {
-                    tick(this, map);
-                    return action;
-                }
-            }
-        }
-        tick(this, map);
-        return new DoNothingAction();
-    }
+
 }

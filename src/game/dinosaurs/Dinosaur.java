@@ -1,11 +1,12 @@
 package game.dinosaurs;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.*;
 import game.behaviours.Behaviour;
 import game.Type;
 import game.Util;
+import game.behaviours.BreedBehaviour;
+import game.behaviours.SeekFoodBehaviour;
+import game.behaviours.WanderBehaviour;
 import game.items.*;
 
 
@@ -143,6 +144,39 @@ abstract public class Dinosaur extends Actor {
     }
 
     /**
+     *
+     * @param actions    collection of possible Actions for this Actor
+     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+     * @param map        the map containing the Actor
+     * @param display    the I/O object to which messages may be written
+     * @return action to be done this turn
+     */
+    @Override
+    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        behaviour.clear();
+        if (this.isConscious()) {
+            if (this.hitPoints >= this.getMIN_HUNGER() && !(this.hasCapability(Type.PREGNANT))) {
+                behaviour.add(new BreedBehaviour());
+            }
+            if (isHungry(this.getMIN_HUNGER(), map)) {
+                behaviour.add(new SeekFoodBehaviour());
+            }
+            behaviour.add(new WanderBehaviour());
+            for (Behaviour index : behaviour) {
+                Action action = index.getAction(this, map);
+                if (action != null) {
+                    tick(this, map);
+                    return action;
+                }
+            }
+        }
+        tick(this, map);
+        return new DoNothingAction();
+    }
+
+    protected abstract int getMIN_HUNGER();
+
+    /**
      * check if dinosaur is hungry
      * @param minHunger min hunger of dinosaur species
      * @param map game map actor is located
@@ -157,7 +191,6 @@ abstract public class Dinosaur extends Actor {
         }
         return isHungry;
     }
-
 
     public boolean isHydrated() {
         return waterLevel > 0;
