@@ -7,7 +7,6 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.FancyGroundFactory;
 import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.World;
 import game.dinosaurs.*;
 import game.grounds.*;
 
@@ -15,12 +14,13 @@ import game.grounds.*;
  * The main class for the Jurassic World game.
  * @author Jinyeop
  * @author Maurya Gamage
- * @version 1.1.0
+ * @version 1.2.0
  */
 public class Application {
 
 	public static void main(String[] args) {
-		World world = new World(new Display());
+		Display display = new Display();
+		JurassicWorld world = new JurassicWorld(display);
 
 		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Tree(), new VendingMachine(), new Bush(), new Lake()); // Jinyeop
 
@@ -63,7 +63,7 @@ public class Application {
 		".....#_____#....................................................................",
 		".....#_+___#....................................~...............................",
 		".....###.###....................................................................",
-		"........+.......................................................................",
+		"........+.M.....................................................................",
 		"......................................+++............~..........................",
 		".......................................++++.....................................",
 		"...................................+++++........................................",
@@ -72,7 +72,7 @@ public class Application {
 		".....................................+++........................................",
 		"................................................................................",
 		"............+++.................................................................",
-		".............+++++.....................M........................................",
+		".............+++++..............................................................",
 		"...............++........................................+++++..................",
 		".............+++....................................++++++++....................",
 		"............+++.......................................+++.......................",
@@ -106,6 +106,17 @@ public class Application {
 		//gameMap.at(30, 10).addActor(new Allosaur("allo-4",Type.MALE));
 
 
-		world.run();
+		boolean flag = true;
+		while(flag){
+			world.run();
+
+			System.out.println("Play another game?");
+			System.out.println("Leave the game - n");
+			System.out.println("Play agina - press any");
+			if( display.readChar() == 'n'){
+				flag = false;
+				System.out.println("Thank you!!!!!!!!!!!!");
+			}
+		}
 	}
 }

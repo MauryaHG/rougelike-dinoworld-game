@@ -8,7 +8,7 @@ abstract public class EcoPoint {
     /**
      *  An integer representing the eco point used in the game
      */
-    private static int ecoPoint = 2000;
+    private static int ecoPoint = 0;
 
     /**
      * Increment the ecoPoint by given ecoPoint. There is no limit.
