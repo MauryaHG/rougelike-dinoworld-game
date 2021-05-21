@@ -16,13 +16,6 @@ import java.util.List;
  */
 public class SeekFoodBehaviour implements Behaviour {
 
-    /**
-     * Constructor.
-     *
-     * @param
-     */
-    public SeekFoodBehaviour() {
-    }
 
     /**
      * finds closest food or eats food around the actor

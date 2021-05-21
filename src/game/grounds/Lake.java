@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
+import game.Type;
 import game.Util;
 import game.dinosaurs.Dinosaur;
 import game.items.Fish;
@@ -30,7 +31,7 @@ public class Lake extends Ground {
      */
     public Lake() {
         super('~');
-
+        addCapability(Type.LAKE);
         // Initialise fishes with 5
         for(int i = 0; i < 5; i++)
             fishes.add(new Fish());
@@ -77,6 +78,14 @@ public class Lake extends Ground {
     }
 
     /**
+     * Decreases the sips after actor drinks
+     */
+    public void decrementSips(){
+        this.sips -= 1;
+    }
+
+
+    /**
      * Returns the number of fishes in the lake
      * @return
      */
@@ -95,5 +104,9 @@ public class Lake extends Ground {
         // If enough room for new Fish, calc 60% and then create new one
         if(Util.calcPercentage(Util.SIXTY_PERCENT_CHANCE))
             fishes.add(new Fish());
+    }
+
+    public int getSips() {
+        return sips;
     }
 }

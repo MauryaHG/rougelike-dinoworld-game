@@ -1,12 +1,9 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
-import game.behaviours.Behaviour;
+import game.behaviours.*;
 import game.Type;
 import game.Util;
-import game.behaviours.BreedBehaviour;
-import game.behaviours.SeekFoodBehaviour;
-import game.behaviours.WanderBehaviour;
 import game.items.*;
 
 
@@ -161,6 +158,9 @@ abstract public class Dinosaur extends Actor {
             if (isHungry(this.getMIN_HUNGER(), map)) {
                 behaviour.add(new SeekFoodBehaviour());
             }
+            if (!isHydrated()){
+                behaviour.add(new SeekWaterBehaviour());
+            }
             behaviour.add(new WanderBehaviour());
             for (Behaviour index : behaviour) {
                 Action action = index.getAction(this, map);
@@ -196,6 +196,12 @@ abstract public class Dinosaur extends Actor {
         return waterLevel > 0;
     }
 
+
+
+    public void increaseWater(int points){
+        waterLevel += points;
+        waterLevel = Math.min(waterLevel, maxWaterLevel);
+    }
     /**
      * ticks every turn and changes relevant attributes of dinosaur
      * @param actor
