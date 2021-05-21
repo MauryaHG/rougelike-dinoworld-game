@@ -86,6 +86,11 @@ abstract public class Dinosaur extends Actor {
     private final int ALLO_BREEDING_LENGTH = 50;
 
     /**
+     * constant integer of breeding length of Pterodactyl
+     */
+    private final int PET_BREEDING_LENGTH = 50;
+
+    /**
      * constant integer starting water level
      */
     private final int START_WATER_LVL = 60;
@@ -152,7 +157,7 @@ abstract public class Dinosaur extends Actor {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();
         if (this.isConscious()) {
-            if (this.hitPoints >= this.getMIN_HUNGER() && !(this.hasCapability(Type.PREGNANT))) {
+            if (this.hitPoints >= this.getMIN_HUNGER() && isHydrated() &&  !(this.hasCapability(Type.PREGNANT))) {
                 behaviour.add(new BreedBehaviour());
             }
             if (isHungry(this.getMIN_HUNGER(), map)) {
@@ -172,6 +177,11 @@ abstract public class Dinosaur extends Actor {
         }
         tick(this, map);
         return new DoNothingAction();
+    }
+
+    @Override
+    public boolean isConscious() {
+        return (hitPoints > 0 && waterLevel > 0);
     }
 
     protected abstract int getMIN_HUNGER();
@@ -238,6 +248,16 @@ abstract public class Dinosaur extends Actor {
             maxUnconscious = 25;
             adultAge = ALLO_ADULT_AGE;
             breedLength = ALLO_BREEDING_LENGTH;
+        }
+
+        if(actor.hasCapability(Type.PTERODACTYLS)){
+            eggItem = new StegosaurEgg();
+            corpse = new StegosaurCorpse();
+            maxUnconscious = 20;
+            adultAge = PET_ADULT_AGE;
+            breedLength = PET_BREEDING_LENGTH;
+            ((Pterodactyls)actor).decreaseFuel();
+
         }
 
         if (actor.isConscious() && this.isHydrated()) {

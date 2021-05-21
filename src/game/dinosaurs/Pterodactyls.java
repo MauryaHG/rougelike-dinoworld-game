@@ -12,7 +12,7 @@ public class Pterodactyls extends Dinosaur {
     private int MIN_HUNGER = 30;
 
     private boolean getAttacked = false;
-    private int turns = 0;
+    private int fuel = 30;
 
 
 
@@ -62,12 +62,24 @@ public class Pterodactyls extends Dinosaur {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         if (this.isConscious()) {
             behaviour.clear();
-            if (this.hitPoints >= MIN_HUNGER && !(this.hasCapability(Type.PREGNANT))) {
+            if(fuel > 0 ){
+                this.addCapability(Type.CAN_FLY);
+                this.removeCapability(Type.CANT_FLY);
+            }else {
+                this.addCapability(Type.CANT_FLY);
+                this.removeCapability(Type.CAN_FLY);
+            }
+
+            if (this.hitPoints >= MIN_HUNGER && isHydrated() && !(this.hasCapability(Type.PREGNANT))) {
                 behaviour.add(new BreedBehaviour());
             }
 
             if (isHungry(MIN_HUNGER, map)) {
                 behaviour.add(new SeekFoodBehaviour());
+            }
+
+            if (!isHydrated()){
+                behaviour.add(new SeekWaterBehaviour());
             }
             for (Behaviour index : behaviour) {
                 Action action = index.getAction(this, map);
@@ -85,4 +97,11 @@ public class Pterodactyls extends Dinosaur {
     public int getMIN_HUNGER() {
         return MIN_HUNGER;
     }
+
+
+    public void decreaseFuel(){
+        fuel --;
+    }
+
 }
+

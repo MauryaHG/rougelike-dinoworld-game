@@ -59,7 +59,7 @@ public class SeekFoodBehaviour implements Behaviour {
 
         if(actor.hasCapability(Type.PTERODACTYLS)) {
             sourceOne = Type.CORPSE;
-            sourceTwo = Type.CORPSE;
+            sourceTwo = Type.FISH;
         }
 
         // if actor is standing on food EatFoodaction is called

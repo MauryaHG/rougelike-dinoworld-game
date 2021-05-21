@@ -1,6 +1,7 @@
 package game.items;
 
 import edu.monash.fit2099.engine.Item;
+import game.Type;
 
 /**
  * @author jinyeopoh
@@ -9,5 +10,6 @@ import edu.monash.fit2099.engine.Item;
 public class Fish extends Item {
     public Fish() {
         super("Fish", 'w', false);
+        this.addCapability(Type.FISH);
     }
 }

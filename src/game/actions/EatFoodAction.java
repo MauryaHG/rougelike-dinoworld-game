@@ -62,6 +62,7 @@ public class EatFoodAction extends Action {
         }
 
         if(actor.hasCapability(Type.PTERODACTYLS)) {
+
             actor.heal(10);
         }
 
