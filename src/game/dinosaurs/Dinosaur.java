@@ -181,7 +181,8 @@ abstract public class Dinosaur extends Actor {
 
     @Override
     public boolean isConscious() {
-        return (hitPoints > 0 && waterLevel > 0);
+        return (hitPoints > 0 && waterLevel > 0)
+                ;
     }
 
     protected abstract int getMIN_HUNGER();

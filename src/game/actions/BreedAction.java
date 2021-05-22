@@ -46,7 +46,15 @@ public class BreedAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        femaleDinosaur.addCapability(Type.PREGNANT);
+        if(actor.hasCapability(Type.PTERODACTYLS)){
+            if((map.locationOf(maleDinosaur).getGround().hasCapability(Type.TREE)) &&
+                    map.locationOf(femaleDinosaur).getGround().hasCapability(Type.TREE)) {
+                femaleDinosaur.addCapability(Type.PREGNANT);
+                return actor + "can not mate here";
+            }
+        } else{
+            femaleDinosaur.addCapability(Type.PREGNANT);
+        }
 
         return menuDescription(actor);
     }

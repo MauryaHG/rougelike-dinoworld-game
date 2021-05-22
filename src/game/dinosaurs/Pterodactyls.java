@@ -20,14 +20,11 @@ public class Pterodactyls extends Dinosaur {
 
 
     /**
-     * Create dinosaur with specified gender
-     *
-     * @param name        name of dinosaur
-     * @param displayChar display character which will be shown on map
-     * @param hitPoints   health of dinosaur
-     * @param gender      gender of dinosaur
+     * creates adult dinosaur with specified gender
+     * @param name name of dinosaur
+     * @param gender gender of dinosaur
      */
-    public Pterodactyls(String name, char displayChar, int hitPoints, Type gender) {
+    public Pterodactyls(String name, Type gender) {
         super(name, 'v', 50, gender);
         this.hitPoints = 30;
         addCapability(Type.PTERODACTYLS);

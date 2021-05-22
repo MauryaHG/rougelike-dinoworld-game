@@ -75,7 +75,9 @@ public class SeekFoodBehaviour implements Behaviour {
             for (Exit exit : here.getExits()) {
                 Location destination = exit.getDestination();
                 Actor thisActor = destination.getActor();
-                if ((thisActor != null && thisActor.hasCapability(Type.STEGOSAUR))) {
+                if ((thisActor != null && (thisActor.hasCapability(Type.STEGOSAUR))) ||
+                        (thisActor.hasCapability(Type.PTERODACTYLS) && // if target is pterodactyl and not flying attack it
+                                thisActor.hasCapability(Type.CANT_FLY))) {
                     return new AttackAction(thisActor);
                 }
             }
@@ -101,7 +103,7 @@ public class SeekFoodBehaviour implements Behaviour {
         }
 
         //scan the map and search for closest food STEGOSAUR/BRACHIOSAUR can eat
-        if ((actor.hasCapability(Type.STEGOSAUR)) || (actor.hasCapability(Type.BRACHIOSAUR))) {
+        if ((actor.hasCapability(Type.HERBIVORE))) {
             for (int x : widths) {
                 for (int y : heights) {
                     Ground groundHere = map.at(x, y).getGround();

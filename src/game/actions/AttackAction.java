@@ -49,6 +49,11 @@ public class AttackAction extends Action {
 			return "This " +target+"("+targetX+","+targetY+")"+" got attacked by " + actor +"("+actorX+","+actorY+")" + " so cannot attack again.";
 		}
 
+		if (target.hasCapability(Type.PTERODACTYLS)){
+			actor.heal(30);
+			map.removeActor(target);
+			return menuDescription(actor);
+		}
 		// get weapon and attack the target
 		Weapon weapon = actor.getWeapon();
 		int damage = weapon.damage();
@@ -75,6 +80,6 @@ public class AttackAction extends Action {
 
 	@Override
 	public String menuDescription(Actor actor) {
-		return actor + " attacks " + target;
+		return actor + " ate " + target;
 	}
 }
