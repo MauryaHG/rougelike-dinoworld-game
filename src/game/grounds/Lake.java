@@ -68,7 +68,14 @@ public class Lake extends Ground {
 //            return new Actions(new DrinkAction());
 //        return new Actions();
 //    }
-
+    @Override
+    public boolean canActorEnter(Actor actor) {
+        if(actor.hasCapability(Type.PTERODACTYLS) &&
+                actor.hasCapability(Type.CAN_FLY)){
+            return true;
+        }
+        return false;
+    }
     /**
      * Increases the sips after raining
      * @param sips An int to be added onto sips

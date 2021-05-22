@@ -32,6 +32,7 @@ public class Stegosaur extends Dinosaur {
 		super(name, 's', 100, gender);
 		this.hitPoints = 50;
 		addCapability(Type.STEGOSAUR);
+		addCapability(Type.HERBIVORE);
 		this.age = BRACH_ADULT_AGE;
 	}
 
@@ -44,6 +45,7 @@ public class Stegosaur extends Dinosaur {
 		super(name, 'd', 100);
 		this.hitPoints = 50;
 		addCapability(Type.STEGOSAUR);
+		addCapability(Type.HERBIVORE);
 		addCapability(Type.BABY);
 		this.age = 0;
 	}

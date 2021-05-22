@@ -27,6 +27,7 @@ public class Allosaur extends Dinosaur{
         super(name, 'a', 100, gender);
         this.hitPoints = 50;
         addCapability(Type.ALLOSAUR);
+        addCapability(Type.CARNIVORE);
         this.age = ALLO_ADULT_AGE;
     }
 
@@ -38,6 +39,7 @@ public class Allosaur extends Dinosaur{
         super(name, 'a', 100);
         this.hitPoints = 20;
         addCapability(Type.ALLOSAUR);
+        addCapability(Type.CARNIVORE);
         addCapability(Type.BABY);
         this.age = 0;
 

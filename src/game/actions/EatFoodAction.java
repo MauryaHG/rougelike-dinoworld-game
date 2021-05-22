@@ -2,12 +2,16 @@ package game.actions;
 
 import edu.monash.fit2099.engine.*;
 import game.Type;
+import game.dinosaurs.Dinosaur;
+import game.items.DinosaurCorpse;
+import game.items.PortableItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author :Maurya
- * @version :1.0.0
+ * @version :2.0.0
  * @see : Action
  * @see : Fruit
  * @see : Actor
@@ -15,10 +19,13 @@ import java.util.List;
  */
 public class EatFoodAction extends Action {
 
+
     /**
      * item which will be eaten by dinosaur
      */
-    protected  Item item;
+    protected List <PortableItem> items = new ArrayList<>();
+    private String  itemsEaten = "";
+    private int waterLevel =0;
 
     /**
      * searches the item list and adds all the
@@ -26,17 +33,19 @@ public class EatFoodAction extends Action {
      * @param itemsHere items on ground actor is standing on
      */
     public EatFoodAction(Actor actor, List<Item> itemsHere) {
-        if (actor.hasCapability(Type.ALLOSAUR)) {
+        if (actor.hasCapability(Type.CARNIVORE)) {
             for (Item indexItem : itemsHere) {
-                if (indexItem.hasCapability(Type.EGG) || (indexItem.hasCapability(Type.CORPSE))) {
-                    this.item = indexItem;
+                if (indexItem.hasCapability(Type.EGG) ||
+                        (indexItem.hasCapability(Type.CORPSE)) ||
+                        (indexItem.hasCapability(Type.FISH))) {
+                    this.items.add((PortableItem) indexItem);
                 }
             }
         }
-        if (actor.hasCapability(Type.STEGOSAUR) || (actor.hasCapability(Type.BRACHIOSAUR))) {
+        if (actor.hasCapability(Type.HERBIVORE)) {
             for (Item indexItem : itemsHere) {
                 if (indexItem.hasCapability(Type.FRUIT)) {
-                    this.item = indexItem;
+                    this.items.add((PortableItem) indexItem);
                 }
             }
         }
@@ -53,33 +62,51 @@ public class EatFoodAction extends Action {
     public String execute(Actor actor, GameMap map) {
         Location here = map.locationOf(actor);
         int heal = 0;
+        int amount = 0;
 
-        if(actor.hasCapability(Type.STEGOSAUR)) {
-            actor.heal(10);
+        if (actor.hasCapability(Type.STEGOSAUR)) {
+            heal = 10;
+            amount = 1;
         }
-        if(actor.hasCapability(Type.BRACHIOSAUR)) {
-            actor.heal(5);
-        }
-
-        if(actor.hasCapability(Type.PTERODACTYLS)) {
-
-            actor.heal(10);
+        if (actor.hasCapability(Type.BRACHIOSAUR)) {
+            heal = 10;
+            amount = items.size();
         }
 
-        if(actor.hasCapability(Type.ALLOSAUR)) {
-            if((item.hasCapability(Type.ALLOSAUR_CORPSE)) || (item.hasCapability(Type.STEGOSAUR_CORPSE))){
+        if (actor.hasCapability(Type.PTERODACTYLS)) {
+            heal = 10;
+            amount = items.size();//make random value 0-1-2
+        }
+        if (actor.hasCapability(Type.ALLOSAUR)) {
+            amount = 1;
+        }
+        for (int i = 0; i < amount; i++) {
+            Item item = items.get(i);
+            if ((item.hasCapability(Type.ALLOSAUR_CORPSE)) || (item.hasCapability(Type.STEGOSAUR_CORPSE))) {
                 heal = 50;
-            } else if(item.hasCapability(Type.BRACHIOSAUR_CORPSE)){
+            } else if (item.hasCapability(Type.BRACHIOSAUR_CORPSE)) {
                 heal = 100;
-            }else if (item.hasCapability(Type.EGG)){
+            } else if (item.hasCapability(Type.EGG)) {
                 heal = 10;
+            } else if (item.hasCapability(Type.FISH)) {
+                heal = 5;
+                waterLevel = 30;
             }
             actor.heal(heal);
-        }
-        //if (item.life == 0 ){
-        //     here.removeItem(item);
-        // }
+            if(item.hasCapability(Type.CORPSE)) {
+                ((DinosaurCorpse) item).reduceFoodPoints(heal);
+                if (((DinosaurCorpse) item).getFoodPoints() == 0) {
+                    here.removeItem(item);
+                }
+            } else {
+                here.removeItem(item);
+            }
 
+            itemsEaten += " ," + item;
+        }
+        if (actor.hasCapability(Type.PTERODACTYLS)) {
+            ((Dinosaur) actor).increaseWater(waterLevel);
+        }
         return menuDescription(actor);
     }
 
@@ -91,6 +118,6 @@ public class EatFoodAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " eats " + item;
+        return actor + " eats" + itemsEaten;
     }
 }

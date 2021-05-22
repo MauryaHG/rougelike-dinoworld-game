@@ -17,7 +17,7 @@ public class AllosaurCorpse extends DinosaurCorpse {
      * Sets the name of this corpse and the number of turns this will rot away
      */
     public AllosaurCorpse() {
-        super("Allosaur corpse");
+        super("Allosaur corpse", 50);
         this.addCapability(Type.ALLOSAUR_CORPSE);
         super.setRotAge(ROT_AGE);
     }

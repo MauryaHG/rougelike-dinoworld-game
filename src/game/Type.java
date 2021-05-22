@@ -2,7 +2,7 @@ package game;
 
 /**
  * @author Jinyeop Oh and Maurya Gamage
- * @version 1.1.0
+ * @version 2.0.0
  */
 public enum Type {
     PLAYER,
@@ -13,6 +13,6 @@ public enum Type {
     ON_GROUND, ON_TREE, BABY, ON_BUSH,
     CORPSE, ALLOSAUR_CORPSE, BRACHIOSAUR_CORPSE, STEGOSAUR_CORPSE,
     PTERODACTYLS,
-    LAKE, FISH, CAN_FLY, CANT_FLY;
+    LAKE, FISH, CAN_FLY, CANT_FLY, CARNIVORE, HERBIVORE
     // These are used to distinguish whether Fruit is to be picked up or harvested(ON_GROUND: picked up / ON_TREE and ON_BUSH: harvested)
 }

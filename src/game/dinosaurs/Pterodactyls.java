@@ -31,6 +31,7 @@ public class Pterodactyls extends Dinosaur {
         super(name, 'v', 50, gender);
         this.hitPoints = 30;
         addCapability(Type.PTERODACTYLS);
+        addCapability(Type.CARNIVORE);
         this.age = PET_ADULT_AGE;
     }
 
@@ -45,6 +46,7 @@ public class Pterodactyls extends Dinosaur {
         super(name, 'v', hitPoints);
         this.hitPoints = 30;
         addCapability(Type.PTERODACTYLS);
+        addCapability(Type.CARNIVORE);
         addCapability(Type.BABY);
         this.age = 0;
     }

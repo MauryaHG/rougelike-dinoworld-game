@@ -17,7 +17,7 @@ public class StegosaurCorpse extends DinosaurCorpse {
      * Sets the name of this corpse and the number of turns this will rot away
      */
     public StegosaurCorpse() {
-        super("Stego corpse");
+        super("Stego corpse", 50);
         this.addCapability(Type.STEGOSAUR_CORPSE);
         super.setRotAge(ROT_AGE);
     }

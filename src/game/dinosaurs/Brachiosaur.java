@@ -29,6 +29,7 @@ public class Brachiosaur extends Dinosaur {
         this.hitPoints = 100;
         this.maxWaterLevel = 200;
         addCapability(Type.BRACHIOSAUR);
+        addCapability(Type.HERBIVORE);
         this.age = BRACH_ADULT_AGE;
     }
 

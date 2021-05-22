@@ -17,8 +17,9 @@ public class BrachiosaurCorpse extends DinosaurCorpse {
      * Sets the name of this corpse and the number of turns this will rot away
      */
     public BrachiosaurCorpse() {
-        super("Brachio corpse");
+        super("Brachio corpse", 100);
         this.addCapability(Type.BRACHIOSAUR_CORPSE);
         super.setRotAge(ROT_AGE);
+
     }
 }
