@@ -4,13 +4,14 @@ import edu.monash.fit2099.engine.Location;
 import game.EcoPoint;
 import game.dinosaurs.Allosaur;
 import game.dinosaurs.Brachiosaur;
+import game.dinosaurs.Pterodactyls;
 import game.dinosaurs.Stegosaur;
 import game.Type;
 import game.Util;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.2
+ * @version 1.0.3
  */
 public class Egg extends PortableItem {
     /**
@@ -64,6 +65,10 @@ public class Egg extends PortableItem {
                 case ALLOSAUR_EGG:
                     location.addActor(new Allosaur("ALlosaurNewBorn"));
                     EcoPoint.increaseEcoPoint(1000);
+                    break;
+                case PTERODACTYLS_EGG:
+                    location.addActor(new Pterodactyls("PterodactylsNewBorn", Util.getGender()));
+                    EcoPoint.increaseEcoPoint(100);
                     break;
             }
         }
