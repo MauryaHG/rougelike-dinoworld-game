@@ -49,6 +49,10 @@ public class JurassicWorld extends World {
             throw new IllegalStateException();
 
         selectGameMode(display);
+        if(endGame){
+            display.println(endGameMessage());
+            return;
+        }
 
         // If user select a challenge game
         if( isChallengeMode)
@@ -186,6 +190,7 @@ public class JurassicWorld extends World {
             System.out.println("Select game mode");
             System.out.println("Challenge game - 1");
             System.out.println("Sandbox game - 2");
+            System.out.println("Quit game - 3");
             System.out.print("Input : ");
             char userInput = display.readChar();
             System.out.println();
@@ -199,27 +204,14 @@ public class JurassicWorld extends World {
                     isChallengeMode = false;
                     again = false;
                     break;
+                case '3':
+                    endGame = true;
+                    again = false;
+                    break;
             }
         }
 
 
-    }
-
-    /**
-     * Asks if user wants to quit the game at any time
-     * @param display Display object to get char input from the user
-     * @return return false if user wants to quit, otherwise true
-     */
-    private boolean quitGame(Display display){
-        System.out.println();
-        System.out.println("Would you quit the game now?");
-        System.out.println("Quit now - q");
-        System.out.println("continue game - press any");
-        System.out.print("Input : ");
-        char input = display.readChar();
-        System.out.println();
-
-        return input == 'q';
     }
 
     /**

@@ -5,6 +5,8 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.GroundFactory;
 import edu.monash.fit2099.engine.Location;
 import game.grounds.Dirt;
+import game.grounds.Lake;
+import game.items.Fish;
 
 import java.util.List;
 
@@ -42,6 +44,18 @@ public class DinosaurGameMap extends GameMap {
             for (int x : widths) {
                 if(at(x, y).getGround() instanceof Dirt)
                     at(x, y).tick();
+            }
+        }
+    }
+
+    public void createFish(){
+        for (int y : heights) {
+            for (int x : widths) {
+                if(at(x, y).getGround() instanceof Lake){
+                    for( int i = 0; i < 5; i++){
+                        at(x, y).addItem(new Fish());
+                    }
+                }
             }
         }
     }

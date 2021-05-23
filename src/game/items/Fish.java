@@ -7,9 +7,9 @@ import game.Type;
  * @author jinyeopoh
  * @version 1.0.0
  */
-public class Fish extends Item {
+public class Fish extends PortableItem {
     public Fish() {
-        super("Fish", 'w', false);
+        super("Fish", '~');
         this.addCapability(Type.FISH);
     }
 }

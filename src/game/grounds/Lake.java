@@ -6,10 +6,9 @@ import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 import game.Type;
 import game.Util;
+import game.actions.DrinkAction;
 import game.dinosaurs.Dinosaur;
 import game.items.Fish;
-
-import java.util.ArrayList;
 
 /**
  *
@@ -21,53 +20,46 @@ public class Lake extends Ground {
     /**
      * Fishes that this lake has
      */
-    private ArrayList<Fish> fishes = new ArrayList<>();
-    private final int MAX_FISHES = 25;
+    private final int MAX_FISH = 25;
+
+    /**
+     * Each lake starts with 5 fish
+     */
+    private int numOfFish = 5;
 
     /**
      * Constructor.
-     *
-     * @param displayChar character to display for this type of terrain
      */
     public Lake() {
         super('~');
         addCapability(Type.LAKE);
-        // Initialise fishes with 5
-        for(int i = 0; i < 5; i++)
-            fishes.add(new Fish());
     }
 
     @Override
     public void tick(Location location) {
-        incrementFish();
+        incrementFish(location);
     }
 
-//    /**
-//     * Allow passable for Pterodactyl only
-//     * @param actor the Actor to check
-//     * @return A boolean if passable by the actor
-//     */
-//    @Override
-//    public boolean canActorEnter(Actor actor) {
-//        if( actor instanceof Pterodactyl)
-//            return true;
-//        return false;
-//    }
-
-    // To be modified after DrinkAciton is done
-//    /**
-//     * If actor is Dinosaur, allows DrinkAction
-//     * @param actor the Actor acting
-//     * @param location the current Location
-//     * @param direction the direction of the Ground from the Actor
-//     * @return
-//     */
-//    @Override
-//    public Actions allowableActions(Actor actor, Location location, String direction) {
-//        if( actor instanceof Dinosaur)
-//            return new Actions(new DrinkAction());
-//        return new Actions();
-//    }
+    /**
+     * If actor is Dinosaur, allows DrinkAction
+     * @param actor the Actor acting
+     * @param location the current Location
+     * @param direction the direction of the Ground from the Actor
+     * @return
+     */
+    @Override
+    public Actions allowableActions(Actor actor, Location location, String direction) {
+        Actions actions = new Actions();
+        if( actor instanceof Dinosaur){
+            actions.add(new Actions(new DrinkAction(location)));
+        }
+        return actions;
+    }
+    /**
+     * Allow passable for Pterodactyl only
+     * @param actor the Actor to check
+     * @return A boolean if passable by the actor
+     */
     @Override
     public boolean canActorEnter(Actor actor) {
         if(actor.hasCapability(Type.PTERODACTYLS) &&
@@ -93,24 +85,27 @@ public class Lake extends Ground {
 
 
     /**
-     * Returns the number of fishes in the lake
+     * Returns the number of fish in the lake
      * @return
      */
-    public int getNumOfFishes() {
-        return fishes.size();
+    public int getNumOfFish() {
+        return numOfFish;
     }
 
     /**
      * Checks validity of fish limits and increment(add) by 1 if valid
      */
-    public void incrementFish() {
-        // if number of fishes in the lake is more than the limit, then terminate
-        if( getNumOfFishes() > MAX_FISHES )
+    public void incrementFish(Location location) {
+        // Pre : if number of fishes in the lake is more than the limit, then terminate
+        if( getNumOfFish() >= MAX_FISH)
             return;
 
         // If enough room for new Fish, calc 60% and then create new one
-        if(Util.calcPercentage(Util.SIXTY_PERCENT_CHANCE))
-            fishes.add(new Fish());
+        if(Util.calcPercentage(Util.SIXTY_PERCENT_CHANCE)){
+            location.addItem(new Fish());
+            numOfFish++;
+        }
+
     }
 
     public int getSips() {
