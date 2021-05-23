@@ -1,6 +1,7 @@
 package game;
 
 import edu.monash.fit2099.engine.*;
+import game.actions.QuitAction;
 import game.grounds.Lake;
 
 import java.util.Random;
@@ -11,11 +12,13 @@ import java.util.Random;
  */
 public class JurassicWorld extends World {
     private boolean isChallengeMode = false;
+    private boolean endGame = false;
 
     /**
      * turn counter for raining
      */
     private int turns = 0;
+
 
     /**
      * Constructor.
@@ -62,22 +65,25 @@ public class JurassicWorld extends World {
             GameMap playersMap = actorLocations.locationOf(player).map();
             playersMap.draw(display);
 
-            // Prompts for quitting the game
-            if(quitGame(display)){
+            // Process all the actors.
+            for (Actor actor : actorLocations) {
+                if (stillRunning()){
+                    processActorTurn(actor);
+                    if(endGame)
+                        break;
+                }
+            }
+            // Check for quitting the game after player's turn
+            if(endGame){
                 break;
             }
 
-            // Process all the actors.
-            for (Actor actor : actorLocations) {
-                if (stillRunning())
-                    processActorTurn(actor);
-            }
 
             int numOfSips = sips();
             Util.setRaining(false);
             // Tick over all the maps. For the map stuff.
             for (GameMap gameMap : gameMaps) {
-                if(++turns > 10 && isRaining()){
+                if(++turns > 10 && isGoingToRain()){
                     Util.setRaining(true); // This is true for one turn only
                     addWaterToLake(numOfSips, gameMap);
                     turns = 0;
@@ -102,6 +108,71 @@ public class JurassicWorld extends World {
 
         }
         display.println(endGameMessage());
+    }
+
+    /**
+     * Gives an Actor its turn.
+     * And if actor is player, display quit menu
+     * The Actions an Actor can take include:
+     * <ul>
+     * <li>those conferred by items it is carrying</li>
+     * <li>movement actions for the current location and terrain</li>
+     * <li>actions that can be done to Actors in adjacent squares</li>
+     * <li>actions that can be done using items in the current location</li>
+     * <li>skipping a turn</li>
+     * </ul>
+     *
+     * @param actor the Actor whose turn it is.
+     */
+    @Override
+    protected void processActorTurn(Actor actor) {
+        Location here = actorLocations.locationOf(actor);
+        GameMap map = here.map();
+
+        Actions actions = new Actions();
+
+        // If actor is player, display quit menu
+        if( actor instanceof Player){
+            actions.add(new QuitAction());
+        }
+
+        for (Item item : actor.getInventory()) {
+            actions.add(item.getAllowableActions());
+            // Game rule. If you're carrying it, you can drop it.
+            actions.add(item.getDropAction());
+        }
+
+        for (Exit exit : here.getExits()) {
+            Location destination = exit.getDestination();
+
+            // Game rule. You don't get to interact with the ground if someone is standing
+            // on it.
+            if (actorLocations.isAnActorAt(destination)) {
+                actions.add(actorLocations.getActorAt(destination).getAllowableActions(actor, exit.getName(), map));
+            } else {
+                actions.add(destination.getGround().allowableActions(actor, destination, exit.getName()));
+            }
+            actions.add(destination.getMoveAction(actor, exit.getName(), exit.getHotKey()));
+        }
+
+        for (Item item : here.getItems()) {
+            actions.add(item.getAllowableActions());
+            // Game rule. If it's on the ground you can pick it up.
+            actions.add(item.getPickUpAction());
+        }
+        actions.add(new DoNothingAction());
+
+        Action action = actor.playTurn(actions, lastActionMap.get(actor), map, display);
+        lastActionMap.put(actor, action);
+
+        // If player selects to quit the game
+        if( actor instanceof Player && action instanceof QuitAction){
+            endGame = true;
+            return;
+        }
+
+        String result = action.execute(actor, map);
+        display.println(result);
     }
 
     /**
@@ -155,7 +226,7 @@ public class JurassicWorld extends World {
      * Calculate the chance of raining
      * @return true if raining or false
      */
-    private boolean isRaining(){
+    private boolean isGoingToRain(){
         return Util.calcPercentage(Util.TWENTY_PERCENT_CHANCE);
     }
 
