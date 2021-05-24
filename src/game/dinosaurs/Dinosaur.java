@@ -179,6 +179,10 @@ abstract public class Dinosaur extends Actor {
         return new DoNothingAction();
     }
 
+    /**
+     * returns minimum hunger
+     * @return
+     */
     protected abstract int getMIN_HUNGER();
 
     /**
@@ -197,8 +201,12 @@ abstract public class Dinosaur extends Actor {
         return isHungry;
     }
 
+    /**
+     * checks if the actor is thirsty
+     * @param map map actor is on
+     * @return true/false
+     */
     public boolean isThirsty(GameMap map) {
-        //return waterLevel > 30;
         boolean isThirsty = false;
         if (waterLevel < 30) {
             Location here = map.locationOf(this);
@@ -212,15 +220,18 @@ abstract public class Dinosaur extends Actor {
         return waterLevel < 0;
     }
 
-
+    /**
+     * increase the water level by the given amount
+     * @param points
+     */
     public void increaseWater(int points){
         waterLevel += points;
         waterLevel = Math.min(waterLevel, maxWaterLevel);
     }
     /**
      * ticks every turn and changes relevant attributes of dinosaur
-     * @param actor
-     * @param map
+     * @param actor  current actor
+     * @param map map the actor is on
      */
     public void tick(Actor actor, GameMap map) {
 

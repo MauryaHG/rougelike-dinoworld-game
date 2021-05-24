@@ -13,7 +13,7 @@ public class SeekWaterBehaviour implements Behaviour{
      * finds closest water or drinks if next to lake
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
-     * @return
+     * @return action that has to be done
      */
     @Override
     public Action getAction(Actor actor, GameMap map) {

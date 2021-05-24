@@ -43,7 +43,7 @@ public class Brachiosaur extends Dinosaur {
      * @param otherActor the Actor that might be performing attack
      * @param direction  String representing the direction of the other Actor
      * @param map        current GameMap
-     * @return
+     * @return list of actions that can be done to actor
      */
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {

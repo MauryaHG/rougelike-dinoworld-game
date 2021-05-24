@@ -19,7 +19,6 @@ public class BrachiosaurEgg extends Egg{
     /**
      * Constructor
      * Sets the the number of turns before hatching and egg type
-     * @param name
      */
     public BrachiosaurEgg() {
         super("Brachiosaur Egg");

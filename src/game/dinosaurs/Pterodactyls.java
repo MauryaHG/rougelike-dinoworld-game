@@ -12,11 +12,10 @@ public class Pterodactyls extends Dinosaur {
     private int MIN_HUNGER = 30;
 
     private boolean getAttacked = false;
+    /**
+     * fuel of the dinosaur
+     */
     private int fuel = 30;
-
-
-
-
 
 
     /**
@@ -98,7 +97,9 @@ public class Pterodactyls extends Dinosaur {
         return MIN_HUNGER;
     }
 
-
+    /**
+     * decreases the fuel by 1
+     */
     public void decreaseFuel(){
         fuel --;
     }

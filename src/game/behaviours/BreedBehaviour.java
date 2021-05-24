@@ -25,7 +25,7 @@ public class BreedBehaviour implements Behaviour {
      *Directs actor to closest mate if no mate adjacent to it, where if it is it will mate with it
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
-     * @return
+     * @return action that has to be done
      */
     @Override
     public Action getAction(Actor actor, GameMap map) {

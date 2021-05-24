@@ -17,7 +17,6 @@ public class PterodactylsEgg extends Egg{
     /**
      * Constructor
      * Sets the the number of turns before hatching and egg type
-     * @param name
      */
     public PterodactylsEgg() {
         super("Pterodactyls Egg");

@@ -21,7 +21,7 @@ public class SeekFoodBehaviour implements Behaviour {
      * finds closest food or eats food around the actor
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
-     * @return
+     * @return action that has to be done
      */
     @Override
     public Action getAction(Actor actor, GameMap map) {

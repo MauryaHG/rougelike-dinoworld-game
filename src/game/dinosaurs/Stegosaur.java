@@ -39,7 +39,7 @@ public class Stegosaur extends Dinosaur {
 	/**
 	 * Constuctor.
 	 *Used to create Stegosaur with only name and gender given randomly
-	 * @param name
+	 * @param name name of dinosaur
 	 */
 	public Stegosaur(String name) {
 		super(name, 'd', 100);
