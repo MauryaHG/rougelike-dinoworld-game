@@ -29,7 +29,7 @@ public class Stegosaur extends Dinosaur {
 	 * @param name the name of this Stegosaur
 	 */
 	public Stegosaur(String name, Type gender) {
-		super(name, 's', 100, gender);
+		super(name, 's', 100, 100, gender);
 		this.hitPoints = 50;
 		addCapability(Type.STEGOSAUR);
 		addCapability(Type.HERBIVORE);
@@ -42,7 +42,7 @@ public class Stegosaur extends Dinosaur {
 	 * @param name name of dinosaur
 	 */
 	public Stegosaur(String name) {
-		super(name, 'd', 100);
+		super(name, 'd', 100, 100);
 		this.hitPoints = 50;
 		addCapability(Type.STEGOSAUR);
 		addCapability(Type.HERBIVORE);
@@ -89,7 +89,7 @@ public class Stegosaur extends Dinosaur {
 			if (isHungry(MIN_HUNGER, map)) {
 				behaviour.add(new SeekFoodBehaviour());
 			}
-			if (!isThirsty(map)){
+			if (isThirsty(map)){
 				behaviour.add(new SeekWaterBehaviour());
 			}
 			for (Behaviour index : behaviour) {

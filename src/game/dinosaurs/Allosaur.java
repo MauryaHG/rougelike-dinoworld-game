@@ -24,7 +24,7 @@ public class Allosaur extends Dinosaur{
      * @param gender gender of dinosaur
      */
     public Allosaur(String name, Type gender) {
-        super(name, 'a', 100, gender);
+        super(name, 'a', 100, 100, gender);
         this.hitPoints = 50;
         addCapability(Type.ALLOSAUR);
         addCapability(Type.CARNIVORE);
@@ -36,7 +36,7 @@ public class Allosaur extends Dinosaur{
      * @param name name of allosaur
      */
     public Allosaur(String name) {
-        super(name, 'a', 100);
+        super(name, 'a', 100, 100);
         this.hitPoints = 20;
         addCapability(Type.ALLOSAUR);
         addCapability(Type.CARNIVORE);

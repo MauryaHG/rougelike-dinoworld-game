@@ -112,10 +112,10 @@ abstract public class Dinosaur extends Actor {
      * @param hitPoints health of dinosaur
      * @param gender gender of dinosaur
      */
-    public Dinosaur(String name, char displayChar, int hitPoints, Type gender) {
+    public Dinosaur(String name, char displayChar, int hitPoints, int waterLevel, Type gender) {
         super(name, displayChar, hitPoints);
         this.waterLevel = START_WATER_LVL;
-        this.maxWaterLevel = MAX_WATER_LVL;
+        this.maxWaterLevel = waterLevel;
         if (gender == Type.MALE) {
             addCapability(Type.MALE);
         }
@@ -132,9 +132,11 @@ abstract public class Dinosaur extends Actor {
      * @param displayChar display character which will be shown on map
      * @param hitPoints health of dinosaur
      */
-    public Dinosaur(String name, char displayChar, int hitPoints ) {
+    public Dinosaur(String name, char displayChar, int hitPoints, int waterLevel ) {
         super(name, displayChar, hitPoints);
         Type gender = Util.getGender();
+        this.waterLevel = START_WATER_LVL;
+        this.maxWaterLevel = waterLevel;
         if (gender == Type.MALE) {
             addCapability(Type.MALE);
         }
@@ -157,13 +159,13 @@ abstract public class Dinosaur extends Actor {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();
         if (this.isConscious()) {
-            if (this.hitPoints >= this.getMIN_HUNGER() && isThirsty(map) &&  !(this.hasCapability(Type.PREGNANT))) {
+            if (this.hitPoints >= this.getMIN_HUNGER() && !isThirsty(map) &&  !(this.hasCapability(Type.PREGNANT))) {
                 behaviour.add(new BreedBehaviour());
             }
             if (isHungry(this.getMIN_HUNGER(), map)) {
                 behaviour.add(new SeekFoodBehaviour());
             }
-            if (!isThirsty(map)){
+            if (isThirsty(map)){
                 behaviour.add(new SeekWaterBehaviour());
             }
             behaviour.add(new WanderBehaviour());
@@ -204,7 +206,7 @@ abstract public class Dinosaur extends Actor {
     /**
      * checks if the actor is thirsty
      * @param map map actor is on
-     * @return true/false
+     * @return returns true if water level below minimum
      */
     public boolean isThirsty(GameMap map) {
         boolean isThirsty = false;

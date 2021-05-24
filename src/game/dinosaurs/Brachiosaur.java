@@ -2,7 +2,6 @@ package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
 import game.*;
-import game.behaviours.*;
 import game.actions.*;
 
 
@@ -17,7 +16,7 @@ public class Brachiosaur extends Dinosaur {
     /**
      * minimum int where dinosaur will be hungry
      */
-    private int MIN_HUNGER = 140;
+    private int MIN_HUNGER = 20;
 
     /**
      * creates adult dinosaur with specified gender
@@ -25,7 +24,7 @@ public class Brachiosaur extends Dinosaur {
      * @param gender gender of dinosaur
      */
     public Brachiosaur(String name, Type gender) {
-        super(name, 'b', 160, gender);
+        super(name, 'b', 160, 200,  gender);
         this.hitPoints = 100;
         this.maxWaterLevel = 200;
         addCapability(Type.BRACHIOSAUR);
