@@ -1,9 +1,6 @@
 package game.grounds;
 
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Ground;
-import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.*;
 import game.Type;
 import game.Util;
 import game.actions.DrinkAction;
@@ -13,31 +10,51 @@ import game.items.Fish;
 /**
  *
  * @author jinyeopoh
- * @version 1.0.0
+ * @version 1.1.0
+ * @see Ground
+ * @see Fish
  */
 public class Lake extends Ground {
+    /**
+     * Represents water level
+     */
     private int sips = 25;
+
     /**
      * Fishes that this lake has
      */
     private final int MAX_FISH = 25;
 
-    /**
-     * Each lake starts with 5 fish
-     */
-    private int numOfFish = 5;
-
-    /**
-     * Constructor.
-     */
     public Lake() {
         super('~');
         addCapability(Type.LAKE);
     }
 
+    /**
+     * In every turn, calculate the number of fish in the lake and if under the limit,
+     * create new fish by 60% chance
+     * @param location The location of the Ground
+     */
     @Override
     public void tick(Location location) {
-        incrementFish(location);
+        // Get number of fish in the lake
+        int numOfFish = 0;
+        for(Item item: location.getItems()){
+            if(item instanceof Fish){
+                numOfFish++;
+            }
+        }
+
+        // Pre : if number of fishes in the lake is more than the limit, then terminate
+        if( numOfFish >= MAX_FISH){
+            return;
+        }
+
+        // If enough room for new Fish, calc 60% and then create new one
+        if(Util.calcPercentage(Util.SIXTY_PERCENT_CHANCE)){
+            location.addItem(new Fish());
+            numOfFish++;
+        }
     }
 
     /**
@@ -51,7 +68,7 @@ public class Lake extends Ground {
     public Actions allowableActions(Actor actor, Location location, String direction) {
         Actions actions = new Actions();
         if( actor instanceof Dinosaur){
-            actions.add(new Actions(new DrinkAction(location)));
+            actions.add(new DrinkAction(location));
         }
         return actions;
     }
@@ -62,8 +79,7 @@ public class Lake extends Ground {
      */
     @Override
     public boolean canActorEnter(Actor actor) {
-        if(actor.hasCapability(Type.PTERODACTYLS) &&
-                actor.hasCapability(Type.CAN_FLY)){
+        if(actor.hasCapability(Type.PTERODACTYLS) &&  actor.hasCapability(Type.CAN_FLY)){
             return true;
         }
         return false;
@@ -80,32 +96,7 @@ public class Lake extends Ground {
      * Decreases the sips after actor drinks
      */
     public void decrementSips(){
-        this.sips -= 1;
-    }
-
-
-    /**
-     * Returns the number of fish in the lake
-     * @return
-     */
-    public int getNumOfFish() {
-        return numOfFish;
-    }
-
-    /**
-     * Checks validity of fish limits and increment(add) by 1 if valid
-     */
-    public void incrementFish(Location location) {
-        // Pre : if number of fishes in the lake is more than the limit, then terminate
-        if( getNumOfFish() >= MAX_FISH)
-            return;
-
-        // If enough room for new Fish, calc 60% and then create new one
-        if(Util.calcPercentage(Util.SIXTY_PERCENT_CHANCE)){
-            location.addItem(new Fish());
-            numOfFish++;
-        }
-
+        this.sips = Math.max(0, this.sips-1);
     }
 
     public int getSips() {

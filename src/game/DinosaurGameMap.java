@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @author Jinyeop Oh
- * @version 2.0.0
+ * @version 2.0.1
  */
 public class DinosaurGameMap extends GameMap {
     /**
@@ -29,7 +29,6 @@ public class DinosaurGameMap extends GameMap {
      * Represents if this map is the south map
      */
     private boolean isSouthMap = false;
-
 
     public DinosaurGameMap(GroundFactory groundFactory, List<String> lines) {
         super(groundFactory, lines);
@@ -48,6 +47,9 @@ public class DinosaurGameMap extends GameMap {
         }
     }
 
+    /**
+     * Iterate all grounds and if it is lake, then create five fish there
+     */
     public void createFish(){
         for (int y : heights) {
             for (int x : widths) {

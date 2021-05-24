@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  * @author jinyeopoh
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class JurassicWorld extends World {
     private boolean isChallengeMode = false;
@@ -88,9 +88,13 @@ public class JurassicWorld extends World {
             Util.setRaining(false);
             // Tick over all the maps. For the map stuff.
             for (GameMap gameMap : gameMaps) {
-                if(++turns > 10 && isGoingToRain()){
-                    Util.setRaining(true); // This is true for one turn only
-                    addWaterToLake(numOfSips, gameMap);
+                // Calculate percentage to rain in the world
+                if(++turns > 10){
+                    if(isGoingToRain()){
+                        Util.setRaining(true); // This is true for one turn only
+                        worldRains(numOfSips, gameMap);
+                    }
+                    // set turns = 0 in every 10 turns, no matter if there was raining or not
                     turns = 0;
                 }
 
@@ -138,6 +142,7 @@ public class JurassicWorld extends World {
 
         // If actor is player, display quit menu
         if( actor instanceof Player){
+            System.out.println("Eco point : " + EcoPoint.getEcoPoint());
             actions.add(new QuitAction());
         }
 
@@ -233,20 +238,22 @@ public class JurassicWorld extends World {
     }
 
     /**
-     * Finds lake object in the map and add given amount of water to it
+     * World rains under specific condition.
+     * Which add up water to the lake and hydrate to unconscious dinosaurs
      * @param sips number of water to add
      * @param gameMap the gameMap in which contains lakes in it
      */
-    private void addWaterToLake(int sips, GameMap gameMap){
-        // Find all lakes in the map
+    private void worldRains(int sips, GameMap gameMap){
         for(int y: gameMap.getYRange()){
             for(int x: gameMap.getXRange()){
+                // Find dinosaur that is unconscious
                 Actor actorHere = gameMap.at(x, y).getActor();
                 if (actorHere != null && actorHere.hasCapability(Type.UNCONSCIOUS)){
                     ((Dinosaur)actorHere).increaseWater(10);
                     actorHere.removeCapability(Type.UNCONSCIOUS);
 
                 }
+                // Find all lakes in the map
                 if( gameMap.at(x, y).getGround() instanceof Lake) {
                     ((Lake) gameMap.at(x, y).getGround()).incrementSips(sips);
                 }

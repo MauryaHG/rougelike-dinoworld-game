@@ -53,6 +53,7 @@ public class Application {
 		GameMap gameMapNorth = new DinosaurGameMap(groundFactory, mapNorth ); // Jinyeop
 		((DinosaurGameMap)gameMapNorth).setNorthMap(true);
 		((DinosaurGameMap)gameMapNorth).growBush();
+		((DinosaurGameMap)gameMapNorth).createFish();
 		world.addGameMap(gameMapNorth);
 
 
@@ -85,6 +86,7 @@ public class Application {
 		GameMap gameMapSouth = new DinosaurGameMap(groundFactory, mapSouth ); // Jinyeop
 		((DinosaurGameMap)gameMapSouth).setSouthMap(true);
 		((DinosaurGameMap)gameMapSouth).growBush();
+		((DinosaurGameMap)gameMapSouth).createFish();
 		world.addGameMap(gameMapSouth);
 
 		// Each map holds the other map for switching
