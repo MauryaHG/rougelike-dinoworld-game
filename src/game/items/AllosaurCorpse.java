@@ -14,10 +14,16 @@ public class AllosaurCorpse extends DinosaurCorpse {
     private final int ROT_AGE = 20;
 
     /**
+     * food points of this dinosaur corpse
+     */
+    private final int FOOD_POINTS = 50;
+
+    /**
      * Sets the name of this corpse and the number of turns this will rot away
      */
     public AllosaurCorpse() {
-        super("Allosaur corpse", 50);
+        super("Allosaur corpse");
+        this.foodPoints = FOOD_POINTS;
         this.addCapability(Type.ALLOSAUR_CORPSE);
         super.setRotAge(ROT_AGE);
     }

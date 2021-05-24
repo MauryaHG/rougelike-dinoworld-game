@@ -22,15 +22,14 @@ public class DinosaurCorpse extends PortableItem{
     /**
      * An int representing the amount of food points left in item
      */
-    private int foodPoints;
+    protected int foodPoints = 0;
     /**
      * Initialise the name, char, age as 0 and add capability.
      * @param name
      */
-    public DinosaurCorpse(String name, int foodPoints) {
+    public DinosaurCorpse(String name) {
         super(name, 'C');
         this.age = 0;
-        this.foodPoints = foodPoints;
         this.addCapability(Type.CORPSE);
     }
 
