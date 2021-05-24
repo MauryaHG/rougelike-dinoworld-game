@@ -32,6 +32,19 @@ public class Brachiosaur extends Dinosaur {
         this.age = BRACH_ADULT_AGE;
     }
 
+    /** add baby Brachiosaur with a gender chosen randomly
+     * @param name name of allosaur
+     */
+    public Brachiosaur(String name) {
+        super(name, 'b', 160, 200);
+        this.hitPoints = 20;
+        addCapability(Type.BRACHIOSAUR);
+        addCapability(Type.HERBIVORE);
+        addCapability(Type.BABY);
+        this.age = 0;
+
+    }
+
     @Override
     public int getMIN_HUNGER() {
         return MIN_HUNGER;

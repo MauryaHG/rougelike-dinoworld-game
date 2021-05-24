@@ -3,6 +3,7 @@ package game.dinosaurs;
 import edu.monash.fit2099.engine.*;
 import game.Type;
 import game.behaviours.*;
+import game.grounds.Tree;
 
 
 public class Pterodactyls extends Dinosaur {
@@ -25,22 +26,21 @@ public class Pterodactyls extends Dinosaur {
      */
     public Pterodactyls(String name, Type gender) {
         super(name, 'v', 50, 100, gender);
-        this.hitPoints = 60;
+        this.hitPoints = 30;
         addCapability(Type.PTERODACTYLS);
         addCapability(Type.CARNIVORE);
         this.age = PET_ADULT_AGE;
     }
 
     /**
-     * createa dinosaur with random gender
-     *
+     * create a dinosaur with random gender
      * @param name        name of dinosaur
-     * @param displayChar display character which will be shown on map
+
      * @param hitPoints   health of dinosaur
      */
-    public Pterodactyls(String name, char displayChar, int hitPoints) {
-        super(name, 'v', hitPoints,100);
-        this.hitPoints = 50;
+    public Pterodactyls(String name) {
+        super(name, 'v', 50,100);
+        this.hitPoints = 25;
         addCapability(Type.PTERODACTYLS);
         addCapability(Type.CARNIVORE);
         addCapability(Type.BABY);
@@ -59,8 +59,10 @@ public class Pterodactyls extends Dinosaur {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         if (!this.hasCapability(Type.UNCONSCIOUS)) {
-
             behaviour.clear();
+            if(map.locationOf(this).getGround().hasCapability(Type.TREE)){
+                fuel = 30;
+            }
             if(fuel > 0 ){
                 this.addCapability(Type.CAN_FLY);
                 this.removeCapability(Type.CANT_FLY);

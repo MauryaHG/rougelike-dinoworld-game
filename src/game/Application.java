@@ -66,9 +66,9 @@ public class Application {
 		"........+.M.....................................................................",
 		".....................................+++............~...........................",
 		".......................................++++.....................................",
-		"...................................+++++........................................",
-		".....................................++++++.....................................",
-		"......................................+++.......................................",
+		"....................~~~~...........+++++........................................",
+		".....................~~~~~...........++++++.....................................",
+		"......................~~~.............+++.......................................",
 		".....................................+++........................................",
 		"................................................................................",
 		"............+++.................................................................",
@@ -97,14 +97,14 @@ public class Application {
 		world.addPlayer(player, gameMapSouth.at(9, 4));
 		
 		// Place a pair of stegosaurs in the middle of the map
-		gameMapSouth.at(30, 12).addActor(new Stegosaur("Stegosaur-1",Type.MALE));
-		gameMapSouth.at(31, 12).addActor(new Stegosaur("Stegosaur-2",Type.FEMALE));
-		gameMapSouth.at(10, 12).addActor(new Brachiosaur("Brachiosaur-1",Type.FEMALE));
-		gameMapSouth.at(12, 12).addActor(new Brachiosaur("Brachiosaur-2",Type.FEMALE));
-		gameMapSouth.at(10, 14).addActor(new Brachiosaur("Brachiosaur-3",Type.MALE));
-		gameMapSouth.at(12, 14).addActor(new Brachiosaur("Brachiosaur-4",Type.MALE));
-		//gameMapSouth.at(14, 15).addActor(new Pterodactyls("pet-4",Type.MALE));
-		//gameMapSouth.at(13, 15).addActor(new Pterodactyls("pet-5",Type.FEMALE));
+		//gameMapSouth.at(30, 12).addActor(new Stegosaur("Stegosaur-1",Type.MALE));
+		//gameMapSouth.at(31, 12).addActor(new Stegosaur("Stegosaur-2",Type.FEMALE));
+		//gameMapSouth.at(10, 12).addActor(new Brachiosaur("Brachiosaur-1",Type.FEMALE));
+		//gameMapSouth.at(12, 12).addActor(new Brachiosaur("Brachiosaur-2",Type.FEMALE));
+		//gameMapSouth.at(10, 14).addActor(new Brachiosaur("Brachiosaur-3",Type.MALE));
+		//gameMapSouth.at(12, 14).addActor(new Brachiosaur("Brachiosaur-4",Type.MALE));
+		gameMapSouth.at(14, 15).addActor(new Pterodactyls("pet-4",Type.MALE));
+		gameMapSouth.at(13, 15).addActor(new Pterodactyls("pet-5",Type.FEMALE));
 		//gameMapSouth.at(12, 15).addActor(new Allosaur("allo-4",Type.MALE));
 
 

@@ -55,11 +55,11 @@ public class Egg extends PortableItem {
 
             switch (eggType){
                 case STEGOSAUR_EGG:
-                    location.addActor(new Stegosaur("StegosaurNewBorn", Util.getGender()));
+                    location.addActor(new Stegosaur("StegosaurNewBorn"));
                     EcoPoint.increaseEcoPoint(100);
                     break;
                 case BRACHIOSAUR_EGG:
-                    location.addActor(new Brachiosaur("BrachiosaurNewBorn", Util.getGender()));
+                    location.addActor(new Brachiosaur("BrachiosaurNewBorn"));
                     EcoPoint.increaseEcoPoint(1000);
                     break;
                 case ALLOSAUR_EGG:
@@ -67,7 +67,7 @@ public class Egg extends PortableItem {
                     EcoPoint.increaseEcoPoint(1000);
                     break;
                 case PTERODACTYLS_EGG:
-                    location.addActor(new Pterodactyls("PterodactylsNewBorn", Util.getGender()));
+                    location.addActor(new Pterodactyls("PterodactylsNewBorn"));
                     EcoPoint.increaseEcoPoint(100);
                     break;
             }

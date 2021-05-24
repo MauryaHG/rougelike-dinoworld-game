@@ -37,7 +37,7 @@ public class Stegosaur extends Dinosaur {
 	}
 
 	/**
-	 * Constuctor.
+	 * Constructor.
 	 *Used to create Stegosaur with only name and gender given randomly
 	 * @param name name of dinosaur
 	 */

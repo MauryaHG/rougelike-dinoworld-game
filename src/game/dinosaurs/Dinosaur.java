@@ -307,6 +307,7 @@ abstract public class Dinosaur extends Actor {
         }
 
         if (!isConscious()) {
+            System.out.println(this + " is unconscious at (" + here.x() + "," + here.y() + ") due to hunger");
             addCapability(Type.UNCONSCIOUS);
             if (unconsciousCount == maxUnconscious) {
                 map.locationOf(actor).addItem(corpse);
@@ -314,6 +315,7 @@ abstract public class Dinosaur extends Actor {
             }
             unconsciousCount += 1;
         }else if (isDehydrated()){
+            System.out.println(this + " is unconscious at (" + here.x() + "," + here.y() + ") due to dehydration");
              addCapability(Type.UNCONSCIOUS);
              if (unconsciousCount == DEATH_BY_DEHYDRATION) {
                  map.locationOf(actor).addItem(corpse);
