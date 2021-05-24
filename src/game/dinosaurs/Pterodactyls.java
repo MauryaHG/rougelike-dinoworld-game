@@ -1,7 +1,10 @@
 package game.dinosaurs;
 
 import edu.monash.fit2099.engine.*;
+import game.Player;
 import game.Type;
+import game.actions.AttackAction;
+import game.actions.FeedAction;
 import game.behaviours.*;
 import game.grounds.Tree;
 
@@ -35,8 +38,6 @@ public class Pterodactyls extends Dinosaur {
     /**
      * create a dinosaur with random gender
      * @param name        name of dinosaur
-
-     * @param hitPoints   health of dinosaur
      */
     public Pterodactyls(String name) {
         super(name, 'v', 50,100);
@@ -93,6 +94,23 @@ public class Pterodactyls extends Dinosaur {
         }
         tick(this, map);
         return new DoNothingAction();
+    }
+    /**
+     *  Allow player can feed this
+     * @param otherActor the Actor that might be performing attack
+     * @param direction  String representing the direction of the other Actor
+     * @param map        current GameMap
+     * @return list of actions that can be done to actor
+     */
+    @Override
+    public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
+        if( otherActor instanceof Player ){
+            return new Actions(new FeedAction(this));
+        }
+        if(2 otherActor instanceof Allosaur){
+            return new Actions(new AttackAction(this));
+        }
+        return new Actions();
     }
 
     @Override

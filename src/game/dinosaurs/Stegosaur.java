@@ -103,10 +103,9 @@ public class Stegosaur extends Dinosaur {
 		tick(this, map);
 
 		//Jinyeop - if this Stegosaur get attacked, no more getting attack for 20 turns( when only attacked by Allosaur)
-		if(getAttacked){
-			if( ++turns > 20){
-				getAttacked = false;
-			}
+		if(getAttacked && ++turns > 20){
+			getAttacked = false;
+			turns = 0;
 		}
 
 		return new DoNothingAction();
