@@ -88,12 +88,12 @@ abstract public class Dinosaur extends Actor {
     /**
      * constant integer of breeding length of Pterodactyl
      */
-    private final int PET_BREEDING_LENGTH = 50;
+    private final int PET_BREEDING_LENGTH = 5;
 
     /**
      * constant integer starting water level
      */
-    private final int START_WATER_LVL = 60;
+    private final int START_WATER_LVL = 45;
 
     /**
      * constant integer maximum water level
@@ -157,13 +157,13 @@ abstract public class Dinosaur extends Actor {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();
         if (this.isConscious()) {
-            if (this.hitPoints >= this.getMIN_HUNGER() && isHydrated() &&  !(this.hasCapability(Type.PREGNANT))) {
+            if (this.hitPoints >= this.getMIN_HUNGER() && isThirsty() &&  !(this.hasCapability(Type.PREGNANT))) {
                 behaviour.add(new BreedBehaviour());
             }
             if (isHungry(this.getMIN_HUNGER(), map)) {
                 behaviour.add(new SeekFoodBehaviour());
             }
-            if (!isHydrated()){
+            if (!isThirsty()){
                 behaviour.add(new SeekWaterBehaviour());
             }
             behaviour.add(new WanderBehaviour());
@@ -177,12 +177,6 @@ abstract public class Dinosaur extends Actor {
         }
         tick(this, map);
         return new DoNothingAction();
-    }
-
-    @Override
-    public boolean isConscious() {
-        return (hitPoints > 0 && waterLevel > 0)
-                ;
     }
 
     protected abstract int getMIN_HUNGER();
@@ -203,10 +197,13 @@ abstract public class Dinosaur extends Actor {
         return isHungry;
     }
 
-    public boolean isHydrated() {
-        return waterLevel > 0;
+    public boolean isThirsty() {
+        return waterLevel > 30;
     }
 
+    private boolean isDehydrated() {
+        return waterLevel < 0;
+    }
 
 
     public void increaseWater(int points){
@@ -252,8 +249,8 @@ abstract public class Dinosaur extends Actor {
         }
 
         if(actor.hasCapability(Type.PTERODACTYLS)){
-            eggItem = new StegosaurEgg();
-            corpse = new StegosaurCorpse();
+            eggItem = new PterodactylsEgg();
+            corpse = new PetrodactylCorpse();
             maxUnconscious = 20;
             adultAge = PET_ADULT_AGE;
             breedLength = PET_BREEDING_LENGTH;
@@ -261,18 +258,27 @@ abstract public class Dinosaur extends Actor {
 
         }
 
-        if (actor.isConscious() && this.isHydrated()) {
+        if (actor.isConscious() && !this.isDehydrated()) {
             if(actor.hasCapability(Type.BABY)){
                 if ((age >= adultAge)){
                     removeCapability(Type.BABY);
                 }
             }
             if (actor.hasCapability(Type.PREGNANT)) {
-                if(breedingCount == breedLength){
+                if(breedingCount > breedLength){
                     actor.removeCapability(Type.PREGNANT);
-                    here.addItem(eggItem);
-                    breedingCount = 0;
-                    System.out.println(actor + " laid egg on (" + here.x() + "," + here.y() + ")");
+                    //if actor is petrodactyl check if they are on tree to lay egg
+                    if (actor.hasCapability(Type.PTERODACTYLS)){
+                        if (map.locationOf(actor).getGround().hasCapability(Type.TREE)){
+                            here.addItem(eggItem);
+                            breedingCount = 0;
+                            System.out.println(actor + " laid egg on (" + here.x() + "," + here.y() + ")");
+                        }
+                    }else{
+                        here.addItem(eggItem);
+                        breedingCount = 0;
+                        System.out.println(actor + " laid egg on (" + here.x() + "," + here.y() + ")");
+                    }
                 }
                 breedingCount++;
             }
@@ -287,16 +293,15 @@ abstract public class Dinosaur extends Actor {
                 map.removeActor(actor);
             }
             unconsciousCount += 1;
-        }
-
-         if (!isHydrated()){
+        }else if (isDehydrated()){
              addCapability(Type.UNCONSCIOUS);
              if (unconsciousCount == DEATH_BY_DEHYDRATION) {
                  map.locationOf(actor).addItem(corpse);
                  map.removeActor(actor);
              }
              unconsciousCount += 1;
-         }
+         }else{
         age++;
+        }
     }
 }

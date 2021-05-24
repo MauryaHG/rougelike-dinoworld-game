@@ -2,6 +2,7 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 import game.actions.QuitAction;
+import game.dinosaurs.Dinosaur;
 import game.grounds.Lake;
 
 import java.util.Random;
@@ -240,6 +241,12 @@ public class JurassicWorld extends World {
         // Find all lakes in the map
         for(int y: gameMap.getYRange()){
             for(int x: gameMap.getXRange()){
+                Actor actorHere = gameMap.at(x, y).getActor();
+                if (actorHere != null && actorHere.hasCapability(Type.UNCONSCIOUS)){
+                    ((Dinosaur)actorHere).increaseWater(10);
+                    actorHere.removeCapability(Type.UNCONSCIOUS);
+
+                }
                 if( gameMap.at(x, y).getGround() instanceof Lake) {
                     ((Lake) gameMap.at(x, y).getGround()).incrementSips(sips);
                 }

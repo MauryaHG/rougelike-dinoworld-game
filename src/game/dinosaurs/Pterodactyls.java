@@ -26,7 +26,7 @@ public class Pterodactyls extends Dinosaur {
      */
     public Pterodactyls(String name, Type gender) {
         super(name, 'v', 50, gender);
-        this.hitPoints = 30;
+        this.hitPoints = 60;
         addCapability(Type.PTERODACTYLS);
         addCapability(Type.CARNIVORE);
         this.age = PET_ADULT_AGE;
@@ -41,7 +41,7 @@ public class Pterodactyls extends Dinosaur {
      */
     public Pterodactyls(String name, char displayChar, int hitPoints) {
         super(name, 'v', hitPoints);
-        this.hitPoints = 30;
+        this.hitPoints = 50;
         addCapability(Type.PTERODACTYLS);
         addCapability(Type.CARNIVORE);
         addCapability(Type.BABY);
@@ -69,7 +69,7 @@ public class Pterodactyls extends Dinosaur {
                 this.removeCapability(Type.CAN_FLY);
             }
 
-            if (this.hitPoints >= MIN_HUNGER && isHydrated() && !(this.hasCapability(Type.PREGNANT))) {
+            if (this.hitPoints >= MIN_HUNGER && isThirsty() && !(this.hasCapability(Type.PREGNANT))) {
                 behaviour.add(new BreedBehaviour());
             }
 
@@ -77,9 +77,10 @@ public class Pterodactyls extends Dinosaur {
                 behaviour.add(new SeekFoodBehaviour());
             }
 
-            if (!isHydrated()){
+            if (!isThirsty()){
                 behaviour.add(new SeekWaterBehaviour());
             }
+            behaviour.add(new WanderBehaviour());
             for (Behaviour index : behaviour) {
                 Action action = index.getAction(this, map);
                 if (action != null) {

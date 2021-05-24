@@ -58,7 +58,8 @@ public abstract class Util {
         if(!(actor.hasCapability(Type.PREGNANT) || otherActor.hasCapability(Type.PREGNANT))){
             if ((actor.hasCapability(Type.STEGOSAUR) && otherActor.hasCapability(Type.STEGOSAUR)) ||
                     (actor.hasCapability(Type.BRACHIOSAUR) && otherActor.hasCapability(Type.BRACHIOSAUR)) ||
-                    (actor.hasCapability(Type.ALLOSAUR) && otherActor.hasCapability(Type.ALLOSAUR))) {  
+                    (actor.hasCapability(Type.ALLOSAUR) && otherActor.hasCapability(Type.ALLOSAUR)) ||
+                    (actor.hasCapability(Type.PTERODACTYLS) && otherActor.hasCapability(Type.PTERODACTYLS))) {
                 if ((actor.hasCapability(Type.MALE)) && otherActor.hasCapability(Type.FEMALE)) {
                     isValid = true;
                 }

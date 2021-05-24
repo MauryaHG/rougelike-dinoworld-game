@@ -13,6 +13,6 @@ public enum Type {
     ON_GROUND, ON_TREE, BABY, ON_BUSH,
     CORPSE, ALLOSAUR_CORPSE, BRACHIOSAUR_CORPSE, STEGOSAUR_CORPSE, PTERODACTYLS_CORPSE,
     PTERODACTYLS,
-    LAKE, FISH, CAN_FLY, CANT_FLY, CARNIVORE, HERBIVORE
+    LAKE, FISH, CAN_FLY, CANT_FLY, CARNIVORE, HERBIVORE, PTERODACTYL_CORPSE
     // These are used to distinguish whether Fruit is to be picked up or harvested(ON_GROUND: picked up / ON_TREE and ON_BUSH: harvested)
 }

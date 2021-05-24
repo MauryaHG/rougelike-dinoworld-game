@@ -50,6 +50,8 @@ public class BreedAction extends Action {
             if((map.locationOf(maleDinosaur).getGround().hasCapability(Type.TREE)) &&
                     map.locationOf(femaleDinosaur).getGround().hasCapability(Type.TREE)) {
                 femaleDinosaur.addCapability(Type.PREGNANT);
+
+            }else{
                 return actor + "can not mate here";
             }
         } else{

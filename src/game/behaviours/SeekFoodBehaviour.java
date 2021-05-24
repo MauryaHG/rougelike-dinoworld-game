@@ -75,9 +75,9 @@ public class SeekFoodBehaviour implements Behaviour {
             for (Exit exit : here.getExits()) {
                 Location destination = exit.getDestination();
                 Actor thisActor = destination.getActor();
-                if ((thisActor != null && (thisActor.hasCapability(Type.STEGOSAUR))) ||
-                        (thisActor.hasCapability(Type.PTERODACTYLS) && // if target is pterodactyl and not flying attack it
-                                thisActor.hasCapability(Type.CANT_FLY))) {
+                if (thisActor != null && (thisActor.hasCapability(Type.STEGOSAUR) ||
+                        (thisActor.hasCapability(Type.PTERODACTYLS) && thisActor.hasCapability(Type.CANT_FLY))))// if target is pterodactyl and not flying attack it
+{
                     return new AttackAction(thisActor);
                 }
             }
@@ -89,7 +89,8 @@ public class SeekFoodBehaviour implements Behaviour {
                     for (Item indexItem : itemsThere) {
                         if ((indexItem.hasCapability(sourceOne)) ||
                                 (indexItem.hasCapability(sourceTwo)) ||
-                                (thisActor != null && thisActor.hasCapability(Type.STEGOSAUR))) {
+                                (thisActor != null && (thisActor.hasCapability(Type.STEGOSAUR) ||
+                                        thisActor.hasCapability(Type.PTERODACTYLS)))) {
                             Location there = map.at(x, y);
                             int currentDistance = Util.distance(here, there);
                             if (currentDistance < minimumDistance) {
@@ -132,7 +133,8 @@ public class SeekFoodBehaviour implements Behaviour {
         if (actor.hasCapability(Type.PTERODACTYLS)){
             boolean landable = true;
             for (Item indexItem : itemsHere) {
-                if (indexItem.hasCapability(sourceOne)) {
+                if (indexItem.hasCapability(sourceOne) ||
+                        indexItem.hasCapability(sourceTwo)) {
                     for (Exit exit : here.getExits()) {
                         Location destination = exit.getDestination();
                         Actor thisActor = destination.getActor();
@@ -140,10 +142,10 @@ public class SeekFoodBehaviour implements Behaviour {
                             landable = false;
                         }
                     }
+                    if (landable){
+                        return new EatFoodAction(actor, itemsHere);
+                    }
                 }
-            }
-            if (landable){
-                return new EatFoodAction(actor, itemsHere);
             }
 
             for (int x : widths) {
