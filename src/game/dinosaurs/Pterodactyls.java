@@ -107,7 +107,7 @@ public class Pterodactyls extends Dinosaur {
         if( otherActor instanceof Player ){
             return new Actions(new FeedAction(this));
         }
-        if(2 otherActor instanceof Allosaur){
+        if( otherActor instanceof Allosaur){
             return new Actions(new AttackAction(this));
         }
         return new Actions();

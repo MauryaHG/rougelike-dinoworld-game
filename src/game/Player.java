@@ -137,5 +137,20 @@ public class Player extends Actor {
 	public boolean isLose() {
 		return lose;
 	}
+
+	public void setDefault() {
+		this.win = false;
+		this.lose = false;
+		this.turns = 0;
+	}
+
+
+	public int getTurnsRequired() {
+		return turnsRequired;
+	}
+
+	public int getPointsRequired() {
+		return pointsRequired;
+	}
 }
 
