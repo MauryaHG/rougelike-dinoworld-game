@@ -69,7 +69,7 @@ public class Pterodactyls extends Dinosaur {
                 this.removeCapability(Type.CAN_FLY);
             }
 
-            if (this.hitPoints >= MIN_HUNGER && isThirsty() && !(this.hasCapability(Type.PREGNANT))) {
+            if (this.hitPoints >= MIN_HUNGER && isThirsty(map) && !(this.hasCapability(Type.PREGNANT))) {
                 behaviour.add(new BreedBehaviour());
             }
 
@@ -77,7 +77,7 @@ public class Pterodactyls extends Dinosaur {
                 behaviour.add(new SeekFoodBehaviour());
             }
 
-            if (!isThirsty()){
+            if (!isThirsty(map)){
                 behaviour.add(new SeekWaterBehaviour());
             }
             behaviour.add(new WanderBehaviour());

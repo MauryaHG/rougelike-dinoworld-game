@@ -157,13 +157,13 @@ abstract public class Dinosaur extends Actor {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();
         if (this.isConscious()) {
-            if (this.hitPoints >= this.getMIN_HUNGER() && isThirsty() &&  !(this.hasCapability(Type.PREGNANT))) {
+            if (this.hitPoints >= this.getMIN_HUNGER() && isThirsty(map) &&  !(this.hasCapability(Type.PREGNANT))) {
                 behaviour.add(new BreedBehaviour());
             }
             if (isHungry(this.getMIN_HUNGER(), map)) {
                 behaviour.add(new SeekFoodBehaviour());
             }
-            if (!isThirsty()){
+            if (!isThirsty(map)){
                 behaviour.add(new SeekWaterBehaviour());
             }
             behaviour.add(new WanderBehaviour());
@@ -197,8 +197,15 @@ abstract public class Dinosaur extends Actor {
         return isHungry;
     }
 
-    public boolean isThirsty() {
-        return waterLevel > 30;
+    public boolean isThirsty(GameMap map) {
+        //return waterLevel > 30;
+        boolean isThirsty = false;
+        if (waterLevel < 30) {
+            Location here = map.locationOf(this);
+            System.out.println(this.name + " at (" + here.x() + "," + here.y() + ") is thirsty !!!");
+            isThirsty = true;
+        }
+        return isThirsty;
     }
 
     private boolean isDehydrated() {
