@@ -63,12 +63,12 @@ public class Pterodactyls extends Dinosaur {
             if(map.locationOf(this).getGround().hasCapability(Type.TREE)){
                 fuel = 30;
             }
-            if(fuel > 0 ){
-                this.addCapability(Type.CAN_FLY);
-                this.removeCapability(Type.CANT_FLY);
-            }else {
+            if(fuel < 0 && !map.locationOf(this).getGround().hasCapability(Type.LAKE)){
                 this.addCapability(Type.CANT_FLY);
                 this.removeCapability(Type.CAN_FLY);
+            }else {
+                this.addCapability(Type.CAN_FLY);
+                this.removeCapability(Type.CANT_FLY);
             }
 
             if (this.hitPoints >= MIN_HUNGER && !isThirsty(map) && !(this.hasCapability(Type.PREGNANT))) {

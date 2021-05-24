@@ -8,6 +8,7 @@ import game.items.PortableItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author :Maurya
@@ -26,6 +27,7 @@ public class EatFoodAction extends Action {
     protected List <PortableItem> items = new ArrayList<>();
     private String  itemsEaten = "";
     private int waterLevel =0;
+    private Random rand;
 
     /**
      * searches the item list and adds all the
@@ -75,7 +77,10 @@ public class EatFoodAction extends Action {
 
         if (actor.hasCapability(Type.PTERODACTYLS)) {
             heal = 10;
-            amount = items.size();//make random value 0-1-2
+            amount = rand.nextInt((2 - 0) + 1);;//make random value 0-1-2
+            if(amount > items.size()){
+                amount = items.size();
+            }
         }
         if (actor.hasCapability(Type.ALLOSAUR)) {
             amount = 1;
@@ -92,10 +97,13 @@ public class EatFoodAction extends Action {
                 heal = 5;
                 waterLevel = 30;
             }
+            if (actor.hasCapability(Type.PTERODACTYLS)) {
+                heal = 10;
+            }
             actor.heal(heal);
             if(item.hasCapability(Type.CORPSE)) {
                 ((DinosaurCorpse) item).reduceFoodPoints(heal);
-                if (((DinosaurCorpse) item).getFoodPoints() == 0) {
+                if (((DinosaurCorpse) item).getFoodPoints() <= 0) {
                     here.removeItem(item);
                 }
             } else {
