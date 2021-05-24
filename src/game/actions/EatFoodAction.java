@@ -87,9 +87,14 @@ public class EatFoodAction extends Action {
         for (int i = 0; i < amount; i++) {
             Item item = items.get(i);
             if ((item.hasCapability(Type.ALLOSAUR_CORPSE)) || (item.hasCapability(Type.STEGOSAUR_CORPSE))) {
-                heal = 50;
+                heal = ((DinosaurCorpse) item).getFoodPoints();
+
             } else if (item.hasCapability(Type.BRACHIOSAUR_CORPSE)) {
-                heal = 100;
+                heal = ((DinosaurCorpse) item).getFoodPoints();
+
+            } else if (item.hasCapability(Type.PTERODACTYL_CORPSE)) {
+                heal = ((DinosaurCorpse) item).getFoodPoints();
+
             } else if (item.hasCapability(Type.EGG)) {
                 heal = 10;
             } else if (item.hasCapability(Type.FISH)) {
