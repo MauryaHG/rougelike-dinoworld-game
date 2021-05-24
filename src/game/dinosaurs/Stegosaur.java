@@ -80,7 +80,7 @@ public class Stegosaur extends Dinosaur {
 	 */
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-		if (this.isConscious()) {
+		if (!this.hasCapability(Type.UNCONSCIOUS)) {
 			behaviour.clear();
 			if (this.hitPoints >= 50 && !(this.hasCapability(Type.PREGNANT))) {
 				behaviour.add(new BreedBehaviour());

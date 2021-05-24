@@ -158,7 +158,7 @@ abstract public class Dinosaur extends Actor {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         behaviour.clear();
-        if (this.isConscious()) {
+        if (!this.hasCapability(Type.UNCONSCIOUS)) {
             if (this.hitPoints >= this.getMIN_HUNGER() && !isThirsty(map) &&  !(this.hasCapability(Type.PREGNANT))) {
                 behaviour.add(new BreedBehaviour());
             }

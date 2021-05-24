@@ -58,7 +58,8 @@ public class Pterodactyls extends Dinosaur {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        if (this.isConscious()) {
+        if (!this.hasCapability(Type.UNCONSCIOUS)) {
+
             behaviour.clear();
             if(fuel > 0 ){
                 this.addCapability(Type.CAN_FLY);
