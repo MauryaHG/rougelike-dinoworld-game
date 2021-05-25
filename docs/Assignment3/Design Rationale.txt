@@ -230,18 +230,27 @@ Initial Design of each classes
 
     Classes added (Assignment3):
         DrinkAction
+            -  Responsible to make actor drink water if next to lake
         QuitAction
             - Responsible to be added and shown in the user's menu
             - hot key for quitting game will be provided to user and if it is selected, processActorTurn() in JurassicWorld will terminate the game
 
         SeekWaterBehaviour
+            - Responsible to move actor to closest lake
         Pterodactyls
+            - Responsible for wander, eat fish and breeding
+            - This class extends Dinosaur that provide shared methods with Stegosaur and Allosaur.
+            - Overrides methods to if it is hungry, baby and conscious for WanderBehaviour, EatBehaviour and BreedBehaviour.
 
         Lake
             - Responsible for the lake ground and the display character is ~
             - when tick() in Lake is invoked, it will check the number of fish in the lake and determine to skip or add a fish by 60% chance.
 
         PteodactylsEgg
+            - Responsible for wait for a few turns before creating an instance of corresponding dinosaur.
+            - This extends Ground class and override tick() method for counting the number of ticks. After that, GroundLocation
+              will be responsible for creating an instance of it on the same spot.
+            - Interacting through GroundLocation class after appropriate turns pass to create an instance.
 
         PteodactylsCorpse
             - Responsible for staying in the map for several turns before disappearing or be a food source for carnivorous dinosaurs
@@ -256,6 +265,9 @@ Initial Design of each classes
               processPlayerTurn() is to add QuitAction into Actions in order for displaying quitting option to users. If selected, processPlayerTurn() will be terminated and alert run() that users wants to stop.
 
     Classes Modified(Assignment3)
+        Dinosaur
+            - moved playturn into Dinosaur for shared dinosaurs
+
         AttackAction
             - Modified to kill Pterodactyls and hurt Stegosaur
 
