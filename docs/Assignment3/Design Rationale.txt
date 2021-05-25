@@ -65,6 +65,22 @@ Overview
     tick() method in Dinosaur counts when Dinosaur is unconscious class because all the dinosaurs share the same tick method.If the actor is unconscious for certain amount of turns it gets removed from the map and an corpse item is added
 
 
+    --- Assignment 3---
+    Thirsty dinosaurs
+    For finding  a source of water (lake) a new seekwaterBhaviour class was created which extends Behaviour which allows us to give the behaviour to the dinosaurs as all the dinosaurs share the same method of getting water.This function returns a move action if there is no water adjacent to the dinosaur, else it returns a drinkaction which  increases the water by the relevant values for each dinosaur.
+     The moveactor action was changed from the moveactoraction class to the move actoraction method in the Location class because it has canActorEnter methods which has checks so only  pterodactyl can pass over lakes.
+
+    New waterLevel attribute was added into the Dinosaur class and this was decreased by one every turn by the tick() in Dinosaur class.When rain occurs in JurassicWorld Class it goes over the map and if any actor has the enum UNCONCIOUS they will get + 10 waterLevel through the Dinosaur class increaseWater() which was added so all Dinosaurs can share this method.
+
+    Playturn method was also moved into Dinosaur class to improve code reuse .
+
+    Pterodactyls
+    New class Pterodactyls which extends Dinosaur was created so they can share the methods . Pterodactyls have new attribute fuel which is the number of turns it can fly.Catching fish is done in the eatFoodaction which checks the tile the actor is standing on and if it has fish eats random 0-1 value and adds 30 water. This is done here because the actor only eats if its hungry rather than eat every time it moves over a lake block.
+    To eat corpses at 10 food points at a time the DinosaurCorpse items where given a foodPoints attribute which stores the total amount of foodPoints that can be obtained from eating the corpse.where 10 points is deducted every turn it eats it, and removed if the foodPoints reach zero.
+
+    Breeding is done by the normal BreedBehaviour where it will go near a partner of opposite gender but if they are not on a tree they do not breed.This is done in the Breedaction class. Egg is layed after by the tick method in dinosaur function and if its time to lay the egg but actor is on a lake tile it will be halt until the actors gets onto a ground.This is done by tick method because it needs to be checked every turn.Identifying if  Pterodactyls are flying or not is done with enums CAN_FLY and CANT_FLY.
+
+
 
 Initial Design of each classes
     Dirt (extends Ground)
