@@ -119,7 +119,7 @@ public class GroundLocation extends Location {
 
     /**
      * Counts the number of Bushes nearby
-     * @return An int respresenting the number of Bushes nearby
+     * @return An int representing the number of Bushes nearby
      */
     private int neighboursBushCount() {
         return (int) getExits().stream().map(exit -> exit.getDestination().getGround())
@@ -128,7 +128,7 @@ public class GroundLocation extends Location {
 
     /**
      * Counts the number of Trees nearby
-     * @return An int respresenting the number of Trees nearby
+     * @return An int representing the number of Trees nearby
      */
     private int neighboursTreeCount() {
         return (int) getExits().stream().map(exit -> exit.getDestination().getGround())
@@ -142,7 +142,6 @@ public class GroundLocation extends Location {
     private void growBush(int chance){
         if(Util.calcPercentage(chance)){
                 setGround(new Bush());
-                return;
         }
     }
 }
