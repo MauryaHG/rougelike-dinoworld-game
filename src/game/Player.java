@@ -69,12 +69,7 @@ public class Player extends Actor {
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
 		// When Challenge Mode, check for winning/losing condition - jinyeop
 		if( isChallengeMode ){
-			turns++;
-			if(turns < turnsRequired && EcoPoint.getEcoPoint() >= pointsRequired){
-				win = true;
-			} else if(turnsRequired <= turns){
-				lose = true;
-			}
+			checkChallengeCondition();
 		}
 
 		// Handle multi-turn Actions
@@ -130,6 +125,19 @@ public class Player extends Actor {
 		return false;
 	}
 
+	/**
+	 * In challenge mode, increment turns and check if user wins or loses.
+	 */
+	private void checkChallengeCondition(){
+		turns++;
+		if(turns < turnsRequired && EcoPoint.getEcoPoint() >= pointsRequired){
+			win = true;
+		} else if(turnsRequired <= turns){
+			lose = true;
+		}
+	}
+
+
 	public boolean isWin() {
 		return win;
 	}
@@ -152,5 +160,6 @@ public class Player extends Actor {
 	public int getPointsRequired() {
 		return pointsRequired;
 	}
+
 }
 
