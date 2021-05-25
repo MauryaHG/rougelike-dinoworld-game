@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * @author Jinyeop Oh
- * @version 1.1.2
+ * @version 1.1.3
  * @see Type
  */
 public class PurchaseAction extends Action {
@@ -47,7 +47,7 @@ public class PurchaseAction extends Action {
             return "No vending machine found. Try again.";
         }
 
-        // Get the Map from the machine
+        // Get the products from the machine
         Map<Type, ArrayList<Item>> products = machine.getProducts();
 
         // Ask user a menu option
@@ -57,7 +57,6 @@ public class PurchaseAction extends Action {
         char option = display.readChar();
 
         // Check validity of given input, quantity of items and eco point first then perform corresponding action
-        int size = 0;
         String returnMsg = "There was an typo, not enough eco points or no more item in the machine!!!!";
         switch (option){
             case '1':
@@ -144,14 +143,14 @@ public class PurchaseAction extends Action {
 
         System.out.println();
         System.out.println("Eco Point : " + EcoPoint.getEcoPoint());
-        System.out.println("Fruit (" + numFruits + ") - "+ VendingMachine.FRUIT_PRICE+" points. Press 1" );
-        System.out.println("Vegetarian Meal (" + numVegetarianMeals + ") - "+ VendingMachine.VEGETARIAN_MEAL_PRICE+" points. Press 2" );
-        System.out.println("Carnivore Meal (" + numCarnivoreMeals + ") - "+ VendingMachine.CARNIVORE_MEAL_PRICE+" points. Press 3" );
-        System.out.println("Stegosaur Egg (" + numStegosaurEggs + ") - "+ VendingMachine.STEGOSAUR_EGG_PRICE+" points. Press 4" );
-        System.out.println("Brachiosaur Egg (" + numBrachiosaurEggs + ") - "+ VendingMachine.BRACHIOSAUR_EGG_PRICE+" points. Press 5" );
-        System.out.println("Allosaur Egg (" + numAllosaurEggs + ") - "+ VendingMachine.ALLOSAUR_EGG_PRICE+" points. Press 6" );
-        System.out.println("Pterodactyls Egg (" + numPterodactylsEggs + ") - "+ VendingMachine.PTERODACTYLS_EGG_PRICE+" points. Press 7" );
-        System.out.println("Laser Gun (" + numLaserGun + ") - "+ VendingMachine.LASER_GUN_PRICE+" points. Press 8" );
+        System.out.println("Fruit ( quantities: " + numFruits + ") - "+ VendingMachine.FRUIT_PRICE+" points. Press 1" );
+        System.out.println("Vegetarian Meal ( quantities: " + numVegetarianMeals + ") - "+ VendingMachine.VEGETARIAN_MEAL_PRICE+" points. Press 2" );
+        System.out.println("Carnivore Meal ( quantities: " + numCarnivoreMeals + ") - "+ VendingMachine.CARNIVORE_MEAL_PRICE+" points. Press 3" );
+        System.out.println("Stegosaur Egg ( quantities: " + numStegosaurEggs + ") - "+ VendingMachine.STEGOSAUR_EGG_PRICE+" points. Press 4" );
+        System.out.println("Brachiosaur Egg ( quantities: " + numBrachiosaurEggs + ") - "+ VendingMachine.BRACHIOSAUR_EGG_PRICE+" points. Press 5" );
+        System.out.println("Allosaur Egg ( quantities: " + numAllosaurEggs + ") - "+ VendingMachine.ALLOSAUR_EGG_PRICE+" points. Press 6" );
+        System.out.println("Pterodactyls Egg ( quantities: " + numPterodactylsEggs + ") - "+ VendingMachine.PTERODACTYLS_EGG_PRICE+" points. Press 7" );
+        System.out.println("Laser Gun ( quantities: " + numLaserGun + ") - "+ VendingMachine.LASER_GUN_PRICE+" points. Press 8" );
         System.out.println("Cancel - press any");
 
     }

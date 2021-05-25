@@ -2,13 +2,15 @@ package game;
 
 /**
  * @author Jinyeop Oh
- * @version 1.0.2
+ * @version 1.0.3
  */
 abstract public class EcoPoint {
     /**
      *  An integer representing the eco point used in the game
      */
     private static int ecoPoint = 0;
+
+    private static int defaultEcoPoint = 0;
 
     /**
      * Increment the ecoPoint by given ecoPoint. There is no limit.
@@ -41,6 +43,10 @@ abstract public class EcoPoint {
 
     public static int getEcoPoint(){
         return ecoPoint;
+    }
+
+    public static void setEcoPointDefault(){
+        EcoPoint.ecoPoint = EcoPoint.defaultEcoPoint;
     }
 
 }

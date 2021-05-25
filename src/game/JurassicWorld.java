@@ -13,12 +13,17 @@ import java.util.Random;
  */
 public class JurassicWorld extends World {
     private boolean isChallengeMode = false;
-    private boolean endGame = false;
+    private boolean endGame;
 
     /**
      * turn counter for raining
      */
-    private int turns = 0;
+    private int rainingCounter = 0;
+
+    /**
+     * game turn counter
+     */
+    private int challengeGameCounter = 0;
 
 
     /**
@@ -49,6 +54,10 @@ public class JurassicWorld extends World {
         if (player == null)
             throw new IllegalStateException();
 
+        // Set some variables defaults
+        setDefault();
+        ((Player)player).setDefault();
+
         selectGameMode(display);
         if(endGame){
             display.println(endGameMessage());
@@ -70,6 +79,20 @@ public class JurassicWorld extends World {
             GameMap playersMap = actorLocations.locationOf(player).map();
             playersMap.draw(display);
 
+            // Check if player satisfies winning or losing condition
+            if( isChallengeMode){
+                if( ((Player)player).isWin() ){
+                    display.println("WIN!!!!!!!!");
+                    break;
+                }
+
+                if( ((Player)player).isLose() ){
+                    display.println("LOST!!!!!!!!");
+                    break;
+                }
+
+            }
+
             // Process all the actors.
             for (Actor actor : actorLocations) {
                 if (stillRunning()){
@@ -89,30 +112,16 @@ public class JurassicWorld extends World {
             // Tick over all the maps. For the map stuff.
             for (GameMap gameMap : gameMaps) {
                 // Calculate percentage to rain in the world
-                if(++turns > 10){
-                    if(isGoingToRain()){
+                if (++rainingCounter > 10) {
+                    if (isGoingToRain()) {
                         Util.setRaining(true); // This is true for one turn only
                         worldRains(numOfSips, gameMap);
                     }
-                    // set turns = 0 in every 10 turns, no matter if there was raining or not
-                    turns = 0;
+                    // set rainingCounter = 0 in every 10 turns, no matter if there was raining or not
+                    rainingCounter = 0;
                 }
 
                 gameMap.tick();
-            }
-
-            // Check if player satisfies winning or losing condition
-            if( isChallengeMode){
-                if( ((Player)player).isWin() ){
-                    display.println("WIN!!!!!!!!");
-                    break;
-                }
-
-                if( ((Player)player).isLose() ){
-                    display.println("LOST!!!!!!!!");
-                    break;
-                }
-
             }
 
         }
@@ -142,7 +151,13 @@ public class JurassicWorld extends World {
 
         // If actor is player, display quit menu
         if( actor instanceof Player){
-            System.out.println("Eco point : " + EcoPoint.getEcoPoint());
+            if( isChallengeMode ){
+                int turnsRequired = ((Player)actor).getTurnsRequired();
+                int pointsRequired = ((Player)actor).getPointsRequired();
+                System.out.println("Target turn : " + turnsRequired + ", Target points : " + pointsRequired);
+                System.out.println("Current turns : " + challengeGameCounter++);
+            }
+            System.out.println("Current Eco point : " + EcoPoint.getEcoPoint());
             actions.add(new QuitAction());
         }
 
@@ -259,5 +274,16 @@ public class JurassicWorld extends World {
                 }
             }
         }
+    }
+
+    /**
+     * set a few things as default for multiple game playing
+     */
+    private void setDefault(){
+        EcoPoint.setEcoPointDefault();
+        endGame = false;
+        rainingCounter = 0;
+        challengeGameCounter = 0;
+        isChallengeMode = false;
     }
 }

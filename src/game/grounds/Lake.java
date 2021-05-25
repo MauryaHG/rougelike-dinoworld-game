@@ -4,13 +4,15 @@ import edu.monash.fit2099.engine.*;
 import game.Type;
 import game.Util;
 import game.actions.DrinkAction;
-import game.dinosaurs.Dinosaur;
+import game.dinosaurs.Allosaur;
+import game.dinosaurs.Brachiosaur;
+import game.dinosaurs.Stegosaur;
 import game.items.Fish;
 
 /**
  *
  * @author jinyeopoh
- * @version 1.1.0
+ * @version 1.1.1
  * @see Ground
  * @see Fish
  */
@@ -67,7 +69,7 @@ public class Lake extends Ground {
     @Override
     public Actions allowableActions(Actor actor, Location location, String direction) {
         Actions actions = new Actions();
-        if( actor instanceof Dinosaur){
+        if( actor instanceof Stegosaur || actor instanceof Brachiosaur || actor instanceof Allosaur){
             actions.add(new DrinkAction(location));
         }
         return actions;

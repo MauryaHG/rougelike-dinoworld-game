@@ -27,7 +27,6 @@ public class EatFoodAction extends Action {
     protected List <PortableItem> items = new ArrayList<>();
     private String  itemsEaten = "";
     private int waterLevel =0;
-    private Random rand;
 
     /**
      * searches the item list and adds all the
@@ -77,7 +76,7 @@ public class EatFoodAction extends Action {
 
         if (actor.hasCapability(Type.PTERODACTYLS)) {
             heal = 10;
-            amount = rand.nextInt((2 - 0) + 1);;//make random value 0-1-2
+            amount = new Random().nextInt((2 - 0) + 1);;//make random value 0-1-2 _ Jinyeop modified
             if(amount > items.size()){
                 amount = items.size();
             }

@@ -2,6 +2,7 @@ package game.actions;
 
 import edu.monash.fit2099.engine.*;
 import game.EcoPoint;
+import game.Type;
 import game.Util;
 import game.dinosaurs.Allosaur;
 import game.dinosaurs.Brachiosaur;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * No hot key is used for the Action. In case if there are number of dinosaurs in adjacent squares
  * @author :Jinyeop Oh
- * @version :1.1.0
+ * @version :1.1.1
  * @see AllosaurCorpse
  * @see BrachiosaurCorpse
  * @see StegosaurCorpse
@@ -85,7 +86,7 @@ public class FeedAction extends Action {
         }
 
 
-        if( target instanceof Stegosaur || target instanceof Brachiosaur){
+        if( target.hasCapability(Type.HERBIVORE)){
             // Pre : if no food to feed, terminate
             if( !hasFruits && !hasVegeMeals) {
                 return "Player has no food to feed this herbivore.";
@@ -123,10 +124,10 @@ public class FeedAction extends Action {
             }
         }
 
-        if ( target instanceof Allosaur ){
-            // Pre : if player has no food to feed Allosaur, terminate
+        if ( target.hasCapability(Type.CARNIVORE)){
+            // Pre : if player has no food to feed carnivorous dinosaur, terminate
             if( !hasCarnMeals && !hasStegoCorpse && !hasBrachioCoprse && !hasAllosaurCoprse && !hasEgg)
-                return "Player has no Carnovore Meal Kit to feed";
+                return "Player has no food to feed";
 
             if( hasCarnMeals )
                 System.out.println("Feed Carnivore Meal Kit. Press 3");

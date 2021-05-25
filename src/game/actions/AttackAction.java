@@ -2,8 +2,10 @@ package game.actions;
 
 import edu.monash.fit2099.engine.*;
 import game.dinosaurs.Allosaur;
+import game.dinosaurs.Pterodactyls;
 import game.dinosaurs.Stegosaur;
 import game.Type;
+import game.items.PetrodactylCorpse;
 import game.items.StegosaurCorpse;
 
 import java.util.Random;
@@ -45,28 +47,33 @@ public class AttackAction extends Action {
 		int targetY = map.locationOf(target).y();
 
 		// Pre : if actor is Allosaur and target(Stegosaur) is attacked by allosaur and has not been 20 turns, return
-		if( actor instanceof Allosaur && ((Stegosaur)target).isGetAttacked()){
-			return "This " +target+"("+targetX+","+targetY+")"+" got attacked by " + actor +"("+actorX+","+actorY+")" + " so cannot attack again.";
+		if( actor instanceof Allosaur && target instanceof Stegosaur ){
+			if(((Stegosaur)target).isGetAttacked()){
+				return "This " +target+"("+targetX+","+targetY+")"+" got attacked by " + actor +"("+actorX+","+actorY+")" + " so cannot attack again.";
+			}
 		}
 
-		if (target.hasCapability(Type.PTERODACTYLS)){
-			actor.heal(30);
-			map.removeActor(target);
-			return menuDescription(actor);
-		}
+
 		// get weapon and attack the target
 		Weapon weapon = actor.getWeapon();
 		int damage = weapon.damage();
-		String result = actor +"("+actorX+","+actorY+")" + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 
+		// This is for Pterodactyl
+		if (target instanceof Pterodactyls){
+			actor.heal(30);
+			map.removeActor(target);
+			map.locationOf(target).addItem(new PetrodactylCorpse());
+			return actor +"("+actorX+","+actorY+")" + " " + weapon.verb() + " " + target + " and the target is dead.";
+		}
+
+		// This is for Stegosaur
 		target.hurt(damage);
-
-
+		String result = actor +"("+actorX+","+actorY+")" + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 		if(!target.isConscious()){
 			map.locationOf(target).addItem(new StegosaurCorpse());
 			map.removeActor(target);
 		} else {
-			if( actor instanceof Allosaur ){
+			if( actor instanceof Allosaur && target instanceof Stegosaur){
 				((Stegosaur)target).setGetAttacked(true);
 			}
 		}
