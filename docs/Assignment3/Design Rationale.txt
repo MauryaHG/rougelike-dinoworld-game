@@ -1,4 +1,4 @@
-(Updated - Assignment2)
+(Updated - Assignment3)
 Design Rationale
     - To fulfill some missing parts of the game Jurassic World via creating and modifying classes.
 
@@ -80,6 +80,18 @@ Overview
 
     Breeding is done by the normal BreedBehaviour where it will go near a partner of opposite gender but if they are not on a tree they do not breed.This is done in the Breedaction class. Egg is layed after by the tick method in dinosaur function and if its time to lay the egg but actor is on a lake tile it will be halt until the actors gets onto a ground.This is done by tick method because it needs to be checked every turn.Identifying if  Pterodactyls are flying or not is done with enums CAN_FLY and CANT_FLY.
 
+    Two game maps
+    In order to have two game maps in the World, I created DinosaurGameMap that extends GameMap. And then each DinosaurGameMap has the reference to the other DinosaurGameMap.
+    The reason for creating the DinosaurGameMap and extending GameMap is that core methods should remains the same and each map has to have the other map for switching.
+    And the most important reason is that once run() is invoked in the Application, the actual game will be iterated inside the World class.
+    Hence, I also created JurassicWorld to override core methods, run(). Since World can have multiple GameMap objects, run() will iterate through to process all the required functionalities.
+    To conclude, the design that JurassicWorld has the north and south map and iterate until player wants or loses the game. Meanwhile, the two maps added to the Jurassic world play their role independently even it is not shown to the users.
+
+    Rain
+    I designed to code calculating chance of raining and irrigate to the world in run() in JurassicWorld.
+    Because, since references to those maps are in the Jurassic World, the run() iterate through and invokes tick() in all game maps.
+    Hence, each game map is passed to worldRain() method in order to find lakes and unconscious dinosaur for irrigation.
+    This design can simply take care of all map, even if I add more maps to it, and significantly increases further maintainability.
 
 
 
