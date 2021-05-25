@@ -33,12 +33,19 @@ public class Lake extends Ground {
     }
 
     /**
+     * Check for the water level to decide whether remove all fish or not.
      * In every turn, calculate the number of fish in the lake and if under the limit,
      * create new fish by 60% chance
      * @param location The location of the Ground
      */
     @Override
     public void tick(Location location) {
+        // Pre : check for the water level. If water level == 0, remove all fish in the lake
+        if ( sips <= 0){
+            removeAllFish(location);
+            return;
+        }
+
         // Get number of fish in the lake
         int numOfFish = 0;
         for(Item item: location.getItems()){
@@ -51,6 +58,8 @@ public class Lake extends Ground {
         if( numOfFish >= MAX_FISH){
             return;
         }
+
+
 
         // If enough room for new Fish, calc 60% and then create new one
         if(Util.calcPercentage(Util.SIXTY_PERCENT_CHANCE)){
@@ -99,6 +108,19 @@ public class Lake extends Ground {
      */
     public void decrementSips(){
         this.sips = Math.max(0, this.sips-1);
+
+    }
+
+    /**
+     * Removes all fish in the lake
+     * @param location location of lake
+     */
+    private void removeAllFish(Location location){
+        for(Item item: location.getItems()){
+            if(item instanceof Fish){
+                location.removeItem(item);
+            }
+        }
     }
 
     public int getSips() {

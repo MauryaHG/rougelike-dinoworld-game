@@ -10,14 +10,23 @@ Overview
           FeedAction, BreedBehaviour, SeekFoodBehaviour, HatchBehaviour, GroundLocation,
           CanivoreMeal, vegetarianMeal, LaserGun, Type(Enum), EcoPoint(static)
 
-    Calsses added (in Assignment2)
+    Classes added (in Assignment2)
         -  BreedAction, eatFoodAction, Corpse, StegosaurCorpse, AllosaurCorpse, BrachiosaurCorpse, Util, DinosaurGameMap
+
+    Classes added (in Assignment3)
+        - DrinkAction, QuitAction, SeekWaterBehaviour, Pterodactyls, Lake, PteodactylsEgg, PteodactylsCorpse, Fish, JurassicWorld
 
     Classes removed (in Assignment2)
         - LayEggBehaviour, FruitHarvested, ShootAction
 
+    Classes removed(or Deprecated) (in Assignment3)
+        - GroundLocation
+
     Classes modified (in Assignment2)
         - Fruit
+
+    Classes modified (in Assignment3)
+        - AttackAction, VendingMachine, PurchaseAction, EcoPoint, Util, Dinosaur, BreedAction, Type, FeedAction, DinosaurGameMap
 
     We have designed most of the classes to inherit from the existing classes from the engine. Since engine provides the
     most of necessary parent classes, it should be able to reduce dependencies and fulfil given requirements.
@@ -171,7 +180,7 @@ Initial Design of each classes
 
     We mostly stuck to the initial design but added a few extra classes
 
-    Added classes:
+    Added classes (Assignment2):
         BreedAction (extends Action)
             - which makes actor mate with an actor with is next to it
 
@@ -191,12 +200,67 @@ Initial Design of each classes
         DinosaurGameMap(extends GameMap)
             - Responsible for create Location as GroundLocation
 
-    Modified from existing design:
+    Modified from existing design(Assignment2):
         Fruit (extends PortableItem)
             - Can be set in Location or carried with player.
             - Fruit has attributes telling its state. Because fruits may be on bush, tree, ground or in the inventory
 
+    Removed classes(Assignment2):
+        FruitHarvested class was removed because it was not needed
+        ShootAction class was removed because it was not needed
+        hatchBehaviour class was removed and its functionality was added into be Egg class which has tick method which checks if the egg is ready to hatch and adds a new dinosaur to that location
 
-    FruitHarvested class was removed because it was not needed
-    ShootAction class was removed because it was not needed
-    hatchBehaviour class was removed and its functionality was added into be Egg class which has tick method which checks if the egg is ready to hatch and adds a new dinosaur to that location
+
+    Classes added (Assignment3):
+        DrinkAction
+        QuitAction
+            - Responsible to be added and shown in the user's menu
+            - hot key for quitting game will be provided to user and if it is selected, processActorTurn() in JurassicWorld will terminate the game
+
+        SeekWaterBehaviour
+        Pterodactyls
+
+        Lake
+            - Responsible for the lake ground and the display character is ~
+            - when tick() in Lake is invoked, it will check the number of fish in the lake and determine to skip or add a fish by 60% chance.
+
+        PteodactylsEgg
+
+        PteodactylsCorpse
+            - Responsible for staying in the map for several turns before disappearing or be a food source for carnivorous dinosaurs
+            - tick() will be invoked for counting up and remove when certain condition fits.
+
+        Fish
+            - Responsible for staying in the same square as lake and a food source for Pterodactyls
+
+        JurassicWorld
+            - Responsible for having multiple gameMaps, prompts user for the game mode, decide whether the user selects to quit, calculate turns and chance of raining, and if so, provide water to all the maps.
+            - Overrides run() and processPlayerTurn() from World. run() will call selectGameMode() and checks if endGame == true in the middle.
+              processPlayerTurn() is to add QuitAction into Actions in order for displaying quitting option to users. If selected, processPlayerTurn() will be terminated and alert run() that users wants to stop.
+
+    Classes Modified(Assignment3)
+        AttackAction
+            - Modified to kill Pterodactyls and hurt Stegosaur
+
+        VendingMachine
+            - Added PterodactylsEgg
+
+        PurchaseAction
+            - Added option to choose Egg(random) and if it is PterodactylsEgg, PterodactylsEgg is removed from the vending machine
+
+        EcoPoint
+            - Updated the way of getting percentage
+
+        Dinosaur
+            - Modified to have Pterodactyls
+
+        BreedAction
+            - Modified Pterodactyls can also breed
+        Type
+            - Added more capabilites
+
+        FeedAction
+            - Modified player can feed Pterodactyls
+
+        DinosaurGameMap
+            - Modified game map has another game map, north or south, in order to switch
